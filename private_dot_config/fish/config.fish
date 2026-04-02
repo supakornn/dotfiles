@@ -1,0 +1,21 @@
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+set -gx WASMTIME_HOME "$HOME/.wasmtime"
+
+string match -r ".wasmtime" "$PATH" >/dev/null; or set -gx PATH "$WASMTIME_HOME/bin" $PATH
+
+fish_add_path /Users/supakorn/.spicetify
+
+fish_config theme choose catppuccin-mocha --color-theme=light
+
+# Added by Antigravity
+fish_add_path /Users/supakorn/.antigravity/antigravity/bin
+
+# pnpm
+set -gx PNPM_HOME /Users/supakorn/Library/pnpm
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end

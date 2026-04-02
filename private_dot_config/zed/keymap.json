@@ -1,0 +1,32 @@
+[
+    {
+        "context": "ProjectPanel && not_editing",
+        "bindings": {
+            "H": "project_panel::CollapseAllEntries",
+        },
+    },
+    {
+        "context": "ContextEditor > Editor",
+        "bindings": {
+            "cmd-g": "search::SelectNextMatch",
+        },
+    },
+    {
+        "context": "Pane",
+        "bindings": {
+            "cmd-g": "search::SelectNextMatch",
+        },
+    },
+    {
+        "context": "Pane",
+        "bindings": {
+            "cmd-shift-g": "search::SelectPreviousMatch",
+        },
+    },
+    {
+        "context": "ContextEditor > Editor",
+        "bindings": {
+            "cmd-shift-g": "search::SelectPreviousMatch",
+        },
+    },
+]

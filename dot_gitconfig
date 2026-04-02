@@ -1,0 +1,150 @@
+# https://git-scm.com/docs/git-config
+
+[alias]
+  a = add
+  aa = add --all
+  ap = add --patch
+  b = branch
+  ba = branch --all
+  br = branch --remote
+  ca = commit --amend
+  cm = commit -v
+  cl = clone
+  co = checkout
+  com = checkout master
+  df = diff
+  dc = diff --cached
+  f = fetch
+  l = log --date=format:'%b %d, %Y' --pretty=format:'%C(yellow bold)%h%Creset%C(white)%d%Creset %s%n%C(blue)%aN <%ae> | %cd%n'
+  lg = log --graph --stat --date=format:'%b %d, %Y' --pretty=format:'%C(yellow bold)%h%Creset%C(white)%d%Creset %s%n%C(blue)%aN <%ae> | %cd%n'
+  pl = pull
+  ps = push
+  psf = push --force-with-lease
+  pum = push -u origin master
+  recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+  rv = remote -v
+  s = status
+  tl = tag --list
+  re = reset
+  rsh = reset --soft HEAD^
+  wch = whatchanged -p --abbrev-commit --pretty=medium -10
+
+[apply]
+  whitespace = nowarn
+
+[color]
+  ui = true
+
+[color "branch"]
+  current = white bold
+  local   = yellow
+  remote  = cyan
+
+[color "diff"]
+  frag = cyan bold
+  meta = white
+  new = green bold
+  old = red bold
+  commit = yellow bold
+  whitespace = red reverse
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[color "status"]
+  untracked = cyan
+
+[commit]
+  template = ~/.gitmessage
+	gpgSign = true
+  # gpgsign = true  # Uncomment to enable GPG signing
+
+[core]
+  autocrlf     = input
+  excludesfile = ~/.gitignore_global
+  ignorecase   = false
+  safecrlf     = warn
+  abbrev       = 7
+	editor = code --wait
+	pager = diff-so-fancy | less --tabs=4 -RF
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[diff]
+  tool = vimdiff3
+  submodule = log
+
+[pager]
+  diff = diff-so-fancy | less --tabs=4 -RFXS  # Requires: brew install diff-so-fancy
+  log = less -+X
+
+[fetch]
+  prune = true
+
+[gitsh]
+  defaultCommand = status --short --branch
+
+[gitsh "color"]
+  default   = blue
+  modified  = red
+  untracked = cyan
+
+[user]
+	name = supakorn
+	email = mail@supakorn.me
+	signingkey = A6DA96F3EF72CE0F9E3DC0AF5AF4DCF6F7641CC0
+
+[credential "https://github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+
+[init]
+  defaultBranch = main
+
+[mailmap]
+  # Display commit author names based on global mailmap file.
+  file = ~/.mailmap
+
+[merge]
+  conflictstyle = zdiff3
+  # Always create local merge commits when merging.
+  ff = false
+
+[pull]
+  # Don't flatten locally created merge commits when rebasing.
+  rebase = merges
+
+[push]
+  # Refuse to push if upstream branch name is different from local.
+  default = simple
+
+[status]
+  submoduleSummary = true
+
+[tag]
+  # gpgSign = true  # Uncomment to enable GPG tag signing
+
+[url "https://github.com/"]
+  insteadOf = git@github.com:
+
+[url "https://"]
+  insteadOf = git://
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

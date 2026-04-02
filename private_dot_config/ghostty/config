@@ -1,0 +1,29 @@
+font-family = jetbrains mono
+font-size = 14
+font-thicken = true
+font-thicken-strength = 200
+font-style-bold = regular
+theme = Catppuccin latte
+shell-integration-features = no-cursor,sudo,no-title
+cursor-style = block
+cursor-style-blink=true
+adjust-cell-height = 35%
+#background-blur-radius = 95
+#background-opacity = 0.9
+ 
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+ 
+window-padding-balance = true 
+window-save-state = always
+macos-titlebar-style=transparent
+window-colorspace = "display-p3"
+ 
+ 
+copy-on-select = clipboard
+ 
+# macos-titlebar-style = hidden
+title = " "
+ 
+window-padding-x = 5
+keybind = shift+enter=text:\x1b\r

@@ -1,0 +1,134 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+    "agent_servers": {
+        "github-copilot-cli": {
+            "type": "registry",
+        },
+        "claude-acp": {
+            "type": "registry",
+        },
+        "OpenCode": {
+            "type": "custom",
+            "command": "opencode",
+            "args": ["acp"],
+        },
+    },
+    "colorize_brackets": true,
+    "agent_ui_font_size": 14.0,
+    "agent_buffer_font_size": 14.0,
+    "edit_predictions": {
+        "mode": "eager",
+    },
+    "collaboration_panel": {
+        "button": false,
+        "dock": "right",
+    },
+    "disable_ai": false,
+    "telemetry": {
+        "metrics": true,
+    },
+    "base_keymap": "VSCode",
+    "auto_indent_on_paste": true,
+    "linked_edits": true,
+    "show_edit_predictions": true,
+    "hard_tabs": false,
+    "tab_size": 4,
+    "project_panel": {
+        "default_width": 240,
+        "button": true,
+        "dock": "left",
+        "git_status": true,
+    },
+    "minimap": {
+        "show": "never",
+        "max_width_columns": 100,
+    },
+    "cursor_blink": true,
+    "terminal": {
+        "dock": "bottom",
+        "font_weight": 500.0,
+        "blinking": "on",
+        "cursor_shape": "bar",
+        "line_height": {
+            "custom": 1.5,
+        },
+        "font_family": "JetBrainsMono Nerd Font",
+        "font_size": 13,
+    },
+    "ui_font_size": 15.0,
+    "buffer_font_size": 14.0,
+    "buffer_font_family": "JetBrains Mono",
+    "buffer_font_weight": 500.0,
+    "ui_font_family": "JetBrains Mono",
+    "ui_font_weight": 500.0,
+    "auto_update_extensions": {
+        "discord-presence": true,
+    },
+    "agent": {
+        "tool_permissions": {
+            "tools": {
+                "terminal": {
+                    "default": "allow",
+                },
+            },
+        },
+        "default_profile": "write",
+        "inline_assistant_model": {
+            "provider": "copilot_chat",
+            "model": "gpt-4.1",
+        },
+        "button": true,
+        "enabled": true,
+        "single_file_review": true,
+        "default_model": {
+            "effort": "high",
+            "enable_thinking": true,
+            "provider": "zed.dev",
+            "model": "claude-sonnet-4-6",
+        },
+    },
+    "icon_theme": "Catppuccin Latte",
+    "vim_mode": true,
+    "theme": "Catppuccin Latte",
+    "lsp": {
+        "wakatime": {
+            "initialization_options": {
+                "api-key": "{{ .wakatimeApiKey }}",
+            },
+        },
+    },
+    "indent_guides": {
+        "enabled": true,
+        "line_width": 1,
+        "active_line_width": 2,
+        "coloring": "indent_aware",
+        "background_coloring": "disabled",
+    },
+    "languages": {
+        "JavaScript": {
+            "formatter": "prettier",
+        },
+        "TypeScript": {
+            "formatter": "prettier",
+        },
+        "Python": {
+            "language_servers": [
+                // Disable basedpyright and enable Ty, and otherwise
+                // use the default configuration.
+                "ty",
+                "!basedpyright",
+                "...",
+            ],
+        },
+    },
+    "debugger": {
+        "dock": "bottom",
+    },
+}
