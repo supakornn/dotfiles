@@ -50,7 +50,6 @@ brew "gitmoji"
 brew "czg"
 
 # ---- Docker & Containers ----
-brew "lazydocker"
 brew "podman"
 brew "minikube"
 brew "kubernetes-cli"
