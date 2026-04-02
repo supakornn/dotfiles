@@ -178,6 +178,9 @@ cask "ghostty"
 cask "zed"
 cask "visual-studio-code"
 
+# ---- JetBrains ----
+cask "jetbrains-toolbox"
+
 # ---- Browsers ----
 cask "brave-browser"
 cask "vivaldi"
