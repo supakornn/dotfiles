@@ -1,15 +1,15 @@
 {
-  "enabledPlugins": {
-    "context7@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "anthropic-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/skills"
-      }
-    }
-  },
-  "effortLevel": "medium",
-  "model": "sonnet"
+    "enabledPlugins": {
+        "context7@claude-plugins-official": true
+    },
+    "extraKnownMarketplaces": {
+        "anthropic-agent-skills": {
+            "source": {
+                "source": "github",
+                "repo": "anthropics/skills"
+            }
+        }
+    },
+    "effortLevel": "medium",
+    "model": "sonnet"
 }
