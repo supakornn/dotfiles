@@ -32,6 +32,7 @@ tap "tw93/tap"
 brew "fish"
 brew "starship"
 brew "tmux"
+brew "zellij"
 brew "zoxide"
 brew "fzf"
 
@@ -44,7 +45,6 @@ brew "jq"
 brew "sd"
 brew "tree"
 brew "wget"
-brew "curl"
 brew "coreutils"
 brew "glow"
 brew "yazi"
@@ -95,11 +95,23 @@ brew "uv"
 brew "go"
 brew "golang-migrate"
 
-# Rust (via rustup, not brew — but keeping cargo tools below)
+# Ruby
+brew "chruby"
+brew "ruby-install"
+
+# PHP
+brew "php"
+brew "composer"
+
+# Rust (managed via rustup)
 
 # Other
 brew "gleam"
 brew "zig"
+
+# ---- Editors ----
+brew "neovim"
+brew "helix"
 
 # ---- Cloud & DevOps ----
 brew "awscli"
@@ -108,9 +120,7 @@ brew "firebase-cli"
 brew "railway"
 brew "tfenv"
 brew "localstack"
-brew "ngrok/ngrok/ngrok"
 brew "dotenvx/brew/dotenvx"
-brew "sst/tap/sst"
 
 # ---- Security ----
 brew "gnupg"
@@ -121,6 +131,7 @@ brew "openvpn"
 brew "nmap"
 brew "rustscan"
 brew "wireshark"
+brew "sshpass"
 
 # ---- AI & LLM Tools ----
 brew "ollama"
@@ -167,9 +178,6 @@ cask "ghostty"
 cask "zed"
 cask "visual-studio-code"
 
-# ---- JetBrains ----
-cask "jetbrains-toolbox"
-
 # ---- Browsers ----
 cask "brave-browser"
 cask "vivaldi"
@@ -208,11 +216,9 @@ cask "orbstack"
 cask "gcloud-cli"
 cask "dotnet-sdk"
 cask "flutter"
-cask "ngrok/ngrok/ngrok"
 cask "yaak"
 cask "cap"
 cask "obs"
-cask "localsend"
 
 # ---- Fonts ----
 cask "font-jetbrains-mono"
@@ -242,6 +248,16 @@ mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
 
 # ============================================================
+# VSCode Extensions
+# ============================================================
+vscode "catppuccin.catppuccin-vsc"
+vscode "catppuccin.catppuccin-vsc-icons"
+vscode "dsznajder.es7-react-js-snippets"
+vscode "formulahendry.code-runner"
+vscode "github.copilot-chat"
+vscode "vscodevim.vim"
+
+# ============================================================
 # Go tools (installed via `go install`)
 # ============================================================
 go "github.com/air-verse/air"
@@ -258,7 +274,7 @@ go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
 go "github.com/golangci/golangci-lint/cmd/golangci-lint"
 go "github.com/segmentio/golines"
 go "github.com/fatih/gomodifytags"
-go "github.com/abenz1267/gomvp"
+go "github.com/abice1267/gomvp"
 go "golang.org/x/tools/cmd/gonew"
 go "github.com/haya14busa/goplay/cmd/goplay"
 go "golang.org/x/tools/gopls"
