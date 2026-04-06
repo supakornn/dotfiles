@@ -144,6 +144,9 @@ cask "bartender"
 cask "scroll-reverser"
 cask "shottr"
 
+# ---- Window Management ----
+cask "aerospace"
+
 # ---- System Utilities ----
 cask "betterdisplay"
 cask "batfi"
