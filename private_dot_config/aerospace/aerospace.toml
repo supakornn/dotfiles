@@ -124,15 +124,7 @@ if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'dicord'
-run = 'layout floating'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'mail'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'trello'
 run = 'layout floating'
 
 [[on-window-detected]]
@@ -140,5 +132,26 @@ if.app-name-regex-substring = 'quicktime'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'discord'
+if.app-name-regex-substring = 'textEdit'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'line'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'spotify'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'obsidian'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'yaak'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'orbstack'
+run = 'layout floating'
+
