@@ -8,8 +8,8 @@ shell-integration-features = no-cursor,sudo,no-title
 cursor-style = block
 cursor-style-blink=true
 adjust-cell-height = 35%
-# background-blur-radius = 95
-# background-opacity = 0.9
+background-blur-radius = 95
+background-opacity = 0.9
  
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
