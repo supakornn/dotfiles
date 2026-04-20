@@ -143,9 +143,8 @@
   insteadOf = git://
 [gpg]
 	program = /opt/homebrew/bin/gpg
-[credential]
+[credential "https://dev.azure.com"]
 	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
 	credentialStore = keychain
-[credential "https://dev.azure.com"]
 	useHttpPath = true
