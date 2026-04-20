@@ -8,7 +8,7 @@ string match -r ".wasmtime" "$PATH" >/dev/null; or set -gx PATH "$WASMTIME_HOME/
 
 fish_add_path /Users/supakorn/.spicetify
 
-fish_config theme choose catppuccin-mocha --color-theme=light
+fish_config theme choose catppuccin-mocha
 
 # Added by Antigravity
 fish_add_path /Users/supakorn/.antigravity/antigravity/bin
