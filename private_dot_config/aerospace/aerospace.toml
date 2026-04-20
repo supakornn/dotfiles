@@ -114,3 +114,31 @@ alt-shift-h = ['join-with left',  'mode main']
 alt-shift-j = ['join-with down',  'mode main']
 alt-shift-k = ['join-with up',    'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'telegram'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'dicord'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'mail'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'trello'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'quicktime'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'discord'
+run = 'layout floating'
