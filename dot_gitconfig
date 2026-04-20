@@ -144,7 +144,8 @@
 [gpg]
 	program = /opt/homebrew/bin/gpg
 [credential]
-	helper = 
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
+	credentialStore = keychain
 [credential "https://dev.azure.com"]
 	useHttpPath = true
