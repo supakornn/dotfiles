@@ -25,6 +25,13 @@ function theme --description "Switch between catppuccin mocha (dark) and latte (
     sed -i '' "s/catppuccin_flavor = \".*\"/catppuccin_flavor = \"$flavor\"/" $chezmoi_config
     chezmoi apply
     source ~/.config/fish/config.fish
+    for f in ~/.config/fish/conf.d/*.fish
+        source $f
+    end
+
+    if command -q tmux; and test -n "$TMUX"
+        tmux source-file ~/.tmux.conf
+    end
 
     echo "Switched to catppuccin $flavor"
 end

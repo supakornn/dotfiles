@@ -112,7 +112,7 @@ set-option -g renumber-windows on
 run '~/.tmux/plugins/tpm/tpm'
 
 # Configure the catppuccin plugin
-set -g @catppuccin_flavor "mocha"
+set -g @catppuccin_flavor "{{ .catppuccin_flavor }}"
 set -g @catppuccin_window_status_style "rounded"
 
 # Load catppuccin
