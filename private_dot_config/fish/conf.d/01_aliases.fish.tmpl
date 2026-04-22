@@ -4,7 +4,7 @@ alias la='eza -la --color=always --long --git --icons=always'
 alias ls='eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level=2'
 
 # ---- Tools ----
-alias lg='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/Library/Application Support/lazygit/catppuccin-mocha.yml"'
+alias lg='lazygit --use-config-file="$HOME/Library/Application Support/lazygit/config.yml,$HOME/Library/Application Support/lazygit/catppuccin-{{ .catppuccin_flavor }}.yml"'
 alias cd="z"
 alias cat="bat --style=plain --paging=never"
 

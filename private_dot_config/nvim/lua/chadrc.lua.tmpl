@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "catppuccin",
+	theme = "{{ if eq .catppuccin_flavor "mocha" }}catppuccin{{ else }}catppuccin-latte{{ end }}",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
