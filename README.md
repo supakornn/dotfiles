@@ -20,6 +20,7 @@ curl -fsSL https://raw.githubusercontent.com/supakornn/dotfiles/main/install.sh 
 | [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI |
 | [btop](https://github.com/aristocratos/btop) | System monitor |
 | [Spicetify](https://spicetify.app) | Spotify customization |
+| [Karabiner-Elements](https://karabiner-elements.pqrs.org) | Keyboard remapping |
 | [Claude Code](https://claude.ai/code) | AI coding assistant |
 
 ## Daily Workflow
@@ -48,6 +49,18 @@ cd ~/.local/share/chezmoi
 git add -A && git commit -m "update configs" && git push
 ```
 
+## Theme Switching
+
+Switch between Catppuccin Mocha (dark) and Latte (light) across all apps at once:
+
+```bash
+theme          # toggle
+theme dark     # Catppuccin Mocha
+theme light    # Catppuccin Latte
+```
+
+Covers: Ghostty, Zed, Neovim, Tmux, Fish, Starship, bat, btop, lazygit.
+
 ## Secrets
 
 The WakaTime API key in Zed settings is **not** stored in this repo.  
@@ -56,4 +69,5 @@ It lives in `~/.config/chezmoi/chezmoi.toml` (local only):
 ```toml
 [data]
     wakatimeApiKey = "your-key-here"
+    catppuccin_flavor = "mocha"
 ```
