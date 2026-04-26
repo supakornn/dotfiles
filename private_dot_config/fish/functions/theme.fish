@@ -1,23 +1,25 @@
-function theme --description "Switch between catppuccin mocha (dark) and latte (light)"
+function theme --description "Switch between catppuccin dark (macchiato/mocha/frappe) and latte (light)"
     set chezmoi_config ~/.config/chezmoi/chezmoi.toml
 
     set current (string match -r 'catppuccin_flavor = "(\w+)"' (cat $chezmoi_config) | tail -1)
 
     switch $argv[1]
-        case dark mocha ''
+        case dark macchiato mocha frappe ''
             if test "$argv[1]" = ""
-                if test "$current" = "mocha"
-                    set flavor latte
+                if test "$current" = "latte"
+                    set flavor macchiato
                 else
-                    set flavor mocha
+                    set flavor latte
                 end
+            else if test "$argv[1]" = "dark"
+                set flavor macchiato
             else
-                set flavor mocha
+                set flavor $argv[1]
             end
         case light latte
             set flavor latte
         case '*'
-            echo "Usage: theme [dark|light|mocha|latte]"
+            echo "Usage: theme [dark|light|macchiato|mocha|frappe|latte]"
             echo "Current: catppuccin $current"
             return 1
     end

@@ -51,15 +51,18 @@ git add -A && git commit -m "update configs" && git push
 
 ## Theme Switching
 
-Switch between Catppuccin Mocha (dark) and Latte (light) across all apps at once:
+Switch between Catppuccin dark and Latte (light) across all apps at once:
 
 ```bash
-theme          # toggle
-theme dark     # Catppuccin Mocha
-theme light    # Catppuccin Latte
+theme              # toggle dark/light
+theme dark         # Catppuccin Macchiato
+theme macchiato    # Catppuccin Macchiato
+theme mocha        # Catppuccin Mocha
+theme frappe       # Catppuccin Frappe
+theme light        # Catppuccin Latte
 ```
 
-Covers: Ghostty, Zed, Neovim, Tmux, Fish, Starship, bat, btop, lazygit.
+Covers: Ghostty, Zed, Neovim, Tmux, Fish, Starship, bat, btop, lazygit, fzf.
 
 ## Secrets
 
@@ -69,5 +72,5 @@ It lives in `~/.config/chezmoi/chezmoi.toml` (local only):
 ```toml
 [data]
     wakatimeApiKey = "your-key-here"
-    catppuccin_flavor = "mocha"
+    catppuccin_flavor = "macchiato"
 ```
