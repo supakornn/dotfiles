@@ -10,7 +10,6 @@ tap "homebrew/services"
 tap "mongodb/brew"
 tap "mrkai77/cask"
 tap "ngrok/ngrok"
-tap "oven-sh/bun"
 tap "tw93/tap"
 
 # ---- Shell & Terminal ----
@@ -55,39 +54,21 @@ brew "minikube"
 brew "kubernetes-cli"
 
 # ---- Languages & Runtimes ----
-# Node
-brew "fnm"
-brew "node"
-brew "pnpm"
-brew "yarn"
-brew "oven-sh/bun/bun"
+# Managed by mise: node, bun, deno, pnpm, go, zig, gleam, ruby, neovim
+# Managed by uv: python
 
-# Python
-brew "pyenv"
-brew "uv"
-
-# Go
-brew "go"
+# Go tools (not the runtime)
 brew "golang-migrate"
 
-# Ruby
-brew "chruby"
-brew "ruby-install"
+# Rust (managed via mise)
 
-# Rust (managed via rustup)
-
-# Other
-brew "gleam"
-brew "zig"
-
-# ---- Editors ----
-brew "neovim"
+# Python tooling
+brew "uv"
 
 # ---- Cloud & DevOps ----
 brew "awscli"
 brew "doctl"
 brew "railway"
-brew "tfenv"
 brew "localstack"
 
 # ---- Security ----
@@ -171,8 +152,6 @@ cask "microsoft-auto-update"
 # ---- Dev Tools ----
 cask "orbstack"
 cask "gcloud-cli"
-cask "dotnet-sdk"
-cask "flutter"
 cask "yaak"
 cask "cap"
 cask "obs"
@@ -183,4 +162,3 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-hack-nerd-font"
 
 # ---- Java ----
-cask "zulu@11"
