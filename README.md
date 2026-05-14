@@ -1,6 +1,6 @@
 # dotfiles
 
-My personal dotfiles managed with [chezmoi](https://chezmoi.io).
+Personal dotfiles managed with [chezmoi](https://chezmoi.io). macOS only.
 
 ## Quick Install
 
@@ -8,50 +8,50 @@ My personal dotfiles managed with [chezmoi](https://chezmoi.io).
 curl -fsSL https://raw.githubusercontent.com/supakornn/dotfiles/main/install.sh | bash
 ```
 
-## What's included
 
-| Tool | Description |
-|------|-------------|
-| [Fish](https://fishshell.com) | Shell |
-| [Starship](https://starship.rs) | Prompt |
-| [Ghostty](https://ghostty.org) | Terminal |
-| [Zed](https://zed.dev) | Editor |
-| [Tmux](https://github.com/tmux/tmux) | Terminal multiplexer |
-| [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI |
-| [btop](https://github.com/aristocratos/btop) | System monitor |
-| [Spicetify](https://spicetify.app) | Spotify customization |
-| [Karabiner-Elements](https://karabiner-elements.pqrs.org) | Keyboard remapping |
-| [Claude Code](https://claude.ai/code) | AI coding assistant |
+## What's Included
 
-## Daily Workflow
+- [Fish](https://fishshell.com) — shell
+- [Starship](https://starship.rs) — prompt
+- [Ghostty](https://ghostty.org) — terminal
+- [Neovim](https://neovim.io) — editor (LazyVim)
+- [Zed](https://zed.dev) — editor
+- [Tmux](https://github.com/tmux/tmux) — terminal multiplexer
+- [Lazygit](https://github.com/jesseduffield/lazygit) — git TUI
+- [mise](https://mise.jdx.dev) — runtime version manager
+- [uv](https://docs.astral.sh/uv) — Python toolchain
+- [btop](https://github.com/aristocratos/btop) — system monitor
+- [Spicetify](https://spicetify.app) — Spotify customization
+- [Karabiner-Elements](https://karabiner-elements.pqrs.org) — keyboard remapping
 
-**Edit a config and save to chezmoi:**
+## Runtime Management
+
+All language runtimes managed by [mise](https://mise.jdx.dev) — no fnm, pyenv, or chruby needed:
+
 ```bash
-# Edit the file normally, then:
-chezmoi add ~/.config/fish/config.fish
+mise install        # install everything in ~/.config/mise/config.toml
+mise install node   # install single tool
+mise use node@22    # switch version globally
 ```
 
-**Edit directly in chezmoi source:**
+Python is managed entirely by [uv](https://docs.astral.sh/uv):
+
 ```bash
-chezmoi edit ~/.config/ghostty/config
-chezmoi apply ~/.config/ghostty/config
+uv python install 3.13
+uv run script.py
 ```
 
-**Check what's changed:**
-```bash
-chezmoi diff
-chezmoi status
-```
+## Neovim
 
-**Commit and push:**
-```bash
-cd ~/.local/share/chezmoi
-git add -A && git commit -m "update configs" && git push
-```
+Built on [LazyVim](https://www.lazyvim.org) with [Catppuccin](https://github.com/catppuccin/nvim).
+Neovim auto-switches flavor based on macOS system appearance (Macchiato = dark, Latte = light).
+All other apps follow `catppuccin_flavor` in `~/.config/chezmoi/chezmoi.toml` — changed via the `theme` command.
+
+Neovim config inspired by [craftzdog/dotfiles-public](https://github.com/craftzdog/dotfiles-public).
 
 ## Theme Switching
 
-Switch between Catppuccin dark and Latte (light) across all apps at once:
+Switch Catppuccin flavor across all apps (Ghostty, Zed, Fish, Tmux, bat, btop, lazygit, Starship):
 
 ```bash
 theme              # toggle dark/light
@@ -62,12 +62,32 @@ theme frappe       # Catppuccin Frappe
 theme light        # Catppuccin Latte
 ```
 
-Covers: Ghostty, Zed, Neovim, Tmux, Fish, Starship, bat, btop, lazygit, fzf.
+Requires `catppuccin_flavor` set in `~/.config/chezmoi/chezmoi.toml`:
+
+```toml
+[data]
+    wakatimeApiKey = "your-key-here"
+    catppuccin_flavor = "macchiato"
+```
+
+## Daily Workflow
+
+```bash
+# Edit a file normally, then sync to chezmoi:
+chezmoi add ~/.config/fish/config.fish
+
+# Edit directly in chezmoi source:
+chezmoi edit ~/.config/ghostty/config
+chezmoi apply
+
+# Check what's changed:
+chezmoi diff
+chezmoi status
+```
 
 ## Secrets
 
-The WakaTime API key in Zed settings is **not** stored in this repo.  
-It lives in `~/.config/chezmoi/chezmoi.toml` (local only):
+`~/.config/chezmoi/chezmoi.toml` is local only, not tracked:
 
 ```toml
 [data]

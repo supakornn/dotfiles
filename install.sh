@@ -96,10 +96,15 @@ if [[ ! -f "$CHEZMOI_CONFIG" ]]; then
     cat > "$CHEZMOI_CONFIG" <<EOF
 [data]
     wakatimeApiKey = "${WAKATIME_KEY}"
+    catppuccin_flavor = "macchiato"
 EOF
     success "Created chezmoi config at $CHEZMOI_CONFIG"
 else
     success "chezmoi config already exists"
+    if ! grep -q "catppuccin_flavor" "$CHEZMOI_CONFIG"; then
+        echo '    catppuccin_flavor = "macchiato"' >> "$CHEZMOI_CONFIG"
+        success "Added catppuccin_flavor to chezmoi config"
+    fi
 fi
 
 # =============================================================================
@@ -132,6 +137,19 @@ if [[ -f "$BREWFILE" ]]; then
     success "All packages installed"
 else
     warn "Brewfile not found at $BREWFILE, skipping"
+fi
+
+# =============================================================================
+# mise
+# =============================================================================
+header "mise runtimes"
+
+if command -v mise &>/dev/null; then
+    info "Installing runtimes via mise (this may take a while)..."
+    mise install --yes 2>/dev/null || true
+    success "mise runtimes installed"
+else
+    warn "mise not found, skipping"
 fi
 
 # =============================================================================
@@ -192,20 +210,6 @@ fi
 info "Installing tmux plugins..."
 "$TPM_DIR/bin/install_plugins" 2>/dev/null || true
 success "Tmux plugins installed"
-
-# =============================================================================
-# Rust (rustup)
-# =============================================================================
-header "Rust"
-
-if ! command -v rustup &>/dev/null; then
-    info "Installing rustup..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
-    source "$HOME/.cargo/env"
-    success "Rust installed"
-else
-    success "Rust already installed ($(rustc --version))"
-fi
 
 # =============================================================================
 # Spicetify

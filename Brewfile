@@ -129,6 +129,9 @@ cask "shottr"
 # ---- Window Management ----
 cask "aerospace"
 
+# ---- Keyboard ----
+cask "karabiner-elements"
+
 # ---- System Utilities ----
 cask "betterdisplay"
 cask "batfi"
