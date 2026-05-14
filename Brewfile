@@ -89,6 +89,7 @@ brew "poppler"
 
 # ---- Misc Dev Tools ----
 brew "chezmoi"
+brew "mise"
 brew "just"
 brew "watchman"
 brew "netcat"
