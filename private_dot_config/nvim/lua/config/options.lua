@@ -53,6 +53,10 @@ vim.filetype.add({
 	},
 })
 
+-- Sync background with macOS system appearance
+local appearance = vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null")
+vim.o.background = vim.trim(appearance) == "Dark" and "dark" or "light"
+
 vim.g.lazyvim_prettier_needs_config = true
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"
