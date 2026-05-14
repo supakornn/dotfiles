@@ -2,13 +2,6 @@
 set -gx PATH $HOME/bin $PATH
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /usr/local/bin $PATH
-set -gx PATH /Users/supakorn/go/bin $PATH
-
-# ---- pyenv ----
-set -gx PYENV_ROOT $HOME/.pyenv
-set -gx PATH $PYENV_ROOT/bin $PATH
-status --is-interactive; and pyenv init - | source
-status --is-interactive; and pyenv virtualenv-init - | source
 
 # sdkman (Fish doesn't support Bash-style init scripts directly)
 set -gx SDKMAN_DIR $HOME/.sdkman
