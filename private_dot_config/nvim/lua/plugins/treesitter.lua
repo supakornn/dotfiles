@@ -61,9 +61,11 @@ return {
 			vim.filetype.add({
 				extension = {
 					mdx = "mdx",
+					svelte = "svelte",
 				},
 			})
 			vim.treesitter.language.register("markdown", "mdx")
+			vim.treesitter.language.register("svelte", "svelte")
 		end,
 	},
 }

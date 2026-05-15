@@ -12,6 +12,12 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
+				"svelte-language-server",
+				"gopls",
+				"rust-analyzer",
+				"astro-language-server",
+				"vue-language-server",
+				"zls",
 			})
 		end,
 	},
@@ -59,6 +65,12 @@ return {
 						},
 					},
 				},
+				svelte = {},
+				astro = {},
+				volar = {},
+				gopls = {},
+				rust_analyzer = {},
+				zls = {},
 				html = {},
 				yamlls = {
 					settings = {
@@ -138,19 +150,21 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		opts = function()
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			vim.list_extend(keys, {
-				{
-					"gd",
-					function()
-						-- DO NOT RESUSE WINDOW
-						require("telescope.builtin").lsp_definitions({ reuse_win = false })
-					end,
-					desc = "Goto Definition",
-					has = "definition",
+		opts = {
+			servers = {
+				["*"] = {
+					keys = {
+						{
+							"gd",
+							function()
+								require("telescope.builtin").lsp_definitions({ reuse_win = false })
+							end,
+							desc = "Goto Definition",
+							has = "definition",
+						},
+					},
 				},
-			})
-		end,
+			},
+		},
 	},
 }
