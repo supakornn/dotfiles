@@ -1,22 +1,15 @@
-# ---- File Listing Aliases ----
+# ---- File Listing ----
 alias ll='eza --color=always --long --git --icons=always'
 alias la='eza -la --color=always --long --git --icons=always'
 alias ls='eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level=2'
 
 # ---- Tools ----
 alias lg='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/catppuccin-{{ .catppuccin_flavor }}.yml"'
-alias cd="z"
-alias cat="bat --style=plain --paging=never"
+alias cat='bat --style=plain --paging=never'
+alias o='open'
+alias repos='ghq list'
 
-# ---- Git Aliases ----
-alias g='git'
-alias ga='git add -A -N && git add -p'
-alias gp='git push'
-alias gl='git pull'
-alias gc='git commit'
-alias gdh='git diff HEAD'
-alias gd='git diff'
-alias gst='git stash'
-alias gstp='git stash pop'
-alias gco='git checkout'
-alias gfo='git fetch origin'
+# ---- Navigation ----
+abbr -a .. 'cd ..'
+abbr -a ... 'cd ../..'
+abbr -a reload 'source ~/.config/fish/config.fish'

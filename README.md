@@ -18,6 +18,7 @@ curl -fsSL https://raw.githubusercontent.com/supakornn/dotfiles/main/install.sh 
 - [Zed](https://zed.dev) — editor
 - [Tmux](https://github.com/tmux/tmux) — terminal multiplexer
 - [Lazygit](https://github.com/jesseduffield/lazygit) — git TUI
+- [ghq](https://github.com/x-motemen/ghq) — repository manager
 - [mise](https://mise.jdx.dev) — runtime version manager
 - [uv](https://docs.astral.sh/uv) — Python toolchain
 - [btop](https://github.com/aristocratos/btop) — system monitor
@@ -68,6 +69,16 @@ Requires `catppuccin_flavor` set in `~/.config/chezmoi/chezmoi.toml`:
 [data]
     wakatimeApiKey = "your-key-here"
     catppuccin_flavor = "macchiato"
+```
+
+## Repository Management
+
+All repos managed by [ghq](https://github.com/x-motemen/ghq) under `~/src`:
+
+```bash
+get <user/repo>   # clone a repo (ghq get)
+repos             # list all managed repos
+repo              # fzf picker — fuzzy select and cd into a repo
 ```
 
 ## Daily Workflow
