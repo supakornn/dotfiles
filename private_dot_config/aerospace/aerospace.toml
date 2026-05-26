@@ -144,10 +144,6 @@ if.app-name-regex-substring = 'spotify'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'obsidian'
-run = 'layout floating'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'yaak'
 run = 'layout floating'
 
