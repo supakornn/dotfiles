@@ -124,5 +124,3 @@
 	credentialStore = keychain
 	useHttpPath = true
 
-[ghq]
-  root = ~/src
