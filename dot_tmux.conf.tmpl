@@ -33,15 +33,12 @@ set -g set-clipboard on
 setw -g monitor-activity off
 set -g visual-activity on
 
-# Status bar configuration
+# Status bar styling
 set -g status-style bg=default
-set -g status-right "#{b:pane_current_path} "  # Show only current directory name
-set -g status-left "[#S] "  # Simple session name display
-set -g status-right-length 30  # Can be shorter now since we only show directory name
 
 # -- Plugin Settings --
-TMUX_FZF_LAUNCH_KEY="C-f"
-TMUX_FZF_OPTIONS="-p -w 62% -h 38% -m"
+set -g @tmux-fzf-launch-key "C-f"
+set -g @tmux-fzf-options "-p -w 62% -h 38% -m"
 
 ### --- Plugins ---
 
@@ -55,6 +52,11 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'catppuccin/tmux'
+
+# Catppuccin settings
+set -g @catppuccin_flavor "macchiato"
+set -g @catppuccin_window_status_style "rounded"
 
 ### --- Keybinds ---
 
@@ -108,18 +110,7 @@ set -g pane-base-index 1
 set-window-option -g pane-base-index 1
 set-option -g renumber-windows on
 
-# Initialize tmux plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/.tmux/plugins/tpm/tpm'
-
-# Configure the catppuccin plugin
-set -g @catppuccin_flavor "{{ .catppuccin_flavor }}"
-set -g @catppuccin_window_status_style "rounded"
-
-# Load catppuccin
-run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
-# For TPM, instead use `run ~/.tmux/plugins/tmux/catppuccin.tmux`
-
-# Make the status line pretty and add some modules
+# Status line configuration
 set -g status-right-length 100
 set -g status-left-length 100
 set -g status-left ""
@@ -128,3 +119,6 @@ set -agF status-right "#{E:@catppuccin_status_cpu}"
 set -ag status-right "#{E:@catppuccin_status_session}"
 set -ag status-right "#{E:@catppuccin_status_uptime}"
 set -agF status-right "#{E:@catppuccin_status_battery}"
+
+# Initialize tmux plugin manager (keep this line at the very bottom)
+run '~/.tmux/plugins/tpm/tpm'
