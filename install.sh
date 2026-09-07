@@ -60,22 +60,37 @@ backup_existing_pi_skills() {
   fi
 }
 
-setup_herdr_config() {
-  local source target temporary
-  source="$repo_dir/common/.config/herdr/config.toml"
-  target="$HOME/.config/herdr/config.toml"
+setup_local_file() {
+  local source="$1" target="$2" name="$3" temporary
   mkdir -p "$(dirname "$target")"
 
-  # Herdr writes UI preferences here; keep the live file local, not Stow-linked.
   if [[ -L "$target" ]]; then
     temporary="${target}.migrate-$$"
     cp "$target" "$temporary"
     rm "$target"
     mv "$temporary" "$target"
-    echo "Migrated Herdr config to local settings"
+    echo "Migrated $name config to local settings"
   elif [[ ! -e "$target" ]]; then
     cp "$source" "$target"
-    echo "Created local Herdr config from shared defaults"
+    echo "Created local $name config from shared defaults"
+  fi
+}
+
+setup_nvim_lockfile() {
+  local source target config_dir temporary
+  source="$repo_dir/common/.config/nvim/lazy-lock.json"
+  config_dir="$HOME/.config/nvim"
+  target="$config_dir/lazy-lock.json"
+
+  if [[ -L "$config_dir" ]]; then
+    temporary="$(mktemp)"
+    cp "$target" "$temporary"
+    rm "$config_dir"
+    mkdir -p "$config_dir"
+    mv "$temporary" "$target"
+    echo "Migrated Neovim plugin lockfile to local settings"
+  else
+    setup_local_file "$source" "$target" "Neovim plugin lockfile"
   fi
 }
 
@@ -124,13 +139,15 @@ for profile in "${profiles[@]}"; do
   if [[ "$profile" == "common" ]]; then
     backup_existing_pi_skills
     backup_legacy_ghostty_configs
-    setup_herdr_config
+    setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
+    setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
+    setup_nvim_lockfile
   fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^\.config/herdr/config\.toml$' "$profile"
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^\.config/(herdr/config\.toml|btop/btop\.conf|nvim/lazy-lock\.json)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
   fi
