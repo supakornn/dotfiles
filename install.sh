@@ -44,7 +44,8 @@ backup_conflicts() {
   while IFS= read -r -d '' source; do
     relative="${source#"$repo_dir/$profile/"}"
     target="$HOME/$relative"
-    if [[ -e "$target" || -L "$target" ]]; then
+    # Existing Stow links are already managed; only back up regular files.
+    if [[ ! -L "$target" && -e "$target" ]]; then
       if [[ -z "$backup_dir" ]]; then
         backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
       fi
