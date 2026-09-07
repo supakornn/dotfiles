@@ -1,5 +1,5 @@
 font-family = jetbrains mono
-font-size = 14
+font-size = 13
 font-thicken = true
 font-thicken-strength = 200
 font-style-bold = regular
@@ -23,7 +23,7 @@ window-colorspace = "display-p3"
 copy-on-select = clipboard
  
 # macos-titlebar-style = hidden
-# title = " "
+title = "ghostty"
  
 window-padding-x = 5
 keybind = shift+enter=text:\x1b\r
