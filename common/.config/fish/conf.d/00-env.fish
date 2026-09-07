@@ -7,3 +7,4 @@ end
 
 fish_add_path $HOME/bin $HOME/.local/bin
 set -gx GPG_TTY (tty)
+set -gx GHQ_ROOT $HOME/Documents/src
