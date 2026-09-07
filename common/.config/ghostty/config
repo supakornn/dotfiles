@@ -26,4 +26,3 @@ copy-on-select = clipboard
 title = "ghostty"
  
 window-padding-x = 5
-keybind = shift+enter=text:\x1b\r
