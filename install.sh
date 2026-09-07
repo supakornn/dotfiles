@@ -37,6 +37,7 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
+bundle_failed=false
 pi_settings=("$repo_dir/pi/common/settings.json")
 
 for profile in "${profiles[@]}"; do
@@ -79,7 +80,10 @@ backup_conflicts() {
 }
 
 for profile in "${profiles[@]}"; do
-  brew bundle --file="$repo_dir/Brewfile.$profile"
+  if ! brew bundle --file="$repo_dir/Brewfile.$profile"; then
+    echo "Homebrew installation failed for $profile; applying its dotfiles anyway." >&2
+    bundle_failed=true
+  fi
   if [[ "$profile" == "common" ]]; then
     backup_existing_pi_skills
   fi
@@ -96,3 +100,6 @@ if [[ -n "$backup_dir" ]]; then
 fi
 
 echo "Done. Herdr was installed but not started; run 'herdr' yourself when needed."
+if "$bundle_failed"; then
+  exit 1
+fi
