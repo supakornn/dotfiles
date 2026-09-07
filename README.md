@@ -58,12 +58,12 @@ chmod 600 ~/.gitconfig.local
 
 ## Pi profiles
 
-Pi is installed on both Macs. The installer merges profile declarations into the local `~/.pi/agent/settings.json` rather than linking that file, so Pi may safely store machine-local state there.
+Pi is installed on both Macs. The installer merges profile declarations into the local `~/.pi/agent/settings.json` rather than linking or replacing that file, so Pi may safely store machine-local state there.
 
 - `pi/common/settings.json` supplies the shared theme, packages, and skills.
 - `pi/personal/settings.json` supplies personal model defaults and `pi-codex-usage`.
 - Shared skills are Stow-linked to `~/.pi/agent/skills/`.
-- Local-only skills, authentication, MCP servers, OAuth credentials, sessions, logs, package caches, and Herdr's managed extension are never tracked.
+- Local-only skills, authentication, MCP servers, OAuth credentials, sessions, logs, package caches, and Herdr's managed extension are never tracked. Existing local settings (including MCP servers) are preserved when the installer runs.
 
 Start Pi after installation to let it install any missing declared packages. Third-party packages and skills run with your user permissions; review updates before promoting them to the shared profile.
 
