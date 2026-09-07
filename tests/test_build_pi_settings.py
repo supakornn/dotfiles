@@ -18,6 +18,7 @@ class BuildPiSettingsTests(unittest.TestCase):
             output.write_text(json.dumps({
                 "mcpServers": {"work": {"command": "work-mcp"}},
                 "lastChangelogVersion": "0.85.1",
+                "defaultModel": "work-model",
                 "packages": ["npm:work-only"],
             }))
             shared = directory / "shared.json"
@@ -34,6 +35,7 @@ class BuildPiSettingsTests(unittest.TestCase):
             settings = json.loads(output.read_text())
             self.assertEqual(settings["mcpServers"]["work"]["command"], "work-mcp")
             self.assertEqual(settings["lastChangelogVersion"], "0.85.1")
+            self.assertEqual(settings["defaultModel"], "work-model")
             self.assertEqual(settings["packages"], ["npm:work-only", "npm:shared"])
             self.assertEqual(settings["theme"], "dark")
 

@@ -11,8 +11,5 @@
     "npm:pi-toggle-skills",
     "npm:@narumitw/pi-btw"
   ],
-  "skills": ["skills"],
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-terra"
-
+  "skills": ["skills"]
 }
