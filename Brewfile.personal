@@ -18,7 +18,7 @@ cask "microsoft-word"
 cask "proxyman"
 cask "rustdesk"
 mas "Tailscale", id: 1475387142
-cask "vmware-fusion"
+mas "RunCatNeo", id: 6757801838
 cask "wallspace"
 cask "wireshark-app"
 cask "zoom"
