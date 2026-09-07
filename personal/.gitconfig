@@ -27,3 +27,7 @@
 
 [pull]
   rebase = false
+
+# Keep your name and email in ~/.gitconfig.local, which is never tracked.
+[include]
+  path = ~/.gitconfig.local

@@ -43,6 +43,19 @@ Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; a
 
 `uv`, a generic personal Git configuration, and a global Git ignore file. Git identity, signing keys, tokens, and credential helpers are intentionally not managed.
 
+Set your GitHub identity locally after installing the personal profile. Use the verified noreply email shown in GitHub’s email settings:
+
+```sh
+cat > ~/.gitconfig.local <<'EOF'
+[user]
+  name = Your Name
+  email = YOUR_GITHUB_NOREPLY_EMAIL
+EOF
+chmod 600 ~/.gitconfig.local
+```
+
+`~/.gitconfig.local` is included by the tracked Git config but is never synced.
+
 ## Tmux plugins
 
 The tmux configuration retains TPM plugin declarations. Install TPM manually if you want those plugins:
