@@ -60,6 +60,24 @@ backup_existing_pi_skills() {
   fi
 }
 
+backup_legacy_ghostty_configs() {
+  local relative target destination
+  for relative in \
+    "Library/Application Support/com.mitchellh.ghostty/config" \
+    "Library/Application Support/com.mitchellh.ghostty/config.ghostty"; do
+    target="$HOME/$relative"
+    if [[ -f "$target" || -L "$target" ]]; then
+      if [[ -z "$backup_dir" ]]; then
+        backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+      fi
+      destination="$backup_dir/$relative"
+      mkdir -p "$(dirname "$destination")"
+      mv "$target" "$destination"
+      echo "Backed up legacy Ghostty config: $target"
+    fi
+  done
+}
+
 backup_conflicts() {
   local profile source relative target destination
   profile="$1"
@@ -86,6 +104,7 @@ for profile in "${profiles[@]}"; do
   fi
   if [[ "$profile" == "common" ]]; then
     backup_existing_pi_skills
+    backup_legacy_ghostty_configs
   fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
