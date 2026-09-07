@@ -11,7 +11,8 @@ if len(sys.argv) < 3:
     raise SystemExit("usage: build-pi-settings.py OUTPUT INPUT [INPUT ...]")
 
 output = Path(sys.argv[1]).expanduser()
-merged: dict[str, object] = json.loads(output.read_text()) if output.exists() else {}
+existing = output.read_text().strip() if output.exists() else ""
+merged: dict[str, object] = json.loads(existing) if existing else {}
 for source_name in sys.argv[2:]:
     source = Path(source_name)
     data = json.loads(source.read_text())
