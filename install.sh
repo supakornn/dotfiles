@@ -45,6 +45,20 @@ for profile in "${profiles[@]}"; do
   fi
 done
 
+backup_existing_pi_skills() {
+  local target destination
+  target="$HOME/.pi/agent/skills"
+  if [[ -d "$target" && ! -L "$target" ]]; then
+    if [[ -z "$backup_dir" ]]; then
+      backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+    fi
+    destination="$backup_dir/.pi/agent/skills"
+    mkdir -p "$(dirname "$destination")"
+    mv "$target" "$destination"
+    echo "Backed up existing Pi skills directory"
+  fi
+}
+
 backup_conflicts() {
   local profile source relative target destination
   profile="$1"
@@ -66,6 +80,9 @@ backup_conflicts() {
 
 for profile in "${profiles[@]}"; do
   brew bundle --file="$repo_dir/Brewfile.$profile"
+  if [[ "$profile" == "common" ]]; then
+    backup_existing_pi_skills
+  fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
   fi
