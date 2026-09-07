@@ -60,6 +60,25 @@ backup_existing_pi_skills() {
   fi
 }
 
+setup_herdr_config() {
+  local source target temporary
+  source="$repo_dir/common/.config/herdr/config.toml"
+  target="$HOME/.config/herdr/config.toml"
+  mkdir -p "$(dirname "$target")"
+
+  # Herdr writes UI preferences here; keep the live file local, not Stow-linked.
+  if [[ -L "$target" ]]; then
+    temporary="${target}.migrate-$$"
+    cp "$target" "$temporary"
+    rm "$target"
+    mv "$temporary" "$target"
+    echo "Migrated Herdr config to local settings"
+  elif [[ ! -e "$target" ]]; then
+    cp "$source" "$target"
+    echo "Created local Herdr config from shared defaults"
+  fi
+}
+
 backup_legacy_ghostty_configs() {
   local relative target destination
   for relative in \
@@ -105,11 +124,16 @@ for profile in "${profiles[@]}"; do
   if [[ "$profile" == "common" ]]; then
     backup_existing_pi_skills
     backup_legacy_ghostty_configs
+    setup_herdr_config
   fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
   fi
-  stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
+  if [[ "$profile" == "common" ]]; then
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^\.config/herdr/config\.toml$' "$profile"
+  else
+    stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
+  fi
 done
 
 python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json" "${pi_settings[@]}"
