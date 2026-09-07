@@ -76,7 +76,7 @@ backup_conflicts() {
       mv "$target" "$destination"
       echo "Backed up $target"
     fi
-  done < <(find "$repo_dir/$profile" -type f -print0)
+  done < <(find "$repo_dir/$profile" \( -type f -o -type l \) -print0)
 }
 
 for profile in "${profiles[@]}"; do
