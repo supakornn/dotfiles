@@ -12,6 +12,16 @@ auto_switch = false
 light_name = "catppuccin-latte"
 dark_name = "catppuccin"
 
+# Catppuccin Macchiato palette over Herdr's built-in Catppuccin theme.
+[theme.custom]
+sidebar_bg = "#1e2030"
+active_row_bg = "#363a4f"
+selection_bg = "#494d64"
+panel_bg = "reset"
+accent = "#c6a0f6"
+red = "#ed8796"
+green = "#a6da95"
+
 [ui]
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "spaces"
