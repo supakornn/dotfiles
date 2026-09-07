@@ -1,96 +1,54 @@
 # dotfiles
 
-Personal dotfiles managed with [chezmoi](https://chezmoi.io). macOS only.
+Public macOS dotfiles managed with [Homebrew](https://brew.sh/) and [GNU Stow](https://www.gnu.org/software/stow/).
 
-## Quick Install
+- `common/` contains safe configuration and tools shared by both Macs.
+- `personal/` contains personal-Mac-only tools and Git configuration.
+- No secrets, keys, tokens, work Git configuration, or company information belong here.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/supakornn/dotfiles/main/install.sh | bash
+The previous chezmoi setup is preserved on the [`legacy-chezmoi`](../../tree/legacy-chezmoi) branch.
+
+## Install
+
+Clone the repository, then choose a profile:
+
+```sh
+git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
+cd ~/Documents/dotfiles
+
+# Office Mac: shared, work-safe profile
+./install.sh common
+
+# Personal Mac: shared profile plus personal tools/config
+./install.sh common personal
 ```
 
+The script installs Homebrew when necessary, installs the selected Brewfiles, and Stow-links the selected files into `$HOME`. It fails rather than overwriting conflicting files; move or back up a conflicting file, then rerun it.
 
-## What's Included
+## What is managed
 
-- [Fish](https://fishshell.com) — shell
-- [Starship](https://starship.rs) — prompt
-- [Ghostty](https://ghostty.org) — terminal
-- [Neovim](https://neovim.io) — editor (LazyVim)
-- [Zed](https://zed.dev) — editor
-- [Tmux](https://github.com/tmux/tmux) — terminal multiplexer
-- [Lazygit](https://github.com/jesseduffield/lazygit) — git TUI
-- [mise](https://mise.jdx.dev) — runtime version manager
-- [uv](https://docs.astral.sh/uv) — Python toolchain
-- [btop](https://github.com/aristocratos/btop) — system monitor
-- [Spicetify](https://spicetify.app) — Spotify customization
-- [Karabiner-Elements](https://karabiner-elements.pqrs.org) — keyboard remapping
+### Common
 
-## Runtime Management
+Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
 
-All language runtimes managed by [mise](https://mise.jdx.dev) — no fnm, pyenv, or chruby needed:
+Herdr is installed but deliberately not registered as a login/background service. Start it manually with `herdr`.
 
-```bash
-mise install        # install everything in ~/.config/mise/config.toml
-mise install node   # install single tool
-mise use node@22    # switch version globally
+Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; add only your own future customizations under `common/.config/nvim/`.
+
+### Personal
+
+`uv`, a generic personal Git configuration, and a global Git ignore file. Git identity, signing keys, tokens, and credential helpers are intentionally not managed.
+
+## Tmux plugins
+
+The tmux configuration retains TPM plugin declarations. Install TPM manually if you want those plugins:
+
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-Python is managed entirely by [uv](https://docs.astral.sh/uv):
+Then open tmux and press `prefix` + `I`.
 
-```bash
-uv python install 3.13
-uv run script.py
-```
+## Daily workflow
 
-## Neovim
-
-Built on [LazyVim](https://www.lazyvim.org) with [Catppuccin](https://github.com/catppuccin/nvim).
-Neovim auto-switches flavor based on macOS system appearance (Macchiato = dark, Latte = light).
-All other apps follow `catppuccin_flavor` in `~/.config/chezmoi/chezmoi.toml` — changed via the `theme` command.
-
-Neovim config inspired by [craftzdog/dotfiles-public](https://github.com/craftzdog/dotfiles-public).
-
-## Theme Switching
-
-Switch Catppuccin flavor across all apps (Ghostty, Zed, Fish, Tmux, bat, btop, lazygit, Starship):
-
-```bash
-theme              # toggle dark/light
-theme dark         # Catppuccin Macchiato
-theme macchiato    # Catppuccin Macchiato
-theme mocha        # Catppuccin Mocha
-theme frappe       # Catppuccin Frappe
-theme light        # Catppuccin Latte
-```
-
-Requires `catppuccin_flavor` set in `~/.config/chezmoi/chezmoi.toml`:
-
-```toml
-[data]
-    wakatimeApiKey = "your-key-here"
-    catppuccin_flavor = "macchiato"
-```
-
-## Daily Workflow
-
-```bash
-# Edit a file normally, then sync to chezmoi:
-chezmoi add ~/.config/fish/config.fish
-
-# Edit directly in chezmoi source:
-chezmoi edit ~/.config/ghostty/config
-chezmoi apply
-
-# Check what's changed:
-chezmoi diff
-chezmoi status
-```
-
-## Secrets
-
-`~/.config/chezmoi/chezmoi.toml` is local only, not tracked:
-
-```toml
-[data]
-    wakatimeApiKey = "your-key-here"
-    catppuccin_flavor = "macchiato"
-```
+Edit the file inside `common/` or `personal/`; its matching file in your home directory is a symlink. Re-run the selected install command after adding new files.

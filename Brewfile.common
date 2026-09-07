@@ -1,0 +1,17 @@
+# Shared tools for both Macs.
+brew "stow"
+brew "fish"
+brew "starship"
+brew "tmux"
+brew "git"
+brew "lazygit"
+brew "bat"
+brew "btop"
+brew "herdr"
+brew "neovim"
+# Required by the Fish configuration.
+brew "eza"
+brew "fzf"
+brew "fd"
+brew "zoxide"
+cask "ghostty"

@@ -1,0 +1,4 @@
+gui:
+  mouseEvents: false
+git:
+  overrideGpg: true
