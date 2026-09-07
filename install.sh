@@ -37,6 +37,13 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
+pi_settings=("$repo_dir/pi/common/settings.json")
+
+for profile in "${profiles[@]}"; do
+  if [[ "$profile" == "personal" ]]; then
+    pi_settings+=("$repo_dir/pi/personal/settings.json")
+  fi
+done
 
 backup_conflicts() {
   local profile source relative target destination
@@ -64,6 +71,8 @@ for profile in "${profiles[@]}"; do
   fi
   stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
 done
+
+python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json" "${pi_settings[@]}"
 
 if [[ -n "$backup_dir" ]]; then
   echo "Existing files were backed up to $backup_dir"

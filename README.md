@@ -33,7 +33,7 @@ The script installs Homebrew when necessary, installs the selected Brewfiles, an
 
 ### Common
 
-Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
+Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, Pi coding agent, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
 
 Herdr is installed but deliberately not registered as a login/background service. Start it manually with `herdr`.
 
@@ -41,7 +41,7 @@ Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; a
 
 ### Personal
 
-`uv`, Pi coding agent, a generic personal Git configuration, and a global Git ignore file. Pi settings and keybindings are synced under `personal/.pi/agent/`; Pi authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
+`uv`, a generic personal Git configuration, a global Git ignore file, and personal Pi settings/keybindings. Pi authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
 
 Set your GitHub identity locally after installing the personal profile. Use the verified noreply email shown in GitHub’s email settings:
 
@@ -55,6 +55,17 @@ chmod 600 ~/.gitconfig.local
 ```
 
 `~/.gitconfig.local` is included by the tracked Git config but is never synced.
+
+## Pi profiles
+
+Pi is installed on both Macs. The installer merges profile declarations into the local `~/.pi/agent/settings.json` rather than linking that file, so Pi may safely store machine-local state there.
+
+- `pi/common/settings.json` supplies the shared theme, packages, and skills.
+- `pi/personal/settings.json` supplies personal model defaults and `pi-codex-usage`.
+- Shared skills are Stow-linked to `~/.pi/agent/skills/`.
+- Local-only skills, authentication, MCP servers, OAuth credentials, sessions, logs, package caches, and Herdr's managed extension are never tracked.
+
+Start Pi after installation to let it install any missing declared packages. Third-party packages and skills run with your user permissions; review updates before promoting them to the shared profile.
 
 ## Tmux plugins
 
