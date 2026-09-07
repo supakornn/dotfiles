@@ -32,7 +32,7 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 for profile in "${profiles[@]}"; do
-  brew bundle --file="$repo_dir/Brewfile.$profile" --no-lock
+  brew bundle --file="$repo_dir/Brewfile.$profile"
   stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
 done
 
