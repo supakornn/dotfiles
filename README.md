@@ -21,9 +21,13 @@ cd ~/Documents/dotfiles
 
 # Personal Mac: shared profile plus personal tools/config
 ./install.sh common personal
+
+# Migrating from the old chezmoi setup on this Mac: back up conflicting files,
+# then create Stow links.
+./install.sh --backup-existing common personal
 ```
 
-The script installs Homebrew when necessary, installs the selected Brewfiles, and Stow-links the selected files into `$HOME`. It fails rather than overwriting conflicting files; move or back up a conflicting file, then rerun it.
+The script installs Homebrew when necessary, installs the selected Brewfiles, and Stow-links the selected files into `$HOME`. It fails rather than overwriting conflicting files. During a migration, pass `--backup-existing` to move conflicting files into a timestamped directory below `~/.dotfiles-backup/` before linking.
 
 ## What is managed
 
