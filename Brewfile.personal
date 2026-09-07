@@ -1,2 +1,4 @@
 # Personal-Mac-only tools.
 brew "uv"
+
+brew "pi-coding-agent"

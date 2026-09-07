@@ -41,7 +41,7 @@ Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; a
 
 ### Personal
 
-`uv`, a generic personal Git configuration, and a global Git ignore file. Git identity, signing keys, tokens, and credential helpers are intentionally not managed.
+`uv`, Pi coding agent, a generic personal Git configuration, and a global Git ignore file. Pi settings and keybindings are synced under `personal/.pi/agent/`; Pi authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
 
 Set your GitHub identity locally after installing the personal profile. Use the verified noreply email shown in GitHub’s email settings:
 

@@ -1,0 +1,15 @@
+{
+  "theme": "catppuccin-macchiato",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-terra",
+  "packages": [
+    "npm:opencode-ponytail",
+    "npm:pi-subagents",
+    "git:github.com/otahontas/pi-coding-agent-catppuccin",
+    "npm:pi-mcp-adapter",
+    "npm:@calesennett/pi-codex-usage",
+    "npm:pi-web-access",
+    "npm:@ff-labs/pi-fff",
+    "npm:@plannotator/pi-extension"
+  ]
+}
