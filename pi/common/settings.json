@@ -6,9 +6,8 @@
     "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     "npm:@ff-labs/pi-fff",
-    "npm:@narumitw/pi-plan-mode",
     "npm:pi-toggle-skills",
-    "npm:@narumitw/pi-btw"
+    "npm:@plannotator/pi-extension"
   ],
   "skills": ["skills"]
 }

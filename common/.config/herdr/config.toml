@@ -6,6 +6,12 @@ detach = "prefix+d"
 previous_workspace = "prefix+("
 next_workspace = "prefix+)"
 
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "annotate.open"
+description = "review documents in this folder"
+
 [theme]
 name = "catppuccin"
 auto_switch = false

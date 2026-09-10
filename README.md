@@ -35,7 +35,7 @@ The script installs Homebrew when necessary, installs the selected Brewfiles, an
 
 Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, Pi coding agent, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
 
-Herdr is installed but deliberately not registered as a login/background service. Start it manually with `herdr`. Herdr, btop, and Neovim plugin-lock defaults are copied into local runtime files, so UI changes and plugin updates never modify this repository.
+Herdr is installed but deliberately not registered as a login/background service. Start it manually with `herdr`. Herdr, Plannotator TUI, btop, and Neovim plugin-lock defaults are copied into local runtime files, so UI changes and plugin updates never modify this repository.
 
 Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; add only your own future customizations under `common/.config/nvim/`.
 
