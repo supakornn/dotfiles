@@ -148,7 +148,7 @@ for profile in "${profiles[@]}"; do
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^\.config/(herdr/config\.toml|btop/btop\.conf|nvim/lazy-lock\.json)$' "$profile"
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
   fi
