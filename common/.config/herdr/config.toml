@@ -28,5 +28,11 @@ blue = "#8aadf4"
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "spaces"
 
+[terminal]
+# Executable used for new interactive panes. Empty uses $SHELL, then /bin/sh.
+# Default: "".
+default_shell = "fish"
+
+
 [ui.sound]
 enabled = false

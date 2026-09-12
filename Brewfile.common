@@ -13,6 +13,7 @@ brew "bat"
 brew "btop"
 brew "herdr"
 brew "neovim"
+brew "tree-sitter-cli"
 brew "opencode"
 brew "wget"
 # Required by the Fish configuration.
