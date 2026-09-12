@@ -58,9 +58,13 @@ chmod 600 ~/.gitconfig.local
 
 ## OpenCode
 
-Shared skills are Stow-linked to `~/.agents/skills/`. The personal profile installs personal MCPs, model defaults, and OpenCode Quota; company MCPs and all credentials stay local.
+- Shared skills are Stow-linked to `~/.agents/skills/`.
+- `opencode/common/settings.json` supplies shared MCP servers.
+- `opencode/personal/settings.json` supplies the personal model default.
+- The installer replaces local `~/.config/opencode/opencode.jsonc` with the selected profiles.
+- Authentication, OAuth credentials, sessions, logs, and package caches are never tracked.
 
-Run `opencode`, then use `/connect` to authenticate.
+Run `opencode`, then use `/connect` to authenticate. Third-party MCP servers and skills run with your user permissions; review updates before promoting them to the shared profile.
 
 ## Tmux plugins
 
