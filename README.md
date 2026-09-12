@@ -33,7 +33,7 @@ The script installs Homebrew when necessary, installs the selected Brewfiles, an
 
 ### Common
 
-Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, Pi coding agent, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
+Fish, Starship, Ghostty, tmux, Git, Lazygit, bat, btop, Herdr, Neovim, OpenCode, and Catppuccin Macchiato configuration. Supporting Fish tools (`eza`, `fzf`, `fd`, and `zoxide`) are installed too.
 
 Herdr is installed but deliberately not registered as a login/background service. Start it manually with `herdr`. Herdr, Plannotator TUI, btop, and Neovim plugin-lock defaults are copied into local runtime files, so UI changes and plugin updates never modify this repository.
 
@@ -41,7 +41,7 @@ Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; a
 
 ### Personal
 
-`uv`, a generic personal Git configuration, a global Git ignore file, and personal Pi settings/keybindings. Pi authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
+`uv`, a generic personal Git configuration, and a global Git ignore file. OpenCode authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
 
 Set your GitHub identity locally after installing the personal profile. Use the verified noreply email shown in GitHub’s email settings:
 
@@ -56,16 +56,13 @@ chmod 600 ~/.gitconfig.local
 
 `~/.gitconfig.local` is included by the tracked Git config but is never synced.
 
-## Pi profiles
+## OpenCode
 
-Pi is installed on both Macs. The installer merges profile declarations into the local `~/.pi/agent/settings.json` rather than linking or replacing that file, so Pi may safely store machine-local state there.
+- Shared skills are Stow-linked to `~/.agents/skills/`.
+- Shared MCP servers are configured in `common/.config/opencode/opencode.jsonc`.
+- Authentication, OAuth credentials, sessions, logs, and package caches are never tracked.
 
-- `pi/common/settings.json` supplies the shared theme, packages, and skills.
-- `pi/personal/settings.json` supplies personal model defaults and `pi-codex-usage`.
-- Shared skills are Stow-linked to `~/.pi/agent/skills/`.
-- Local-only skills, authentication, MCP servers, OAuth credentials, sessions, logs, package caches, and Herdr's managed extension are never tracked. Existing local settings (including MCP servers) are preserved when the installer runs.
-
-Start Pi after installation to let it install any missing declared packages. Third-party packages and skills run with your user permissions; review updates before promoting them to the shared profile.
+Run `opencode`, then use `/connect` to authenticate. Third-party MCP servers and skills run with your user permissions; review updates before promoting them to the shared profile.
 
 ## Tmux plugins
 
