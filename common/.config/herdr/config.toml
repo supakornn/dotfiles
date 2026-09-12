@@ -18,6 +18,15 @@ auto_switch = true
 light_name = "catppuccin-latte"
 dark_name = "catppuccin"
 
+# Keep Latte unmodified in light mode; use the preferred Macchiato overrides in dark mode.
+[theme.custom.dark]
+accent = "#c6a0f6"
+panel_bg = "#24273a"
+green = "#a6da95"
+yellow = "#eed49f"
+red = "#ed8796"
+blue = "#8aadf4"
+
 [ui]
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "spaces"
