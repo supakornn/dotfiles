@@ -38,12 +38,12 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
 bundle_failed=false
-pi_settings=("$repo_dir/pi/common/settings.json")
+pi_settings=("$repo_dir/common/pi/settings.json")
 install_personal_opencode=false
 
 for profile in "${profiles[@]}"; do
   if [[ "$profile" == "personal" ]]; then
-    pi_settings+=("$repo_dir/pi/personal/settings.json")
+    pi_settings+=("$repo_dir/personal/pi/settings.json")
     install_personal_opencode=true
   fi
 done
@@ -150,9 +150,9 @@ for profile in "${profiles[@]}"; do
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^pi(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
   else
-    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^opencode(/|$)' "$profile"
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^(opencode|pi)(/|$)' "$profile"
   fi
 done
 
