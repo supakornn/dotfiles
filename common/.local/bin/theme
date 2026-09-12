@@ -37,9 +37,23 @@ if [[ -f "$HOME/.config/btop/btop.conf" && ! -L "$HOME/.config/btop/btop.conf" ]
     "$HOME/.config/btop/btop.conf"
 fi
 
+if [[ -f "$HOME/.pi/agent/settings.json" ]]; then
+  THEME_FLAVOR="$flavor" python3 - "$HOME/.pi/agent/settings.json" <<'PY'
+import json
+import os
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+data = json.loads(path.read_text())
+data["theme"] = f"catppuccin-{os.environ['THEME_FLAVOR']}"
+path.write_text(json.dumps(data, indent=2) + "\n")
+PY
+fi
+
 if [[ -f "$HOME/.tmux.conf" ]] && command -v tmux >/dev/null && tmux has-session 2>/dev/null; then
   tmux source-file "$HOME/.tmux.conf"
 fi
 
 if [[ "$flavor" == latte ]]; then name=Latte; else name=Macchiato; fi
-echo "Catppuccin $name selected. Restart Neovim, btop, and LazyGit if open."
+echo "Catppuccin $name selected. Restart Neovim, Pi, btop, and LazyGit if open."

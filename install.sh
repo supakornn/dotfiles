@@ -38,6 +38,28 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
 bundle_failed=false
+pi_settings=("$repo_dir/pi/common/settings.json")
+
+for profile in "${profiles[@]}"; do
+  if [[ "$profile" == "personal" ]]; then
+    pi_settings+=("$repo_dir/pi/personal/settings.json")
+  fi
+done
+
+backup_existing_pi_skills() {
+  local target destination
+  target="$HOME/.pi/agent/skills"
+  if [[ -d "$target" && ! -L "$target" ]]; then
+    if [[ -z "$backup_dir" ]]; then
+      backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+    fi
+    destination="$backup_dir/.pi/agent/skills"
+    mkdir -p "$(dirname "$destination")"
+    mv "$target" "$destination"
+    echo "Backed up existing Pi skills directory"
+  fi
+}
+
 setup_local_file() {
   local source="$1" target="$2" name="$3" temporary
   mkdir -p "$(dirname "$target")"
@@ -115,6 +137,7 @@ for profile in "${profiles[@]}"; do
     bundle_failed=true
   fi
   if [[ "$profile" == "common" ]]; then
+    backup_existing_pi_skills
     backup_legacy_ghostty_configs
     setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
@@ -131,6 +154,7 @@ for profile in "${profiles[@]}"; do
   fi
 done
 
+python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json" "${pi_settings[@]}"
 
 if [[ -n "$backup_dir" ]]; then
   echo "Existing files were backed up to $backup_dir"
