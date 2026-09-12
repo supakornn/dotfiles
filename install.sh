@@ -152,7 +152,7 @@ for profile in "${profiles[@]}"; do
   if [[ "$profile" == "common" ]]; then
     stow --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
   else
-    stow --dir="$repo_dir" --target="$HOME" --restow "$profile"
+    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^opencode(/|$)' "$profile"
   fi
 done
 
@@ -160,10 +160,10 @@ python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json"
 
 if "$install_personal_opencode"; then
   python3 "$repo_dir/scripts/build-opencode-settings.py" \
-    "$HOME/.config/opencode/opencode.jsonc" "$repo_dir/opencode/personal/settings.json"
+    "$HOME/.config/opencode/opencode.jsonc" "$repo_dir/personal/opencode/settings.json"
   mkdir -p "$HOME/.config/opencode/opencode-quota"
-  cp "$repo_dir/opencode/personal/tui.jsonc" "$HOME/.config/opencode/tui.jsonc"
-  cp "$repo_dir/opencode/personal/opencode-quota/quota-toast.jsonc" \
+  cp "$repo_dir/personal/opencode/tui.jsonc" "$HOME/.config/opencode/tui.jsonc"
+  cp "$repo_dir/personal/opencode/opencode-quota/quota-toast.jsonc" \
     "$HOME/.config/opencode/opencode-quota/quota-toast.jsonc"
 fi
 
