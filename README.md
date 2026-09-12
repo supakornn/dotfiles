@@ -77,6 +77,10 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 Then open tmux and press `prefix` + `I`.
 
+## Themes
+
+Use `theme light`, `theme dark`, or `theme auto` after installing. Light uses Catppuccin Latte; dark uses Catppuccin Macchiato. `auto` selects the current macOS appearance. Ghostty follows future macOS appearance changes itself; rerun `theme auto` after a later appearance change to update the other terminal tools.
+
 ## Daily workflow
 
 Edit the file inside `common/` or `personal/`; its matching file in your home directory is a symlink. Re-run the selected install command after adding new files.

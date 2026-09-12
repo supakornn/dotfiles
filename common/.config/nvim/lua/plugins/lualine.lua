@@ -3,6 +3,7 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		config = function()
+			local theme = require("supakornn.theme")
 			local harpoon = require("harpoon.mark")
 
 			local function truncate_branch_name(branch)
@@ -92,7 +93,7 @@ return {
 
 			require("lualine").setup({
 				options = {
-					theme = "catppuccin-macchiato",
+					theme = "catppuccin-" .. theme.flavor,
 					globalstatus = true,
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "█", right = "█" },

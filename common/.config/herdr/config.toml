@@ -14,15 +14,9 @@ description = "review documents in this folder"
 
 [theme]
 name = "catppuccin"
-auto_switch = false
-
-[theme.custom]
-accent = "#c6a0f6"
-panel_bg = "#24273a"
-green = "#a6da95"
-yellow = "#eed49f"
-red = "#ed8796"
-blue = "#8aadf4"
+auto_switch = true
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"
 
 [ui]
 show_agent_labels_on_pane_borders = false

@@ -14,7 +14,7 @@ return {
 		end,
 		config = function()
 			local wilder = require("wilder")
-			local macchiato = require("catppuccin.palettes").get_palette("macchiato")
+			local macchiato = require("catppuccin.palettes").get_palette(require("supakornn.theme").flavor)
 
 			-- Create a highlight group for the popup menu
 			local text_highlight =

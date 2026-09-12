@@ -8,7 +8,7 @@ return {
 			"catppuccin/nvim",
 		},
 		config = function()
-			local theme = require("catppuccin.palettes").get_palette("macchiato")
+			local theme = require("catppuccin.palettes").get_palette(require("supakornn.theme").flavor)
 
 			vim.api.nvim_set_hl(0, "SpectreSearch", { bg = theme.red, fg = theme.base })
 			vim.api.nvim_set_hl(0, "SpectreReplace", { bg = theme.green, fg = theme.base })

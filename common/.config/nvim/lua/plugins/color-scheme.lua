@@ -4,7 +4,9 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
+			local theme = require("supakornn.theme")
 			require("catppuccin").setup({
+				flavour = theme.flavor,
 				-- float = {
 				-- 	-- transparent = true,
 				-- 	-- solid = false,
@@ -30,8 +32,8 @@ return {
 					which_key = true,
 				},
 			})
-			local palette = require("catppuccin.palettes").get_palette("macchiato")
-			vim.cmd.colorscheme("catppuccin-macchiato")
+			local palette = require("catppuccin.palettes").get_palette(theme.flavor)
+			vim.cmd.colorscheme("catppuccin-" .. theme.flavor)
 
 			-- Telescope highlights to match editor background
 			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = palette.base })
