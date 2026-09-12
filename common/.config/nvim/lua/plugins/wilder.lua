@@ -10,7 +10,7 @@ return {
 			"catppuccin/nvim",
 		},
 		build = function()
-			vim.fn["UpdateRemotePlugins"]()
+			vim.cmd.UpdateRemotePlugins()
 		end,
 		config = function()
 			local wilder = require("wilder")
