@@ -9,5 +9,5 @@
     "npm:pi-toggle-skills",
     "npm:@plannotator/pi-extension"
   ],
-  "skills": ["skills"]
+  "skills": ["~/.agents/skills"]
 }

@@ -19,9 +19,13 @@ class BuildOpenCodeSettingsTests(unittest.TestCase):
             common = directory / "common.json"
             common.write_text(json.dumps({
                 "mcp": {"context7": {"type": "remote", "url": "https://mcp.context7.com/mcp"}},
+                "plugin": ["@dietrichgebert/ponytail"],
             }))
             personal = directory / "personal.json"
-            personal.write_text(json.dumps({"model": "openai/gpt-5.6-terra"}))
+            personal.write_text(json.dumps({
+                "model": "openai/gpt-5.6-terra",
+                "plugin": ["@slkiser/opencode-quota@latest"],
+            }))
 
             subprocess.run(
                 [sys.executable, BUILDER, output, common, personal], check=True,
@@ -34,6 +38,10 @@ class BuildOpenCodeSettingsTests(unittest.TestCase):
                 {"context7": {"type": "remote", "url": "https://mcp.context7.com/mcp"}},
             )
             self.assertEqual(settings["model"], "openai/gpt-5.6-terra")
+            self.assertEqual(
+                settings["plugin"],
+                ["@dietrichgebert/ponytail", "@slkiser/opencode-quota@latest"],
+            )
 
 
 if __name__ == "__main__":

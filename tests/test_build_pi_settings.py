@@ -20,12 +20,13 @@ class BuildPiSettingsTests(unittest.TestCase):
                 "lastChangelogVersion": "0.85.1",
                 "defaultModel": "work-model",
                 "packages": ["npm:work-only"],
+                "skills": ["skills-old"],
             }))
             shared = directory / "shared.json"
             shared.write_text(json.dumps({
                 "theme": "dark",
                 "packages": ["npm:shared"],
-                "skills": ["skills"],
+                "skills": ["~/.agents/skills"],
             }))
 
             subprocess.run(
@@ -37,6 +38,7 @@ class BuildPiSettingsTests(unittest.TestCase):
             self.assertEqual(settings["lastChangelogVersion"], "0.85.1")
             self.assertEqual(settings["defaultModel"], "work-model")
             self.assertEqual(settings["packages"], ["npm:work-only", "npm:shared"])
+            self.assertEqual(settings["skills"], ["skills-old", "~/.agents/skills"])
             self.assertEqual(settings["theme"], "dark")
 
 

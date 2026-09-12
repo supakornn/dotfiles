@@ -26,7 +26,7 @@ cd ~/Documents/dotfiles
 
 Common installs shell, terminal, Git, Neovim, tmux, Pi, and Catppuccin configuration. Personal adds `uv`, personal Git defaults, Pi settings, and OpenCode settings.
 
-Pi skills live in `~/.pi/agent/skills/`. Personal Pi settings add the default model and Codex usage plugin. Personal OpenCode settings configure its model, MCPs, and quota plugin in `~/.config/opencode/`; no OpenCode skills are managed, so it does not use `~/.agents/`.
+Shared agent skills live in `~/.agents/skills/`: OpenCode auto-loads them and Pi is configured to load them. Personal Pi settings add the default model and Codex usage plugin. Personal OpenCode settings configure its model, MCPs, and quota plugin in `~/.config/opencode/`.
 
 Set Git identity in `~/.gitconfig.local`.
 

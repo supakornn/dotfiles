@@ -39,26 +39,34 @@ repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
 bundle_failed=false
 pi_settings=("$repo_dir/common/pi/settings.json")
+opencode_settings=()
+install_opencode=false
 install_personal_opencode=false
 
 for profile in "${profiles[@]}"; do
   if [[ "$profile" == "personal" ]]; then
     pi_settings+=("$repo_dir/personal/pi/settings.json")
+    opencode_settings+=("$repo_dir/personal/opencode/settings.json")
+    install_opencode=true
     install_personal_opencode=true
+  else
+    opencode_settings+=("$repo_dir/common/opencode/settings.json")
+    install_opencode=true
   fi
 done
 
-backup_existing_pi_skills() {
-  local target destination
-  target="$HOME/.pi/agent/skills"
+backup_existing_skill_directory() {
+  local relative target destination
+  relative="$1"
+  target="$HOME/$relative"
   if [[ -d "$target" && ! -L "$target" ]]; then
     if [[ -z "$backup_dir" ]]; then
       backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
     fi
-    destination="$backup_dir/.pi/agent/skills"
+    destination="$backup_dir/$relative"
     mkdir -p "$(dirname "$destination")"
     mv "$target" "$destination"
-    echo "Backed up existing Pi skills directory"
+    echo "Backed up existing skills directory: $target"
   fi
 }
 
@@ -139,7 +147,7 @@ for profile in "${profiles[@]}"; do
     bundle_failed=true
   fi
   if [[ "$profile" == "common" ]]; then
-    backup_existing_pi_skills
+    backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs
     setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
@@ -150,7 +158,7 @@ for profile in "${profiles[@]}"; do
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^pi(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
+    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^(opencode|pi)(/|$)' "$profile"
   fi
@@ -158,9 +166,12 @@ done
 
 python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json" "${pi_settings[@]}"
 
-if "$install_personal_opencode"; then
+if "$install_opencode"; then
   python3 "$repo_dir/scripts/build-opencode-settings.py" \
-    "$HOME/.config/opencode/opencode.jsonc" "$repo_dir/personal/opencode/settings.json"
+    "$HOME/.config/opencode/opencode.jsonc" "${opencode_settings[@]}"
+fi
+
+if "$install_personal_opencode"; then
   mkdir -p "$HOME/.config/opencode/opencode-quota"
   cp "$repo_dir/personal/opencode/tui.jsonc" "$HOME/.config/opencode/tui.jsonc"
   cp "$repo_dir/personal/opencode/opencode-quota/quota-toast.jsonc" \

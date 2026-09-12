@@ -15,6 +15,10 @@ def merge(base: dict[str, object], update: dict[str, object]) -> None:
     for key, value in update.items():
         if isinstance(value, dict) and isinstance(base.get(key), dict):
             merge(base[key], value)  # type: ignore[arg-type]
+        elif key == "plugin" and isinstance(value, list) and isinstance(base.get(key), list):
+            for plugin in value:
+                if plugin not in base[key]:
+                    base[key].append(plugin)
         else:
             base[key] = value
 
