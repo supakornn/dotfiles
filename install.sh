@@ -38,6 +38,14 @@ if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backup_dir=""
 bundle_failed=false
+opencode_settings=("$repo_dir/opencode/common/settings.json")
+
+for profile in "${profiles[@]}"; do
+  if [[ "$profile" == "personal" ]]; then
+    opencode_settings+=("$repo_dir/opencode/personal/settings.json")
+  fi
+done
+
 setup_local_file() {
   local source="$1" target="$2" name="$3" temporary
   mkdir -p "$(dirname "$target")"
@@ -131,6 +139,8 @@ for profile in "${profiles[@]}"; do
   fi
 done
 
+python3 "$repo_dir/scripts/build-opencode-settings.py" \
+  "$HOME/.config/opencode/opencode.jsonc" "${opencode_settings[@]}"
 
 if [[ -n "$backup_dir" ]]; then
   echo "Existing files were backed up to $backup_dir"
