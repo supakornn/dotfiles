@@ -41,7 +41,7 @@ Neovim is installed, but NvChad is not tracked yet. Install NvChad separately; a
 
 ### Personal
 
-`uv`, a generic personal Git configuration, a global Git ignore file, and the personal OpenCode model default. OpenCode authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
+`uv`, a generic personal Git configuration, and a global Git ignore file. OpenCode authentication, sessions, logs, package caches, and runtime state are intentionally excluded. Git identity, signing keys, tokens, and credential helpers are also intentionally not managed.
 
 Set your GitHub identity locally after installing the personal profile. Use the verified noreply email shown in GitHub’s email settings:
 
@@ -59,9 +59,7 @@ chmod 600 ~/.gitconfig.local
 ## OpenCode
 
 - Shared skills are Stow-linked to `~/.agents/skills/`.
-- `opencode/common/settings.json` supplies shared MCP servers.
-- `opencode/personal/settings.json` supplies the personal model default.
-- The installer replaces local `~/.config/opencode/opencode.jsonc` with the selected profiles.
+- Shared MCP servers are configured in `common/.config/opencode/opencode.jsonc`.
 - Authentication, OAuth credentials, sessions, logs, and package caches are never tracked.
 
 Run `opencode`, then use `/connect` to authenticate. Third-party MCP servers and skills run with your user permissions; review updates before promoting them to the shared profile.
