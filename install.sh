@@ -86,24 +86,6 @@ setup_local_file() {
   fi
 }
 
-setup_nvim_lockfile() {
-  local source target config_dir temporary
-  source="$repo_dir/common/.config/nvim/lazy-lock.json"
-  config_dir="$HOME/.config/nvim"
-  target="$config_dir/lazy-lock.json"
-
-  if [[ -L "$config_dir" ]]; then
-    temporary="$(mktemp)"
-    cp "$target" "$temporary"
-    rm "$config_dir"
-    mkdir -p "$config_dir"
-    mv "$temporary" "$target"
-    echo "Migrated Neovim plugin lockfile to local settings"
-  else
-    setup_local_file "$source" "$target" "Neovim plugin lockfile"
-  fi
-}
-
 backup_legacy_ghostty_configs() {
   local relative target destination
   for relative in \
@@ -152,13 +134,12 @@ for profile in "${profiles[@]}"; do
     setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
-    setup_nvim_lockfile
   fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml|nvim/lazy-lock\.json)$' "$profile"
+    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^(opencode|pi)(/|$)' "$profile"
   fi
