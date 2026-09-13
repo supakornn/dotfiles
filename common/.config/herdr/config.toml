@@ -14,12 +14,10 @@ description = "review documents in this folder"
 
 [theme]
 name = "catppuccin"
-auto_switch = true
-light_name = "catppuccin-latte"
-dark_name = "catppuccin"
+auto_switch = false
 
-# Keep Latte unmodified in light mode; use the preferred Macchiato overrides in dark mode.
-[theme.custom.dark]
+# Herdr ships one Catppuccin base theme; these overrides make it Macchiato.
+[theme.custom]
 accent = "#c6a0f6"
 panel_bg = "#24273a"
 green = "#a6da95"
