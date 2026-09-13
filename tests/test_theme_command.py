@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -11,6 +12,25 @@ STARSHIP = ROOT / "common/.config/starship.toml"
 
 
 class ThemeCommandTests(unittest.TestCase):
+    def test_fish_starts_without_theme_state(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run(
+                [
+                    "fish",
+                    "--no-config",
+                    "-i",
+                    "-c",
+                    "source "
+                    f"{ROOT / 'common/.config/fish/conf.d/02-tools.fish'}; "
+                    f"source {ROOT / 'common/.config/fish/config.fish'}",
+                ],
+                env={**os.environ, "HOME": directory},
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(result.stderr, "")
+
     def test_switches_local_state_and_generated_configs(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
