@@ -32,5 +32,5 @@ Set Git identity in `~/.gitconfig.local`.
 
 ## Extras
 
-- Switch themes: `theme light`, `theme dark`, or `theme auto`.
+- Catppuccin Macchiato is the default theme.
 - Install tmux plugins: clone [TPM](https://github.com/tmux-plugins/tpm) to `~/.tmux/plugins/tpm`, then press `prefix` + `I`.
