@@ -7,6 +7,9 @@
     "npm:pi-web-access",
     "npm:@ff-labs/pi-fff",
     "npm:pi-toggle-skills",
+    "npm:@narumitw/pi-goal",
+    "npm:@narumitw/pi-plan-mode",
+    "npm:@gotgenes/pi-permission-system",
     "npm:@plannotator/pi-extension"
   ],
   "skills": ["~/.agents/skills"]

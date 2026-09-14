@@ -131,7 +131,9 @@ for profile in "${profiles[@]}"; do
   if [[ "$profile" == "common" ]]; then
     backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs
-    setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
+    mkdir -p "$HOME/.config/herdr"
+    cp "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+    herdr server reload-config >/dev/null 2>&1 || true
     herdr plugin install plannotator/herdr-annotate --yes
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
@@ -147,6 +149,7 @@ for profile in "${profiles[@]}"; do
 done
 
 python3 "$repo_dir/scripts/build-pi-settings.py" "$HOME/.pi/agent/settings.json" "${pi_settings[@]}"
+pi update --extensions
 
 if "$install_opencode"; then
   python3 "$repo_dir/scripts/build-opencode-settings.py" \
