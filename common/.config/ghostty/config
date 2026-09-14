@@ -9,7 +9,7 @@ cursor-style = block
 cursor-style-blink=true
 adjust-cell-height = 35%
 background-blur-radius = 95
-# background-opacity = 0.95
+background-opacity = 0.9
  
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
@@ -22,7 +22,7 @@ window-colorspace = "display-p3"
  
 copy-on-select = clipboard
  
-# macos-titlebar-style = hidden
+macos-titlebar-style = hidden
 title = "ghostty"
  
 window-padding-x = 5
