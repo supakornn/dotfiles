@@ -13,17 +13,18 @@ if len(sys.argv) < 3:
 output = Path(sys.argv[1]).expanduser()
 existing = output.read_text().strip() if output.exists() else ""
 merged: dict[str, object] = json.loads(existing) if existing else {}
+managed = {"packages": [], "skills": []}
 for source_name in sys.argv[2:]:
     source = Path(source_name)
     data = json.loads(source.read_text())
     for key, value in data.items():
-        if key in {"packages", "skills"}:
-            values = merged.setdefault(key, [])
+        if key in managed:
             for item in value:
-                if item not in values:
-                    values.append(item)
+                if item not in managed[key]:
+                    managed[key].append(item)
         else:
             merged[key] = value
+merged.update(managed)
 
 output.parent.mkdir(parents=True, exist_ok=True)
 fd, temporary_name = tempfile.mkstemp(dir=output.parent, prefix="settings.", suffix=".json")
