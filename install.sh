@@ -132,6 +132,7 @@ for profile in "${profiles[@]}"; do
     backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs
     setup_local_file "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "Herdr"
+    herdr plugin install plannotator/herdr-annotate --yes
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
   fi
