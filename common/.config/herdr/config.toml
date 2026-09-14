@@ -19,7 +19,10 @@ auto_switch = false
 # Herdr ships one Catppuccin base theme; these overrides make it Macchiato.
 [theme.custom]
 accent = "#c6a0f6"
-panel_bg = "#24273a"
+sidebar_bg = "reset"
+active_row_bg = "reset"
+selection_bg = "reset"
+panel_bg = "reset"
 green = "#a6da95"
 yellow = "#eed49f"
 red = "#ed8796"
