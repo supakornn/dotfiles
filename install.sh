@@ -168,16 +168,14 @@ for profile in "${profiles[@]}"; do
     backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs
     sync_herdr_config "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "$accept_herdr_local"
-    herdr plugin install plannotator/herdr-annotate --yes
     herdr plugin install kryptamine/herdr-auto-title --yes
-    setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
   fi
   if "$backup_existing"; then
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf|plannotator-tui/config\.toml)$' "$profile"
+    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^(opencode|pi)(/|$)' "$profile"
   fi
