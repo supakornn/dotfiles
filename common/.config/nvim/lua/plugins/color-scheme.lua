@@ -7,10 +7,8 @@ return {
 			local theme = require("supakornn.theme")
 			require("catppuccin").setup({
 				flavour = theme.flavor,
-				-- float = {
-				-- 	-- transparent = true,
-				-- 	-- solid = false,
-				-- },
+				transparent_background = true,
+				float = { transparent = true, solid = false },
 				integrations = {
 					diffview = true,
 					fidget = true,
@@ -35,19 +33,19 @@ return {
 			local palette = require("catppuccin.palettes").get_palette(theme.flavor)
 			vim.cmd.colorscheme("catppuccin-" .. theme.flavor)
 
-			-- Telescope highlights to match editor background
-			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = palette.blue, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = palette.mauve, bg = palette.base })
-			vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = palette.mauve, bg = palette.base })
+			-- Keep Telescope transparent while preserving its palette accents.
+			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = palette.blue, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = palette.blue, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = palette.blue, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = palette.blue, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = palette.mauve, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = palette.mauve, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = palette.mauve, bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = palette.mauve, bg = "none" })
 
 			-- Hide all semantic highlights until upstream issues are resolved (https://github.com/catppuccin/nvim/issues/480)
 			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
