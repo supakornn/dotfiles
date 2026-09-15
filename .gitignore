@@ -1,2 +1,3 @@
 .DS_Store
 Brewfile.lock.json
+common/.config/herdr/plugins.json

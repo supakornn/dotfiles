@@ -166,6 +166,7 @@ for profile in "${profiles[@]}"; do
     backup_legacy_ghostty_configs
     sync_herdr_config "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "$accept_herdr_local"
     herdr plugin install plannotator/herdr-annotate --yes
+    herdr plugin install kryptamine/herdr-auto-title --yes
     setup_local_file "$repo_dir/common/.config/plannotator-tui/config.toml" "$HOME/.config/plannotator-tui/config.toml" "Plannotator TUI"
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
   fi
