@@ -17,17 +17,49 @@ description = "review documents in this folder"
 name = "catppuccin"
 auto_switch = false
 
-# Herdr ships one Catppuccin base theme; these overrides make it Macchiato.
 [theme.custom]
+# Override individual tokens from the base theme. Colors accept #rrggbb, named
+# colors, rgb(r,g,b), or reset aliases such as reset, default, none, and
+# transparent. Every custom token defaults to unset.
+
+# Highlight and selection accent.
 accent = "#c6a0f6"
-sidebar_bg = "reset"
-active_row_bg = "reset"
-selection_bg = "reset"
-panel_bg = "reset"
+# Sidebar and panel background.
+panel_bg = "#24273a"
+# Desktop sidebar background, independent of other panel surfaces.
+# sidebar_bg = "#24273a"
+# Background of the active Space and focused Agent sidebar rows.
+# active_row_bg = "#363a4f"
+# Background of the Navigate-mode cursor row in the sidebar.
+# selection_bg = "#494d64"
+# Lowest elevated surface color.
+# surface0 = "#363a4f"
+# Higher elevated surface color.
+# surface1 = "#494d64"
+# Dimmed surface color.
+# surface_dim = "#1e2030"
+# Lowest overlay color.
+# overlay0 = "#6e738d"
+# Higher overlay color.
+# overlay1 = "#8087a2"
+# Primary foreground text.
+# text = "#cad3f5"
+# Secondary foreground text.
+# subtext0 = "#a5adcb"
+# Mauve semantic color.
+# mauve = "#c6a0f6"
+# Green semantic color.
 green = "#a6da95"
+# Yellow semantic color.
 yellow = "#eed49f"
+# Red semantic color.
 red = "#ed8796"
+# Blue semantic color.
 blue = "#8aadf4"
+# Teal semantic color.
+# teal = "#8bd5ca"
+# Peach semantic color.
+# peach = "#f5a97f"
 
 [ui]
 show_agent_labels_on_pane_borders = false
