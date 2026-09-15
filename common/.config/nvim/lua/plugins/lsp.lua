@@ -49,6 +49,10 @@ return {
 					},
 				},
 				marksman = {},
+				gopls = {},
+				kotlin_language_server = {},
+				omnisharp = {},
+				pyright = {},
 				oxlint = {
 					root_markers = { ".oxlintrc.json" },
 				},
@@ -94,6 +98,7 @@ return {
 			local ensure_installed = vim.tbl_filter(function(name)
 				return not vim.tbl_contains(manually_installed_servers, name)
 			end, mason_tools_to_install)
+			table.insert(ensure_installed, "jdtls")
 
 			require("mason-tool-installer").setup({
 				auto_update = true,

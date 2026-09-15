@@ -161,6 +161,9 @@ for profile in "${profiles[@]}"; do
     echo "Homebrew installation failed for $profile; applying its dotfiles anyway." >&2
     bundle_failed=true
   fi
+  if [[ "$profile" == "common" ]] && command -v rustup-init >/dev/null 2>&1 && ! rustup show active-toolchain >/dev/null 2>&1; then
+    rustup-init -y
+  fi
   if [[ "$profile" == "common" ]]; then
     backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs

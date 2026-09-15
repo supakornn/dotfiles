@@ -30,22 +30,7 @@ return {
 					return vcs_cache.result
 				end
 
-				-- Check jj first (priority over git for colocated repos)
-				vim.fn.system("jj root 2>/dev/null")
-				if vim.v.shell_error == 0 then
-					local bookmark = vim.fn.system("jj log -r @ --no-graph -T 'bookmarks'"):gsub("%s+$", "")
-					if bookmark == "" then
-						local change_id =
-							vim.fn.system("jj log -r @ --no-graph -T 'change_id.shortest(8)'"):gsub("%s+$", "")
-						vcs_cache = { result = change_id, cwd = cwd }
-					else
-						local first = bookmark:match("^(%S+)") or bookmark
-						vcs_cache = { result = truncate_branch_name(first), cwd = cwd }
-					end
-					return vcs_cache.result
-				end
-
-				-- Fallback: git branch
+				-- Git branch
 				local branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("%s+$", "")
 				if vim.v.shell_error == 0 and branch ~= "" then
 					vcs_cache = { result = truncate_branch_name(branch), cwd = cwd }

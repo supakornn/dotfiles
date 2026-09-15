@@ -27,6 +27,28 @@ end, { desc = "Toggle Oil file explorer" })
 -- Map Undotree
 vim.keymap.set("n", "<leader>ut", ":UndotreeToggle<CR>", { desc = "Toggle UndoTree" })
 
+vim.keymap.set("n", "<leader>gg", function()
+	if vim.fn.executable("lazygit") == 0 then
+		vim.notify("Install lazygit to use this mapping", vim.log.levels.WARN)
+		return
+	end
+	vim.cmd("tabnew")
+	local win = vim.api.nvim_get_current_win()
+	local buffer = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_win_set_buf(win, buffer)
+	vim.fn.termopen("lazygit")
+	vim.api.nvim_create_autocmd("TermClose", {
+		buffer = buffer,
+		once = true,
+		callback = function()
+			vim.schedule(function()
+				if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
+			end)
+		end,
+	})
+	vim.cmd("startinsert")
+end, { desc = "Open Lazy[G]it" })
+
 -- TwoSlashQueriesInspect
 vim.keymap.set("n", "<leader>ti", ":TwoslashQueriesInspect<CR>", { desc = "[I]nspect [T]woslash Query" })
 
@@ -206,7 +228,7 @@ vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc =
 
 vim.keymap.set("n", "<leader>sb", require("telescope.builtin").buffers, { desc = "Search open buffers" })
 
--- <leader>sf moved to telescope.lua (jj-aware with fallback)
+-- <leader>sf is configured in telescope.lua
 
 vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "Search help tags" })
 
