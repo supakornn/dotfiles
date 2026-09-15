@@ -16,6 +16,7 @@ brew "neovim"
 brew "tree-sitter-cli"
 brew "anomalyco/tap/opencode"
 brew "wget"
+brew "rustup"
 # Required by the Fish configuration.
 brew "eza"
 brew "fzf"
