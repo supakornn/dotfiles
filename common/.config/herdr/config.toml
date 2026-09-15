@@ -364,32 +364,6 @@ resize_mode = "prefix+shift+r"
 # and `plugin_action` for an installed plugin action. Popup commands may also
 # specify width and height in cells or percentages.
 
-# vim-herdr-navigation forwards these chords into Vim/Neovim when focused;
-# otherwise it focuses the adjacent Herdr pane.
-[[keys.command]]
-key = "ctrl+h"
-type = "plugin_action"
-command = "vim-herdr-navigation.left"
-description = "Navigate left (Vim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+j"
-type = "plugin_action"
-command = "vim-herdr-navigation.down"
-description = "Navigate down (Vim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+k"
-type = "plugin_action"
-command = "vim-herdr-navigation.up"
-description = "Navigate up (Vim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+l"
-type = "plugin_action"
-command = "vim-herdr-navigation.right"
-description = "Navigate right (Vim/Herdr)"
-
 # Herdr Annotate: terminal comments, document review, and agent feedback.
 [[keys.command]]
 key = "prefix+a"
