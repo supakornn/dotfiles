@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Bootstrap selected Stow packages on macOS.
-# Usage: ./install.sh [--backup-existing] [--accept-herdr-local] common [personal]
+# Usage: ./install.sh [--backup-existing] common [personal]
 set -euo pipefail
 
 if [[ "$(uname)" != "Darwin" ]]; then
@@ -9,19 +9,17 @@ if [[ "$(uname)" != "Darwin" ]]; then
 fi
 
 backup_existing=false
-accept_herdr_local=false
 profiles=()
 for argument in "$@"; do
   case "$argument" in
     --backup-existing) backup_existing=true ;;
-    --accept-herdr-local) accept_herdr_local=true ;;
     common|personal) profiles+=("$argument") ;;
     *) echo "Unknown option or profile: $argument" >&2; exit 1 ;;
   esac
 done
 
 if [[ ${#profiles[@]} -eq 0 ]]; then
-  echo "Usage: $0 [--backup-existing] [--accept-herdr-local] common [personal]" >&2
+  echo "Usage: $0 [--backup-existing] common [personal]" >&2
   exit 1
 fi
 
@@ -88,34 +86,19 @@ setup_local_file() {
   fi
 }
 
-sync_herdr_config() {
-  local source="$1" target="$2" accept_local="$3" base candidate
-  base="${target}.dotfiles-base"
-  candidate="${target}.dotfiles-merge"
+link_herdr_config() {
+  local source="$1" target="$2" backup
   mkdir -p "$(dirname "$target")"
 
-  if "$accept_local" && [[ -e "$candidate" ]]; then
-    cp "$source" "$base"
-    rm "$candidate"
-    echo "Kept local Herdr config"
-  elif [[ ! -e "$target" ]]; then
-    cp "$source" "$target"
-    cp "$source" "$base"
-    echo "Created Herdr config from shared defaults"
-  elif [[ ! -e "$base" ]]; then
-    cp "$source" "$base"
-    echo "Preserved existing Herdr config; future shared changes will merge"
-  elif cmp -s "$source" "$base"; then
-    return
-  elif git merge-file -p "$target" "$base" "$source" >"$candidate"; then
-    mv "$candidate" "$target"
-    cp "$source" "$base"
-    echo "Updated Herdr config from shared defaults"
-  else
-    echo "Herdr config conflict: kept $target unchanged; resolve $candidate, then run $0 --accept-herdr-local common." >&2
-    return 1
+  if [[ -L "$target" ]]; then
+    rm "$target"
+  elif [[ -e "$target" ]]; then
+    backup="${target}.backup-$(date +%Y%m%d-%H%M%S)"
+    mv "$target" "$backup"
+    echo "Backed up local Herdr config: $backup"
   fi
 
+  ln -s "$source" "$target"
   herdr server reload-config >/dev/null 2>&1 || true
 }
 
@@ -171,7 +154,7 @@ for profile in "${profiles[@]}"; do
   if [[ "$profile" == "common" ]]; then
     backup_existing_skill_directory ".pi/agent/skills"
     backup_legacy_ghostty_configs
-    sync_herdr_config "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml" "$accept_herdr_local"
+    link_herdr_config "$repo_dir/common/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
     herdr plugin install kryptamine/herdr-auto-title --yes
     herdr plugin install plannotator/herdr-annotate --yes
     setup_local_file "$repo_dir/common/.config/btop/btop.conf" "$HOME/.config/btop/btop.conf" "btop"
