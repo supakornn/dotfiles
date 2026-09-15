@@ -1,4 +1,5 @@
 onboarding = false
+
 [keys]
 prefix = "ctrl+a"
 split_vertical = "prefix+|"
@@ -33,10 +34,17 @@ show_agent_labels_on_pane_borders = false
 agent_panel_sort = "spaces"
 
 [terminal]
-# Executable used for new interactive panes. Empty uses $SHELL, then /bin/sh.
-# Default: "".
 default_shell = "fish"
 
+[ui.toast]
+delivery = "herdr"
+
+[ui.toast.herdr]
+position = "top-right"
 
 [ui.sound]
 enabled = false
+
+[experimental]
+kitty_graphics = true
+pane_history = true
