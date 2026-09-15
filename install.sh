@@ -143,6 +143,10 @@ backup_conflicts() {
   while IFS= read -r -d '' source; do
     relative="${source#"$repo_dir/$profile/"}"
     target="$HOME/$relative"
+    # These are merged/copied locally before this runs; never back them up afterward.
+    case "$relative" in
+      .config/herdr/config.toml|.config/herdr/plugins.json|.config/btop/btop.conf) continue ;;
+    esac
     # Existing Stow links are already managed; only back up regular files.
     if [[ ! -L "$target" && -e "$target" ]]; then
       if [[ -z "$backup_dir" ]]; then
@@ -175,7 +179,7 @@ for profile in "${profiles[@]}"; do
     backup_conflicts "$profile"
   fi
   if [[ "$profile" == "common" ]]; then
-    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|btop/btop\.conf)$' "$profile"
+    stow --no-folding --dir="$repo_dir" --target="$HOME" --restow --ignore='(^|/)\.DS_Store$|^(opencode|pi)(/|$)|^\.config/(herdr/config\.toml|herdr/plugins\.json|btop/btop\.conf)$' "$profile"
   else
     stow --dir="$repo_dir" --target="$HOME" --restow --ignore='^(opencode|pi)(/|$)' "$profile"
   fi
