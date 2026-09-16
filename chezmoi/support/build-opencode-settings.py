@@ -24,7 +24,8 @@ def merge(base: dict[str, object], update: dict[str, object]) -> None:
 
 
 output = Path(sys.argv[1]).expanduser()
-merged: dict[str, object] = {}
+existing = output.read_text().strip() if output.exists() else ""
+merged: dict[str, object] = json.loads(existing) if existing else {}
 for source_name in sys.argv[2:]:
     merge(merged, json.loads(Path(source_name).read_text()))
 

@@ -1,0 +1,10 @@
+{{- if eq .profile "personal" -}}
+#!/bin/sh
+set -eu
+# ai settings: {{ include "support/ai/pi/settings.json" | sha256sum }}
+# personal settings: {{ include "support/personal/pi/settings.json" | sha256sum }}
+python3 "{{ joinPath .chezmoi.sourceDir "support/build-pi-settings.py" }}" \
+  "$HOME/.pi/agent/settings.json" \
+  "{{ joinPath .chezmoi.sourceDir "support/ai/pi/settings.json" }}" \
+  "{{ joinPath .chezmoi.sourceDir "support/personal/pi/settings.json" }}"
+{{- end -}}

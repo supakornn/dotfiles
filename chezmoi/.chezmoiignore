@@ -1,0 +1,8 @@
+# Support files are read by scripts, never deployed.
+support/**
+
+{{- if ne .profile "personal" }}
+.agents/**
+.pi/agent/**
+.config/opencode/**
+{{- end }}

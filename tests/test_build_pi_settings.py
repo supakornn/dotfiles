@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).parents[1]
-BUILDER = ROOT / "scripts/build-pi-settings.py"
+BUILDER = ROOT / "chezmoi/support/build-pi-settings.py"
 
 
 class BuildPiSettingsTests(unittest.TestCase):

@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+config="$HOME/.config/btop/btop.conf"
+if [ ! -e "$config" ]; then
+  mkdir -p "${config%/*}"
+  cp "{{ joinPath .chezmoi.sourceDir "support/btop/btop.conf" }}" "$config"
+fi

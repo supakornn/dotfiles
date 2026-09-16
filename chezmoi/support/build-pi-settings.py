@@ -13,7 +13,7 @@ if len(sys.argv) < 3:
 output = Path(sys.argv[1]).expanduser()
 existing = output.read_text().strip() if output.exists() else ""
 merged: dict[str, object] = json.loads(existing) if existing else {}
-managed = {"packages": [], "skills": []}
+managed = {key: list(merged.get(key, [])) for key in ("packages", "skills")}
 for source_name in sys.argv[2:]:
     source = Path(source_name)
     data = json.loads(source.read_text())

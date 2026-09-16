@@ -1,0 +1,10 @@
+{{- if eq .profile "personal" -}}
+#!/bin/sh
+set -eu
+# ai settings: {{ include "support/ai/opencode/settings.json" | sha256sum }}
+# personal settings: {{ include "support/personal/opencode/settings.json" | sha256sum }}
+python3 "{{ joinPath .chezmoi.sourceDir "support/build-opencode-settings.py" }}" \
+  "$HOME/.config/opencode/opencode.jsonc" \
+  "{{ joinPath .chezmoi.sourceDir "support/ai/opencode/settings.json" }}" \
+  "{{ joinPath .chezmoi.sourceDir "support/personal/opencode/settings.json" }}"
+{{- end -}}

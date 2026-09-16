@@ -1,36 +1,41 @@
 # dotfiles
 
-Public macOS dotfiles managed with [Homebrew](https://brew.sh/) and [GNU Stow](https://www.gnu.org/software/stow/).
+macOS dotfiles managed by [Chezmoi](https://www.chezmoi.io/) and [Homebrew](https://brew.sh/).
 
-- `common/`: shared, work-safe configuration.
-- `personal/`: personal-Mac-only configuration.
+- `work`: shared shell, editor, terminal, and Git configuration.
+- `personal`: work configuration plus AI tools and personal applications.
 - No secrets, tokens, or company configuration are tracked.
 
-## Install
+## Install or migrate
 
 ```sh
 git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
 cd ~/Documents/dotfiles
 
-# Work Mac
-./install.sh common
+# Company Mac: safe default
+./bootstrap.sh work
 
 # Personal Mac
-./install.sh common personal
-
-# Move conflicting files aside first
-./install.sh --backup-existing common personal
+./bootstrap.sh personal
 ```
 
-## Included
+`bootstrap.sh` installs the selected Brewfiles, writes the local Chezmoi profile, and applies it. On a machine previously managed by Stow, it replaces matching Stow symlinks with regular Chezmoi-managed files.
 
-Common installs shell, terminal, Git, Neovim, tmux, Pi, and Catppuccin configuration. Personal adds `uv`, personal Git defaults, Pi settings, and OpenCode settings.
+After setup, update with:
 
-Shared agent skills live in `~/.agents/skills/`: OpenCode auto-loads them and Pi is configured to load them. Personal Pi settings add the default model and Codex usage plugin. Personal OpenCode settings configure its model, MCPs, and quota plugin in `~/.config/opencode/`.
+```sh
+chezmoi update
+```
+
+## Profiles
+
+`work` installs only `Brewfile.common` and ignores agent skills, Pi, OpenCode, and personal files. `personal` also installs `Brewfile.ai` and `Brewfile.personal`.
+
+Pi and OpenCode profile fragments are merged into their local final settings files, preserving existing local MCPs, models, plugins, and packages. Update Pi packages deliberately with `pi update --extensions`; bootstrap never updates them automatically.
 
 Set Git identity in `~/.gitconfig.local`.
 
 ## Extras
 
-- Catppuccin Macchiato is the default theme.
 - Install tmux plugins: clone [TPM](https://github.com/tmux-plugins/tpm) to `~/.tmux/plugins/tpm`, then press `prefix` + `I`.
+- Install optional Herdr plugins manually: `herdr plugin install kryptamine/herdr-auto-title --yes` and `herdr plugin install plannotator/herdr-annotate --yes`.
