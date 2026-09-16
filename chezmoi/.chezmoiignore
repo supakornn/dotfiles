@@ -2,7 +2,6 @@
 support/**
 
 {{- if ne .profile "personal" }}
-.agents/**
 .pi/agent/keybindings.json
 .config/opencode/**
 {{- end }}

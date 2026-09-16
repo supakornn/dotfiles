@@ -29,7 +29,7 @@ chezmoi update
 
 ## Profiles
 
-`work` installs only `Brewfile.common` and themes; it ignores agent skills, Pi packages/settings, OpenCode, and personal files. `personal` also installs `Brewfile.ai` and `Brewfile.personal`.
+`work` installs only `Brewfile.common`, shared agent skills, and themes; it ignores Pi packages/settings, OpenCode, and personal files. `personal` also installs `Brewfile.ai` and `Brewfile.personal`.
 
 Pi and OpenCode profile fragments are merged into their local final settings files, preserving existing local MCPs, models, plugins, and packages. Update Pi packages deliberately with `pi update --extensions`; bootstrap never updates them automatically.
 
