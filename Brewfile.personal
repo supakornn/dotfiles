@@ -2,7 +2,6 @@
 tap "tinypkg/tap"
 brew "uv"
 brew "mole"
-brew "thaw"
 cask "anydesk"
 cask "chatgpt"
 cask "batfi"
