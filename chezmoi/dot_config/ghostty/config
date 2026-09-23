@@ -20,7 +20,7 @@ window-colorspace = "display-p3"
  
 copy-on-select = clipboard
  
-macos-titlebar-style = hidden
+macos-titlebar-proxy-icon = hidden
 title = "ghostty"
  
 window-padding-x = 5
