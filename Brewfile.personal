@@ -1,5 +1,4 @@
 # Personal-Mac-only tools.
-tap "betterdiscord/tap"
 tap "tinypkg/tap"
 brew "uv"
 brew "mole"
