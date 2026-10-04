@@ -1,10 +1,8 @@
 # dotfiles
 
-macOS dotfiles managed by [Chezmoi](https://www.chezmoi.io/) and [Homebrew](https://brew.sh/).
+Personal macOS dotfiles managed by [Chezmoi](https://www.chezmoi.io/), [Homebrew](https://brew.sh/), and [Mise](https://mise.jdx.dev/).
 
-- `work`: shared shell, editor, terminal, and Git configuration.
-- `personal`: work configuration plus AI tools and personal applications.
-- No secrets, tokens, or company configuration are tracked.
+No secrets, tokens, or company configuration are tracked.
 
 ## Install or migrate
 
@@ -12,14 +10,10 @@ macOS dotfiles managed by [Chezmoi](https://www.chezmoi.io/) and [Homebrew](http
 git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
 cd ~/Documents/dotfiles
 
-# Company Mac: safe default
-./bootstrap.sh work
-
-# Personal Mac
-./bootstrap.sh personal
+./bootstrap.sh
 ```
 
-`bootstrap.sh` installs the selected Brewfiles, writes the local Chezmoi profile, applies it, and installs the profile's Mise tools. On a machine previously managed by Stow, it replaces matching Stow symlinks with regular Chezmoi-managed files.
+`bootstrap.sh` installs Homebrew packages, writes the local Chezmoi source path, applies it, and installs Mise tools. On a machine previously managed by Stow, it replaces matching Stow symlinks with regular Chezmoi-managed files.
 
 After setup, update with:
 
@@ -27,9 +21,9 @@ After setup, update with:
 chezmoi update
 ```
 
-## Profiles
+## Tools
 
-`work` installs only `Brewfile.common`, shared agent skills, and themes; it ignores Pi packages/settings, OpenCode, and personal files. `personal` also installs `Brewfile.personal`. `~/.config/mise/config.toml` is shared by both profiles and tracks the latest version of its tools.
+`Brewfile` installs macOS apps and system tools. `~/.config/mise/config.toml` tracks the latest version of developer tools.
 
 Pi and OpenCode profile fragments are merged into their local final settings files, preserving existing local MCPs, models, plugins, and packages. Update Pi packages deliberately with `pi update --extensions`; bootstrap never updates them automatically.
 
