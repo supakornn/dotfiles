@@ -3,5 +3,6 @@ support/**
 
 {{- if ne .profile "personal" }}
 .pi/agent/keybindings.json
+.feynman/**
 .config/opencode/**
 {{- end }}
