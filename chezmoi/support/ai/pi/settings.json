@@ -2,7 +2,6 @@
   "theme": "catppuccin-macchiato",
   "packages": [
     "git:github.com/DietrichGebert/ponytail",
-    "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     "npm:@ff-labs/pi-fff",
     "npm:pi-toggle-skills",
