@@ -1,6 +1,5 @@
 # Personal-Mac-only tools.
 tap "tinypkg/tap"
-brew "uv"
 brew "mole"
 cask "anydesk"
 cask "chatgpt"

@@ -23,7 +23,6 @@ repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 brew install chezmoi
 brew bundle --file="$repo_dir/Brewfile.common"
 if [[ "$profile" == "personal" ]]; then
-  brew bundle --file="$repo_dir/Brewfile.ai"
   brew bundle --file="$repo_dir/Brewfile.personal"
 fi
 
@@ -37,3 +36,4 @@ EOF
 
 # --force replaces the old Stow symlinks with Chezmoi-managed files.
 chezmoi apply --force --verbose
+mise install

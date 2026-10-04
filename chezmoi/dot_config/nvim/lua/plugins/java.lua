@@ -18,13 +18,6 @@ return {
 					jdtls.start_or_attach({
 						cmd = { mason .. "/bin/jdtls" },
 						root_dir = root,
-						settings = {
-							java = {
-								runtimes = {
-									{ name = "JavaSE-17", path = "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home" },
-								},
-							},
-						},
 					})
 				end,
 			})

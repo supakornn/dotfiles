@@ -19,7 +19,7 @@ cd ~/Documents/dotfiles
 ./bootstrap.sh personal
 ```
 
-`bootstrap.sh` installs the selected Brewfiles, writes the local Chezmoi profile, and applies it. On a machine previously managed by Stow, it replaces matching Stow symlinks with regular Chezmoi-managed files.
+`bootstrap.sh` installs the selected Brewfiles, writes the local Chezmoi profile, applies it, and installs the profile's Mise tools. On a machine previously managed by Stow, it replaces matching Stow symlinks with regular Chezmoi-managed files.
 
 After setup, update with:
 
@@ -29,7 +29,7 @@ chezmoi update
 
 ## Profiles
 
-`work` installs only `Brewfile.common`, shared agent skills, and themes; it ignores Pi packages/settings, OpenCode, and personal files. `personal` also installs `Brewfile.ai` and `Brewfile.personal`.
+`work` installs only `Brewfile.common`, shared agent skills, and themes; it ignores Pi packages/settings, OpenCode, and personal files. `personal` also installs `Brewfile.personal`. `~/.config/mise/config.toml` is shared by both profiles and tracks the latest version of its tools.
 
 Pi and OpenCode profile fragments are merged into their local final settings files, preserving existing local MCPs, models, plugins, and packages. Update Pi packages deliberately with `pi update --extensions`; bootstrap never updates them automatically.
 

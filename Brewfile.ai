@@ -1,3 +1,0 @@
-# Optional AI coding tools. Install only on approved machines.
-brew "anomalyco/tap/opencode"
-brew "pi-coding-agent"
