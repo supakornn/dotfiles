@@ -2,6 +2,18 @@
   "mcpServers": {
     "alphaxiv": {
       "url": "https://api.alphaxiv.org/mcp/v1"
+    },
+    "huggingface": {
+      "url": "https://huggingface.co/mcp",
+      "description": "Search Hugging Face models, datasets, papers, and documentation."
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "description": "Look up current library and framework documentation."
+    },
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "description": "Work with GitHub repositories, issues, pull requests, and code."
     }
   }
 }
