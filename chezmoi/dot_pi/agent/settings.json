@@ -6,7 +6,13 @@
     "npm:@ff-labs/pi-fff",
     "npm:pi-toggle-skills",
     "npm:@gotgenes/pi-permission-system",
-    "npm:@plannotator/pi-extension"
+    "npm:@plannotator/pi-extension",
+    "npm:@narumitw/pi-usage"
   ],
-  "skills": ["~/.agents/skills"]
+  "skills": [
+    "~/.agents/skills",
+    "skills-local"
+  ],
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-terra"
 }
