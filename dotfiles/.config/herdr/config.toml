@@ -1,5 +1,5 @@
 # Herdr configuration
-# Managed in ~/.dotfiles and stowed to ~/.config/herdr/config.toml.
+# Managed by Mise from this repo's dotfiles/.config/herdr/config.toml.
 # Full reference: https://herdr.dev/docs/config-reference/
 #
 # Active values differ from Herdr's defaults. Default or unset values remain

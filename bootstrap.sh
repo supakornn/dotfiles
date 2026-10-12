@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bootstrap this macOS setup with Homebrew and Chezmoi.
+# Bootstrap this macOS setup with Homebrew and Mise.
 set -euo pipefail
 
 if [[ "$(uname)" != "Darwin" ]]; then
@@ -14,14 +14,10 @@ if [[ -x /opt/homebrew/bin/brew ]]; then eval "$(/opt/homebrew/bin/brew shellenv
 if [[ -x /usr/local/bin/brew ]]; then eval "$(/usr/local/bin/brew shellenv)"; fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-brew install chezmoi
 brew bundle --file="$repo_dir/Brewfile"
 
-mkdir -p "$HOME/.config/chezmoi"
-cat > "$HOME/.config/chezmoi/chezmoi.toml" <<EOF
-sourceDir = "$repo_dir/chezmoi"
-EOF
-
-# --force replaces the old Stow symlinks with Chezmoi-managed files.
-chezmoi apply --force --verbose
-mise install
+mise trust "$repo_dir/mise.toml"
+mise -C "$repo_dir" dotfiles apply --force --yes
+mise -C "$repo_dir" run seed-btop
+mise -C "$repo_dir" install
+mise -C "$repo_dir" run install-herdr-plugins

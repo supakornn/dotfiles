@@ -1,9 +1,0 @@
-# Support files are read by scripts, never deployed.
-support/**
-
-{{- if ne .profile "personal" }}
-.pi/agent/keybindings.json
-.pi/agent/mcp.json
-.feynman/**
-.config/opencode/**
-{{- end }}
