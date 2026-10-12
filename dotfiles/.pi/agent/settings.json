@@ -6,8 +6,7 @@
     "npm:@ff-labs/pi-fff",
     "npm:pi-toggle-skills",
     "npm:@gotgenes/pi-permission-system",
-    "npm:@plannotator/pi-extension",
-    "npm:@narumitw/pi-usage"
+    "npm:@plannotator/pi-extension"
   ],
   "skills": [
     "~/.agents/skills",
