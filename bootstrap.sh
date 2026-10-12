@@ -18,6 +18,5 @@ brew bundle --file="$repo_dir/Brewfile"
 
 mise trust "$repo_dir/mise.toml"
 mise -C "$repo_dir" dotfiles apply --force --yes
-mise -C "$repo_dir" run seed-btop
 mise -C "$repo_dir" install
 mise -C "$repo_dir" run install-herdr-plugins

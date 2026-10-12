@@ -17,13 +17,6 @@
 "~/.pi" = { source = "dotfiles/.pi" }
 "~/.tmux.conf" = { source = "dotfiles/.tmux.conf" }
 
-[tasks.seed-btop]
-description = "Create the default btop config without overwriting local changes"
-run = '''if [ ! -e "$HOME/.config/btop/btop.conf" ]; then
-  mkdir -p "$HOME/.config/btop"
-  cp support/btop/btop.conf "$HOME/.config/btop/btop.conf"
-fi'''
-
 [tasks.install-herdr-plugins]
 description = "Install Herdr plugins used by this config"
 run = '''herdr plugin install --yes plannotator/herdr-annotate
