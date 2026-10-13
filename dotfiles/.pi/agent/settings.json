@@ -3,10 +3,7 @@
   "packages": [
     "npm:pi-web-access",
     "npm:pi-toggle-skills",
-    {
-      "source": "npm:@plannotator/pi-extension",
-      "skills": []
-    }
+    "npm:@plannotator/pi-extension"
   ],
   "skills": [
     "~/.agents/skills",
