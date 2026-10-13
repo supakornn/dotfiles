@@ -2,10 +2,11 @@
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:pi-web-access",
-    "npm:@ff-labs/pi-fff",
     "npm:pi-toggle-skills",
-    "npm:@plannotator/pi-extension",
-    "git:github.com/michael-denyer/pstack-claude"
+    {
+      "source": "npm:@plannotator/pi-extension",
+      "skills": []
+    }
   ],
   "skills": [
     "~/.agents/skills",
