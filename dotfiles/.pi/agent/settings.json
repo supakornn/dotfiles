@@ -5,7 +5,8 @@
     "npm:@ff-labs/pi-fff",
     "npm:pi-subagents",
     "npm:pi-toggle-skills",
-    "npm:@plannotator/pi-extension"
+    "npm:@plannotator/pi-extension",
+    "git:github.com/michael-denyer/pstack-claude"
   ],
   "skills": [
     "~/.agents/skills",

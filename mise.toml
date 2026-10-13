@@ -8,7 +8,6 @@
 "~/.config/lazygit" = { source = "dotfiles/.config/lazygit" }
 "~/.config/mise" = { source = "dotfiles/.config/mise" }
 "~/.config/nvim" = { source = "dotfiles/.config/nvim" }
-"~/.config/opencode" = { source = "dotfiles/.config/opencode" }
 "~/.config/starship.toml" = { source = "dotfiles/.config/starship.toml" }
 "~/.config/vorssaint" = { source = "dotfiles/.config/vorssaint" }
 "~/.feynman" = { source = "dotfiles/.feynman" }
