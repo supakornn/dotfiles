@@ -3,7 +3,6 @@
   "packages": [
     "npm:pi-web-access",
     "npm:@ff-labs/pi-fff",
-    "npm:pi-subagents",
     "npm:pi-toggle-skills",
     "npm:@plannotator/pi-extension",
     "git:github.com/michael-denyer/pstack-claude"
