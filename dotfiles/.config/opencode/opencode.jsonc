@@ -1,11 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "@dietrichgebert/ponytail",
-    "@plannotator/opencode@latest",
-    "@slkiser/opencode-quota@latest"
+    "@plannotator/opencode@latest"
   ],
-  "model": "openai/gpt-5.6-terra",
+  "model": "openai/gpt-6.1-sol",
   "mcp": {
     "github": {
       "type": "local",
