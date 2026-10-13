@@ -1,3 +1,3 @@
 return {
-	flavor = "macchiato",
+	flavor = "mocha",
 }

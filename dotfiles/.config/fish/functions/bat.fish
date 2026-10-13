@@ -1,3 +1,3 @@
 function bat
-    command bat --theme="Catppuccin Macchiato" --style=plain --paging=never $argv
+    command bat --theme="Catppuccin Mocha" --style=plain --paging=never $argv
 end

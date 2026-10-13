@@ -1,5 +1,5 @@
 if status is-interactive
-    fish_config theme choose catppuccin-macchiato --color-theme=dark
+    fish_config theme choose catppuccin-mocha --color-theme=dark
 end
 
 # Added by OrbStack: command-line tools and integration

@@ -2,6 +2,7 @@
 "~/.agents" = { source = "dotfiles/.agents" }
 "~/.config/bat" = { source = "dotfiles/.config/bat" }
 "~/.config/btop/themes" = { source = "dotfiles/.config/btop/themes" }
+"~/.config/btop/btop.conf" = { source = "dotfiles/.config/btop/btop.conf" }
 "~/.config/fish" = { source = "dotfiles/.config/fish" }
 "~/.config/ghostty" = { source = "dotfiles/.config/ghostty" }
 "~/.config/herdr/config.toml" = { source = "dotfiles/.config/herdr/config.toml" }
@@ -22,3 +23,7 @@ run = '''herdr plugin install --yes plannotator/herdr-annotate
 herdr plugin install --yes kryptamine/herdr-auto-title
 herdr plugin action invoke herdr.auto-title.restart || true
 '''
+
+[tasks.build-bat-cache]
+description = "Rebuild Bat's cache for the bundled Catppuccin themes"
+run = "bat cache --build"

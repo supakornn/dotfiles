@@ -13,3 +13,8 @@ cd ~/Documents/dotfiles
 - `dotfiles/`: files deployed into `$HOME`, including Mise tool versions
 - `mise run install-herdr-plugins`: installs Annotate and Auto Title for Herdr
 - `~/.gitconfig.local`: local Git identity
+
+The terminal, shell, prompt, editor, and CLI tools use
+[Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
+After applying updated dotfiles, rebuild Bat's theme cache with `bat cache --build`
+and restart running apps or reload their configuration.
