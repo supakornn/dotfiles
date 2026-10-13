@@ -48,30 +48,12 @@
       "installedAt": "2026-10-13T11:08:22.191Z",
       "updatedAt": "2026-10-13T11:08:22.191Z"
     },
-    "recipe-diagrams": {
-      "source": "dmmulroy/.dotfiles",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/dmmulroy/.dotfiles.git",
-      "skillPath": "home/.agents/skills/recipe-diagrams/SKILL.md",
-      "skillFolderHash": "54844697fae6c8967e523480ef42a9a2042e02cf",
-      "installedAt": "2026-10-13T11:08:22.192Z",
-      "updatedAt": "2026-10-13T11:08:22.192Z"
-    },
     "show-me": {
       "source": "dmmulroy/.dotfiles",
       "sourceType": "github",
       "sourceUrl": "https://github.com/dmmulroy/.dotfiles.git",
       "skillPath": "home/.agents/skills/show-me/SKILL.md",
       "skillFolderHash": "362200ac2fb3c17b765049444e88de73767e6d08",
-      "installedAt": "2026-10-13T11:08:22.192Z",
-      "updatedAt": "2026-10-13T11:08:22.192Z"
-    },
-    "worktrees": {
-      "source": "dmmulroy/.dotfiles",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/dmmulroy/.dotfiles.git",
-      "skillPath": "home/.agents/skills/worktrees/SKILL.md",
-      "skillFolderHash": "38d022ca8601fb1fb6c2c354bef9c08f4dd783a8",
       "installedAt": "2026-10-13T11:08:22.192Z",
       "updatedAt": "2026-10-13T11:08:22.192Z"
     },
