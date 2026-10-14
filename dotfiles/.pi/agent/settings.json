@@ -3,7 +3,9 @@
   "packages": [
     "npm:pi-web-access",
     "npm:pi-toggle-skills",
-    "npm:@plannotator/pi-extension"
+    "npm:@plannotator/pi-extension",
+    "npm:pi-context-view",
+    "npm:@ff-labs/pi-fff"
   ],
   "skills": [
     "~/.agents/skills",
@@ -11,5 +13,6 @@
   ],
   "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
-  "lastChangelogVersion": "1.1.0"
+  "lastChangelogVersion": "1.2.0",
+  "defaultProjectTrust": "ask"
 }
