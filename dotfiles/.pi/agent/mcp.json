@@ -1,5 +1,10 @@
 {
   "mcpServers": {
+    "cua-driver": {
+      "command": "~/.local/bin/cua-driver",
+      "args": ["mcp"],
+      "description": "Operate native desktop apps through the local Cua Driver."
+    },
     "alphaxiv": {
       "url": "https://api.alphaxiv.org/mcp/v1"
     },
