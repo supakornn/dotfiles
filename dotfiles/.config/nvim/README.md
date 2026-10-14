@@ -75,6 +75,26 @@ LazyVim's standard keymaps are retained except for the shortcuts in
 Syntax parsers also cover Gradle's Groovy/Kotlin scripts, Maven XML, JSON, YAML,
 HTML, CSS, Markdown, and common config files.
 
+### Copier / Jinja templates
+
+`HiPhish/jinja.vim` highlights Jinja expressions, statements, and comments alongside
+the host language. `.jinja`, `.jinja2`, and `.j2` files are detected automatically:
+`Example.kt.jinja` uses `kotlin.jinja`, `main.py.jinja` uses `python.jinja`, and
+`pyproject.toml.jinja` uses `toml.jinja`. Templates without a recognized host extension
+use `jinja` alone. An `after/ftplugin/jinja.vim` hook keeps the Jinja syntax overlay
+active when Tree-sitter highlights the host language.
+
+This integration is highlighting-only: no Jinja LSP or formatter is added. Use the
+host-language LSP on the rendered project, not unrendered templates. To check a
+buffer, run `:set filetype? syntax?`; if needed, try `:setlocal syntax=on`.
+
+Verify detection, host parsers, Jinja syntax groups, and absence of template LSPs:
+
+```sh
+XDG_CONFIG_HOME="$PWD/dotfiles/.config" nvim --headless \
+  '+luafile dotfiles/.config/nvim/scripts/verify-jinja.lua'
+```
+
 ### Project prerequisites and limits
 
 - **Java/Kotlin:** Use the project's `./gradlew` / `./mvnw` wrappers and its required JDK.
