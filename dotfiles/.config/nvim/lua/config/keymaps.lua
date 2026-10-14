@@ -1,5 +1,5 @@
 -- Loaded after LazyVim defaults. Keep only a few familiar shortcuts.
-vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode" })
+vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 vim.keymap.set("n", "<leader>w", "<cmd>write<cr>", { desc = "Save buffer" })
 vim.keymap.set("n", "<leader>'", "<C-^>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>sf", function()
