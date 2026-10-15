@@ -36,5 +36,6 @@ dot package list     # Show packages by profile
 Homebrew owns apps and standalone tools; Mise owns language runtimes.
 Existing packages are kept without upgrades unless requested.
 Microsoft apps, Zoom, and Chrome are installed manually.
+Neovim's `lazy-lock.json` stays local to each Mac, managed by Lazy.
 
 Contributor instructions: [AGENTS.md](AGENTS.md).

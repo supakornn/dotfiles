@@ -4,4 +4,6 @@
 {{ end }}
 # Editor-local agent state is never configuration, in either profile.
 .config/nvim/.pi
+# Lazy owns each machine's plugin pins.
+.config/nvim/lazy-lock.json
 # Credentials, sessions, local-only skills, and universal variables are not sources.

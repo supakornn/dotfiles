@@ -8,7 +8,8 @@ The canonical config is this directory, deployed to `~/.config/nvim` by the root
 
 - Add configuration overrides in `lua/config/` and plugin specs in `lua/plugins/`.
 - Language extras are imported explicitly in `lua/config/lazy.lua`.
-- Preserve `lazy-lock.json`; change pinned plugin versions only intentionally.
+- Lazy owns each Mac's local `lazy-lock.json`; keep it outside Git and chezmoi.
+  Preserve existing local pins; change plugin versions only intentionally.
 - Keep formatting on save, debugger/test adapters, extra linters, inlay hints,
   and code lenses disabled. Builds and tests belong in the terminal.
 - Use Snacks pickers and blink.cmp. Scala commands must work without Telescope.

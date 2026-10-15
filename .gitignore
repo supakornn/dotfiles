@@ -12,6 +12,7 @@ home/private_dot_agents/*skill-lock.json*
 home/private_dot_agents/skills/*cua-driver*
 home/*dot_cua-driver*/
 home/dot_config/fish/*fish_variables*
+home/dot_config/nvim/lazy-lock.json
 home/dot_config/nvim/dot_pi/
 home/dot_config/nvim/private_dot_pi/
 home/private_dot_pi/agent/*auth.json*

@@ -12,7 +12,8 @@ and run `dot apply`. This uses native chezmoi behavior; back up local changes
 before overwriting them. `--force` skips confirmation and does not make backups.
 
 On first launch, lazy.nvim installs plugins and Mason installs configured language
-servers. Keep `lazy-lock.json` to preserve the validated plugin versions. Bootstrap
+servers. Lazy maintains `lazy-lock.json` locally on each Mac; chezmoi leaves it
+untouched, so plugin versions can differ between machines. Bootstrap
 also installs Coursier for Scala/Metals; the local installer below is an alternative.
 If Kotlin installation fails at the
 JetBrains CDN, use the helper under Maintenance.
@@ -161,7 +162,8 @@ no shell configuration is changed. The Metals version is pinned in `lua/plugins/
 On macOS the server uses the existing JDK 21; other platforms need a suitable JDK and
 [Coursier installation](https://get-coursier.io/docs/cli-installation).
 
-`lazy-lock.json` pins the installed plugin commits. Preserve it when deploying or updating.
+Preserve the local `lazy-lock.json` when deploying or updating; it is not tracked
+in Git or managed by chezmoi.
 
 ## Validation history
 
