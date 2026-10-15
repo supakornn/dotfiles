@@ -2,6 +2,7 @@
 
 macOS 14+ setup. **chezmoi** manages files, **Homebrew** installs apps/tools,
 **Mise** selects language runtimes. One Bash `dot` command ties them together.
+Agent change workflow: [AGENTS.md](AGENTS.md).
 
 ## Setup
 
