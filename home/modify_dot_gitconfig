@@ -1,0 +1,45 @@
+#!/bin/sh
+# Keep existing identity, credential helpers, and company-specific Git settings.
+set -eu
+awk '
+  /^# BEGIN dotfiles$/ { managed = 1; next }
+  /^# END dotfiles$/ { managed = 0; next }
+  !managed { print }
+'
+cat <<'CONFIG'
+# BEGIN dotfiles
+[alias]
+  cl = clone
+  recent = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(refname:short) - %(contents:subject) - %(authorname) (%(committerdate:relative))'
+
+[color]
+  ui = true
+
+[core]
+  autocrlf = input
+  excludesfile = ~/.gitignore_global
+  ignorecase = false
+  safecrlf = warn
+  abbrev = 7
+  editor = nvim
+
+[fetch]
+  prune = true
+
+[init]
+  defaultBranch = main
+
+[merge]
+  conflictstyle = zdiff3
+
+[push]
+  default = simple
+
+[pull]
+  rebase = false
+
+# Optional machine-local overrides; never tracked.
+[include]
+  path = ~/.gitconfig.local
+# END dotfiles
+CONFIG

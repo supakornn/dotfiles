@@ -1,0 +1,7 @@
+{{- $servers := dict -}}
+{{- range $name, $server := .mcpServers -}}
+{{- if or (eq $.profile "personal") (eq $name "cua-driver") -}}
+{{- $_ := set $servers $name $server -}}
+{{- end -}}
+{{- end -}}
+{{ dict "mcpServers" $servers | toPrettyJson }}

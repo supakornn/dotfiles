@@ -1,0 +1,16 @@
+# Personal Mac only.
+brew "mole"
+brew "gh"
+brew "mas"
+cask "hopper-disassembler"
+cask "anydesk"
+cask "codexbar"
+cask "batfi"
+cask "burp-suite"
+cask "caido"
+cask "discord"
+cask "lulu"
+cask "rustdesk"
+mas "Tailscale", id: 1475387142
+cask "wallspace"
+cask "recordly"

@@ -1,0 +1,10 @@
+[tools]
+bun = "latest"
+dotnet = "latest"
+go = "latest"
+java = "latest"
+kotlin = "latest"
+node = "latest"
+python = "latest"
+rust = "latest"
+scala = "latest"

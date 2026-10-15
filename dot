@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+# Homebrew installs software, Mise installs runtimes, chezmoi manages files.
+set -euo pipefail
+repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+config="${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.json"
+export HOMEBREW_NO_AUTO_UPDATE=1
+fail() { echo "dot: $*" >&2; exit 1; }
+chez() { chezmoi --source "$repo/home" --config "$config" --destination "$HOME" "$@"; }
+check_directories() {
+  local paths path
+  paths="$(chez managed --include dirs --path-style absolute)" || fail 'Cannot inspect managed directories.'
+  while IFS= read -r path; do
+    [[ ! -L "$path" ]] || fail "Managed directory is a symlink: $path. Move the link aside before applying; keep its target data."
+  done <<< "$paths"
+}
+profile() {
+  selected="$(jq -r '.data.profile // empty' "$config")"
+  case "$selected" in personal|work) ;; *) fail 'Run dot init --profile personal|work first.' ;; esac
+}
+usage() {
+  echo 'dot init [--profile personal|work] [--upgrade] [--force]'
+  echo 'dot diff | status | apply [--force] | doctor'
+  echo 'dot package list [base|personal|work]'
+}
+# Find existing Homebrew even before the shell has been configured.
+if ! command -v brew >/dev/null 2>&1; then
+  for brew in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [[ -x "$brew" ]]; then eval "$("$brew" shellenv)"; break; fi
+  done
+fi
+if [[ -x '/Applications/Hopper Disassembler.app/Contents/MacOS/hopper' ]]; then
+  export HOMEBREW_BUNDLE_CASK_SKIP="${HOMEBREW_BUNDLE_CASK_SKIP:-} hopper-disassembler"
+fi
+command="${1:---help}"
+[[ $# == 0 ]] || shift
+case "$command" in
+  --help|-h) usage ;;
+  package)
+    [[ "${1:-}" == list && $# -le 2 ]] || fail 'Use dot package list [base|personal|work].'
+    groups=(base personal work)
+    if [[ $# == 2 ]]; then
+      case "$2" in base|personal|work) groups=("$2") ;; *) fail 'Unknown package group.' ;; esac
+    fi
+    for group in "${groups[@]}"; do
+      printf '\n[%s]\n' "$group"
+      while IFS= read -r line; do printf '%s\n' "$line"; done < "$repo/packages/Brewfile.$group"
+    done ;;
+  init)
+    requested=''; upgrade=false; force=()
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+        --profile)
+          [[ $# -ge 2 ]] || fail '--profile needs personal or work.'
+          requested="$2"; shift
+          case "$requested" in personal|work) ;; *) fail 'Unknown profile.' ;; esac ;;
+        --upgrade) upgrade=true ;;
+        --force) force=(--force) ;;
+        --help|-h) usage; exit 0 ;;
+        *) fail "Unknown option: $1" ;;
+      esac
+      shift
+    done
+    [[ "$(uname -s)" == Darwin ]] || fail 'Setup requires macOS.'
+    if ! command -v brew >/dev/null 2>&1; then
+      installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      /bin/bash -c "$installer"
+      for brew in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+        if [[ -x "$brew" ]]; then eval "$("$brew" shellenv)"; break; fi
+      done
+    fi
+    for tool in chezmoi mise jq; do
+      command -v "$tool" >/dev/null 2>&1 || brew install "$tool"
+    done
+    if [[ -f "$config" ]]; then
+      profile
+      [[ -z "$requested" || "$requested" == "$selected" ]] || fail 'Profile switching needs a reviewed migration; nothing is removed automatically.'
+    else
+      if [[ -n "$requested" ]]; then chez init --promptChoice "Profile=$requested"; else chez init; fi
+      profile
+    fi
+    check_directories
+    # Preview first. Native chezmoi asks before overwriting externally changed files.
+    chez diff
+    brew tap anomalyco/tap
+    brew trust --formula anomalyco/tap/opencode-v2
+    for group in base "$selected"; do
+      if "$upgrade"; then brew bundle install --file "$repo/packages/Brewfile.$group"
+      else brew bundle install --no-upgrade --file "$repo/packages/Brewfile.$group"; fi
+    done
+    chez ${force[@]+"${force[@]}"} apply
+    mise --cd "$HOME" --yes install
+    cua="$HOME/.local/bin/cua-driver"
+    if [[ ! -x "$cua" ]]; then
+      [[ ! -e "$cua" && ! -L "$cua" ]] || fail "Refusing to replace $cua."
+      installer="$(curl -fsSL https://cua.ai/driver/install.sh)"
+      /bin/bash -c "$installer" cua-driver-install --bin-dir "$HOME/.local/bin" --no-modify-path
+    fi
+    "$cua" --version
+    if [[ ! -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]]; then "$cua" skills install; fi
+    [[ -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || fail 'Cua skill is missing; check existing skill links.'
+    while IFS= read -r package; do
+      name="${package#npm:}"
+      manifest="$HOME/.pi/agent/npm/node_modules/$name/package.json"
+      if [[ ! -f "$manifest" ]] || ! jq -e --arg name "$name" '.name == $name' "$manifest" >/dev/null; then
+        mise --cd "$HOME" exec -- pi install "$package"
+      fi
+    done < <(jq -r '.packages[]' "$HOME/.pi/agent/settings.json")
+    if [[ "$selected" == personal ]]; then
+      rea="$(jq -r '.mcpServers.rea.args[1]' "$HOME/.pi/agent/mcp.json")"
+      [[ "$rea" =~ ^rea-agents@[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail 'REA must use a pinned release.'
+      mise --cd "$HOME" exec -- npx --yes "$rea" --help
+    fi
+    bat cache --build
+    herdr plugin install --yes plannotator/herdr-annotate
+    herdr plugin install --yes kryptamine/herdr-auto-title
+    echo 'Done. Sign-ins, licences, and macOS permissions remain interactive.' ;;
+  diff|status|apply)
+    command -v chezmoi >/dev/null 2>&1 || fail 'Run dot init first.'
+    [[ -f "$config" ]] || fail 'Run dot init --profile personal|work first.'
+    profile
+    [[ "$command" != apply ]] || check_directories
+    if [[ "$command" == apply && "${1:-}" == --force && $# == 1 ]]; then chez --force apply
+    else [[ $# == 0 ]] || fail 'Only dot apply accepts --force.'; chez "$command"; fi ;;
+  doctor)
+    [[ $# == 0 ]] || fail 'doctor takes no options.'
+    profile
+    healthy=true
+    chez verify || healthy=false
+    for group in base "$selected"; do
+      brew bundle check --no-upgrade --file "$repo/packages/Brewfile.$group" || healthy=false
+    done
+    mise --cd "$HOME" doctor || healthy=false
+    [[ -x "$HOME/.local/bin/cua-driver" && -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || { echo 'Missing Cua CLI or skill.'; healthy=false; }
+    if [[ "$selected" == work ]]; then
+      for path in "$HOME/.agents/skills/reverse-engineer-anything" "$HOME/.config/nvim/lua/plugins/cord.lua" "$HOME/.local/share/nvim/lazy/cord.nvim" "$HOME"/.npm/_npx/*/node_modules/rea-agents; do
+        if [[ -e "$path" || -L "$path" ]]; then echo "Personal leftover (not removed): $path"; healthy=false; fi
+      done
+    fi
+    echo "Profile: $selected. Account authentication was not checked."
+    "$healthy" ;;
+  *) usage >&2; exit 2 ;;
+esac
