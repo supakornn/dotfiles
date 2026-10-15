@@ -1,22 +1,21 @@
 .DS_Store
-Brewfile.lock.json
-common/.config/herdr/plugins.json
-dotfiles/.config/herdr/.plugins.lock
-dotfiles/.config/herdr/plugins.json
-dotfiles/.config/herdr/plugins/
-dotfiles/.config/herdr/session-history.json
-dotfiles/.config/herdr/session.json
-dotfiles/.config/herdr/session-snapshots/
-
 .dotfiles/
-
-# Fish persists machine-local universal variables here.
-dotfiles/.config/fish/fish_variables
-
-# Python test artifacts and machine-local Pi credentials/state.
 __pycache__/
 *.pyc
-dotfiles/.pi/agent/auth.json
-dotfiles/.pi/agent/mcp-auth.json
-dotfiles/.pi/agent/trust.json
-dotfiles/.pi/agent/sessions/
+Brewfile.lock.json
+
+# Agent working notes are local, not part of the dotfiles configuration.
+/tasks/
+
+# Never capture runtime state or credentials into chezmoi's source tree.
+home/private_dot_agents/*skill-lock.json*
+home/private_dot_agents/skills/*cua-driver*
+home/*dot_cua-driver*/
+home/dot_config/fish/*fish_variables*
+home/dot_config/nvim/dot_pi/
+home/dot_config/nvim/private_dot_pi/
+home/private_dot_pi/agent/*auth.json*
+home/private_dot_pi/agent/*trust.json*
+home/private_dot_pi/agent/*sessions*/
+home/dot_config/herdr/*plugins*
+home/dot_config/herdr/*session*

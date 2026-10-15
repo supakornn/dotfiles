@@ -1,0 +1,2 @@
+#!/bin/sh
+exec '{{ joinPath .chezmoi.sourceDir ".." "dot" | replace "'" "'\\''" }}' "$@"

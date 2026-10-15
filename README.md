@@ -1,63 +1,78 @@
 # dotfiles
 
-My macOS configuration, packages, and language toolchains.
-
-- [Brewfile](Brewfile): apps, fonts, shells, and standalone tools.
-- [Mise config](dotfiles/.config/mise/config.toml): Bun, Go, Java, Node, Python, and Rust.
-- [Deployment config](mise.toml): dotfile mappings and setup tasks.
-
-Project dependencies, including TypeScript, belong in each project. Homebrew may
-install its own runtime dependencies; Mise selects the versions I use in my shell.
+macOS 14+ setup. **chezmoi** manages files, **Homebrew** installs apps/tools,
+**Mise** selects language runtimes. One Bash `dot` command ties them together.
 
 ## Setup
-
-On macOS 14+, `--apply` installs [Homebrew](https://brew.sh/), Mise, and a Mise-managed
-Python if needed, then checks conflicts before installing packages and deploying
-dotfiles. It also installs Cua Driver and Pi packages, prepares REA, and installs
-Herdr plugins. Run from an interactive terminal for installation prompts.
 
 ```sh
 git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
 cd ~/Documents/dotfiles
-
-# Review the repository before applying it.
-./bootstrap.sh          # Preview; reports missing prerequisites without installing.
-./bootstrap.sh --apply  # Prepare prerequisites, install packages, and deploy.
+./dot init --profile personal   # Or work
 ```
 
-Cloning requires Git; macOS may prompt you to install its Command Line Tools.
-Preview needs Homebrew and Mise already available; otherwise it reports what is
-missing and stops.
+Git may prompt for Apple's Command Line Tools. `init` prepares Homebrew, chezmoi,
+Mise, and jq, installs Base plus the selected bundle, applies config, and prepares
+runtimes, Cua, Pi packages, and Herdr plugins. Existing Pi packages/Cua are kept.
+Sign-ins, licences, and macOS permissions remain interactive.
 
-## Bootstrap options
+**On an existing Mac, back up local configs and review the source first.** Setup
+shows `chezmoi diff` before continuing. Apply uses native chezmoi behavior, not a
+custom conflict/backup manager. `--force` skips confirmation; it makes no automatic
+backup. No software is automatically uninstalled or unrelated local files deleted.
 
-| Option | Effect |
-| --- | --- |
-| No options | Preview only; no installation or deployment. |
-| `--apply` | Prepare Homebrew, Mise, and Python; install packages, deploy dotfiles, and run setup tasks. |
-| `--force` | With `--apply`, back up and replace conflicting managed files. |
-| `--upgrade` | With `--apply`, allow Homebrew package upgrades. |
-| `--skip-packages` | With `--apply`, skip Homebrew and agent package installation; requires Homebrew and Mise already installed. |
+Existing Homebrew packages are reused without upgrades by default. Current
+Homebrew Bundle can adopt identical manually installed apps; different copies may
+stop installation rather than be replaced. Use `HOMEBREW_BUNDLE_CASK_SKIP` for apps
+you intentionally keep outside Homebrew. Legacy managed-directory symlinks are
+refused: move the link aside, retain its target and any local-only files, then retry.
 
-Backups are stored in `~/.dotfiles-backups/deployment-*`. Keep them private.
-Pi credentials/sessions, local-only skills, and Fish universal variables stay local.
-Managed configuration files can still be replaced by `--force`.
-
-See [setup notes](docs/setup.md) for permissions, recovery, and MCP prerequisites.
-
-## Updates
-
-Use `brew upgrade` for apps and tools, and `mise upgrade` for language toolchains.
-Java tracks Temurin 21 LTS; the other global toolchains track `latest`. Projects can
-override these defaults in their own `mise.toml`.
-
-## Tests
+## Daily use
 
 ```sh
-python3 -m unittest discover -s tests -v
-bash -n bootstrap.sh
+dot diff                     # Preview configuration changes
+dot status                   # List changes
+dot apply                    # Configuration only; no installs/upgrades
+dot init                     # Install missing software for the saved profile
+dot init --upgrade           # Also allow Homebrew upgrades
+dot doctor                   # Native verification/tool checks; work leftovers
+
+dot package list             # All bundles, labelled
+dot package list base        # Or personal / work: declarations in that bundle
 ```
 
-Tests cover bootstrap safeguards, mocked fresh-Mac installation, agent setup, and
-deployment into a temporary home. They do not install Homebrew packages or verify
-remote MCP authentication or a fresh Mac setup.
+The profile is saved in `~/.config/chezmoi/chezmoi.json` (or your XDG config dir).
+Profile switching is deliberately refused: review local files/software before
+changing that selection manually. Ignored personal files can still exist or load
+on a previously personal machine. Profiles are not security isolation.
+
+## What's shared
+
+- [Base packages](packages/Brewfile.base) plus [Personal](packages/Brewfile.personal)
+  or [Work](packages/Brewfile.work) additions. Work currently has no extra packages.
+- Nine runtimes at `latest`: Java, Kotlin, Scala, .NET, Node, Bun, Python, Rust, Go.
+  Projects can pin versions. Maven/Gradle/Coursier remain Homebrew tools.
+- Shell/editor/terminal configs, font, Herdr plugins, Pi packages/theme/keybindings,
+  general skills, and Cua. Cua owns its version-matched SDK skill and agent links.
+- REA, research/GitHub MCPs, and Cord are personal-only. Work has only Cua MCP and
+  no supplied Pi provider/model. Existing local model choices remain untouched.
+- btop changes only its theme. Existing Git identity and credential settings are
+  preserved; `~/.gitconfig.local` provides optional overrides. Credentials,
+  sessions, local skills, and `~/.feynman` remain unmanaged.
+
+Microsoft apps, Zoom, and Chrome are manual installs, excluded from both profiles.
+An existing Hopper executable in `/Applications/Hopper Disassembler.app` is kept.
+The old Mise file deployment is retired; [home/](home/) is the chezmoi source.
+`bootstrap.sh` is only a compatibility shim: default previews; `--apply` runs init.
+
+## Check
+
+```sh
+bash tests/smoke.sh           # Requires chezmoi/jq; isolated homes, fake installers
+bash -n dot bootstrap.sh tests/smoke.sh
+```
+
+The single test checks both profiles, first adoption with existing tools/configs,
+full init with fake installers, repeat runs, exclusions, state preservation,
+installer failures, directory-symlink safety, doctor, and profile-switch refusal.
+It does not prove real fresh-Mac downloads, app permissions, or authentication.

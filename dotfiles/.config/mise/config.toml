@@ -1,9 +1,0 @@
-# Global language runtimes/toolchains only; standalone CLIs live in Brewfile.
-# Projects can override these defaults with their own mise.toml.
-[tools]
-bun = "latest"
-go = "latest"
-java = "temurin-21"
-node = "latest"
-python = "latest"
-rust = "latest"

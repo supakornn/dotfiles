@@ -1,0 +1,13 @@
+#!/bin/sh
+# Preserve local settings, including provider/model; manage only shared fields.
+set -eu
+managed=$(cat <<'JSON'
+{{ .piSettings | toJson }}
+JSON
+)
+defaults=$(cat <<'JSON'
+{{ if eq .profile "personal" }}{{ .personalPiDefaults | toJson }}{{ else }}{}{{ end }}
+JSON
+)
+jq -s --argjson managed "$managed" --argjson defaults "$defaults" \
+  '$defaults * (.[0] // {}) * $managed'
