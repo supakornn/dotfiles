@@ -139,8 +139,7 @@ for selected in personal work; do
   calls_before="$(wc -c < "$TEST_LOG")"
   "$repo/dot" diff > "$sandbox/diff.log"
   "$repo/dot" status > "$sandbox/status.log"
-  "$repo/bootstrap.sh" > "$sandbox/preview.log"
-  [[ ! -s "$sandbox/diff.log" && ! -s "$sandbox/status.log" && ! -s "$sandbox/preview.log" ]] || fail
+  [[ ! -s "$sandbox/diff.log" && ! -s "$sandbox/status.log" ]] || fail
   [[ "$(wc -c < "$TEST_LOG")" == "$calls_before" ]] || fail
   jq -e '.defaultProvider == "local" and .defaultModel == "chosen" and .localState == 42' "$HOME/.pi/agent/settings.json" >/dev/null
   [[ "$(cat "$HOME/.pi/agent/auth.json")" == keep ]] || fail

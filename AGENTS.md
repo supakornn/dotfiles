@@ -47,8 +47,9 @@ The currently selected profile on this Mac does not determine repository policy.
 
 ## Ownership and layout
 
-- `dot`: the single Bash coordinator. `bootstrap.sh` is a compatibility shim:
-  default is preview, `--apply` delegates to init. Inspection does not install.
+- `dot`: the only setup/configuration entry point. `dot diff` previews,
+  `dot apply` applies configuration, and `dot init` installs dependencies too.
+  Inspection does not install; keep setup logic in this one entry point.
 - `packages/Brewfile.*`: Homebrew owns standalone CLIs, build tools, apps, fonts.
   Maven, Gradle, Coursier, uv, and cargo-binstall belong here.
 - `home/dot_config/mise/config.toml`: Mise owns Java, Kotlin, Scala, .NET, Node,
@@ -84,7 +85,7 @@ The currently selected profile on this Mac does not determine repository policy.
 
 ## Verify and deliver
 
-1. Run `bash tests/smoke.sh`, `bash -n dot bootstrap.sh tests/smoke.sh`,
+1. Run `bash tests/smoke.sh`, `bash -n dot tests/smoke.sh`,
    `sh -n home/modify_dot_gitconfig home/dot_config/btop/modify_btop.conf`,
    `ruby -c` on each Brewfile, and `git diff --check` (also `--cached` if staged).
 2. For changed scope/behavior, extend the same test to prove both inclusion and

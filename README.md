@@ -64,13 +64,12 @@ on a previously personal machine. Profiles are not security isolation.
 Microsoft apps, Zoom, and Chrome are manual installs, excluded from both profiles.
 An existing Hopper executable in `/Applications/Hopper Disassembler.app` is kept.
 The old Mise file deployment is retired; [home/](home/) is the chezmoi source.
-`bootstrap.sh` is only a compatibility shim: default previews; `--apply` runs init.
 
 ## Check
 
 ```sh
 bash tests/smoke.sh           # Requires chezmoi/jq; isolated homes, fake installers
-bash -n dot bootstrap.sh tests/smoke.sh
+bash -n dot tests/smoke.sh
 ```
 
 The single test checks both profiles, first adoption with existing tools/configs,
