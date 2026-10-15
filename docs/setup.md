@@ -2,21 +2,28 @@
 
 ## Package installation
 
-Run `--apply` from an interactive terminal: some apps require an administrator
-password, and Tailscale's App Store installation may require sign-in.
+Run `--apply` from an interactive terminal. It prepares Homebrew, Mise, and a
+Mise-managed Python before running the deployment safety checks. Python is installed
+explicitly, so this also works with Mise's automatic installation disabled. These
+prerequisite installations can happen even if the later safety checks block
+changes. Dotfiles are not replaced to make Python available.
+
+Homebrew's installer and some apps require administrator approval; Tailscale's App
+Store installation may require sign-in. `--skip-packages` requires Homebrew and
+Mise already installed and skips Homebrew and agent package installation, but
+still prepares Python, configured runtimes, and Herdr plugins through Mise.
+
+Hopper is installed through Homebrew at `/Applications/Hopper Disassembler.app`.
+If its executable already exists there, bootstrap preserves it instead of replacing
+it with Homebrew's demo build. Licence activation remains an interactive step.
 
 Bootstrap uses Homebrew's `--no-upgrade` unless you pass `--upgrade`. Homebrew may
 still upgrade dependencies required by a new installation. Package changes are
 machine-wide, even when testing with a temporary home directory.
 
-If Homebrew rejects a package from an untrusted tap, review it and approve that
-specific package. For OpenCode:
-
-```sh
-brew trust --formula anomalyco/tap/opencode-v2
-```
-
-Bootstrap does not grant Homebrew tap trust automatically.
+After deployment preflight passes, bootstrap adds the OpenCode tap and trusts only
+`anomalyco/tap/opencode-v2`, the formula declared in the Brewfile. It does not trust
+an entire tap. Review this declaration before running `--apply`.
 
 ## Deployment and recovery
 
@@ -38,10 +45,16 @@ subdirectories use `symlink-each`, preserving unrelated local entries.
 
 - **GitHub:** run `gh auth login`. Pi obtains the token with `gh auth token`; no
   token is stored in the repo.
-- **Cua Driver:** install the executable at `~/.local/bin/cua-driver`.
-- **REA:** launched through Node/npx, pinned to `rea-agents@6.4.0`. The optional
-  Hopper integration expects `~/Applications/Hopper Disassembler.app`; adjust
-  `HOPPER_LAUNCHER_PATH` in the MCP config if installed elsewhere.
+- **Cua Driver:** bootstrap uses the [official installer](https://cua.ai/docs/cua-driver/quickstart)
+  when `~/.local/bin/cua-driver` is missing. It does not edit shell startup files or
+  reinstall an existing executable. On first use, approve Accessibility and Screen
+  Recording for CuaDriver in System Settings; bootstrap cannot grant these.
+- **Pi packages:** installed from the tracked settings. Existing npm packages are
+  retained rather than upgraded on every run.
+- **REA:** prepared through Node/npx, pinned to `rea-agents@6.4.0`. The Hopper
+  integration uses `/Applications/Hopper Disassembler.app`.
 
 MCP configuration is in [`dotfiles/.pi/agent/mcp.json`](../dotfiles/.pi/agent/mcp.json).
-These external tools and their credentials are not provisioned by dotfile deployment.
+Bootstrap installs the tools, not credentials. GitHub/Pi sign-in, remote MCP OAuth,
+app licences, and macOS permissions remain interactive. These are approvals and
+account setup, not additional software installation commands.

@@ -11,32 +11,33 @@ install its own runtime dependencies; Mise selects the versions I use in my shel
 
 ## Setup
 
-Requires [Homebrew](https://brew.sh/), Mise, and Python 3.8+ for deployment.
+On macOS 14+, `--apply` installs [Homebrew](https://brew.sh/), Mise, and a Mise-managed
+Python if needed, then checks conflicts before installing packages and deploying
+dotfiles. It also installs Cua Driver and Pi packages, prepares REA, and installs
+Herdr plugins. Run from an interactive terminal for installation prompts.
 
 ```sh
-brew install mise
-
 git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
 cd ~/Documents/dotfiles
 
-# Review the config before trusting it.
-mise trust ./mise.toml
-./bootstrap.sh          # Preview packages and dotfile changes.
-./bootstrap.sh --apply  # Install missing packages and deploy.
+# Review the repository before applying it.
+./bootstrap.sh          # Preview; reports missing prerequisites without installing.
+./bootstrap.sh --apply  # Prepare prerequisites, install packages, and deploy.
 ```
 
-If Python is not available, run the apply command through
-`mise exec python@latest -- ./bootstrap.sh --apply`.
+Cloning requires Git; macOS may prompt you to install its Command Line Tools.
+Preview needs Homebrew and Mise already available; otherwise it reports what is
+missing and stops.
 
 ## Bootstrap options
 
 | Option | Effect |
 | --- | --- |
 | No options | Preview only; no installation or deployment. |
-| `--apply` | Install missing packages, deploy dotfiles, build Bat's cache, and install Herdr plugins. |
+| `--apply` | Prepare Homebrew, Mise, and Python; install packages, deploy dotfiles, and run setup tasks. |
 | `--force` | With `--apply`, back up and replace conflicting managed files. |
 | `--upgrade` | With `--apply`, allow Homebrew package upgrades. |
-| `--skip-packages` | With `--apply`, skip Homebrew installation; use existing packages. |
+| `--skip-packages` | With `--apply`, skip Homebrew and agent package installation; requires Homebrew and Mise already installed. |
 
 Backups are stored in `~/.dotfiles-backups/deployment-*`. Keep them private.
 Pi credentials/sessions, local-only skills, and Fish universal variables stay local.
@@ -57,5 +58,6 @@ python3 -m unittest discover -s tests -v
 bash -n bootstrap.sh
 ```
 
-Tests cover bootstrap safeguards and deployment into a temporary home. They do not
-install Homebrew packages or verify remote MCP authentication or a fresh Mac setup.
+Tests cover bootstrap safeguards, mocked fresh-Mac installation, agent setup, and
+deployment into a temporary home. They do not install Homebrew packages or verify
+remote MCP authentication or a fresh Mac setup.

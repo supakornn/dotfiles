@@ -34,6 +34,10 @@ herdr plugin install --yes kryptamine/herdr-auto-title
 herdr plugin action invoke herdr.auto-title.restart || true
 '''
 
+[tasks.install-agent-tools]
+description = "Install Cua Driver, configured Pi packages, and the pinned REA CLI"
+run = "python scripts/install-agent-tools.py"
+
 [tasks.build-bat-cache]
 description = "Rebuild Bat's cache for the bundled Catppuccin themes"
 run = "bat cache --build"

@@ -6,19 +6,21 @@ by the root Mise dotfiles mapping.
 
 ## Install and start
 
-The repository's `./bootstrap.sh` deploys this directory and installs Neovim and core
+The repository's `./bootstrap.sh --apply` deploys this directory and installs Neovim and core
 tools through Homebrew/Mise. To redeploy an existing installation, run
 `mise dotfiles apply --force --yes` from the repository root; this applies **all**
 configured dotfiles, so back up any local-only changes first.
 
 On first launch, lazy.nvim installs plugins and Mason installs configured language
-servers. Keep `lazy-lock.json` to preserve the validated plugin versions. Scala needs
-its Coursier/Metals installation step below. If Kotlin installation fails at the
+servers. Keep `lazy-lock.json` to preserve the validated plugin versions. Bootstrap
+also installs Coursier for Scala/Metals; the local installer below is an alternative.
+If Kotlin installation fails at the
 JetBrains CDN, use the helper under Maintenance.
 
-Install the JDKs/SDKs and build tools your projects require separately: for example,
-JDK 21 for the current JVM setup and a .NET SDK for C#. Existing `~/.dotnet` and
-Neovim-local Coursier installations are exposed only to Neovim child processes.
+Bootstrap supplies Temurin 21, Maven, and Gradle. Additional project-specific SDKs
+(such as .NET for C#) belong in project setup rather than the global toolchain list.
+Existing `~/.dotnet` and Neovim-local Coursier installations are exposed only to
+Neovim child processes.
 
 ```sh
 cd /path/to/project
