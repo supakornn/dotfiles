@@ -18,6 +18,9 @@ Back up existing configs and review the diff before applying. `--force` skips
 confirmation and makes no backups. Sign-ins, licences, and macOS permissions
 may need manual setup.
 
+Existing Pi MCP servers and settings are preserved. Dotfiles replaces only its
+own server entries (Cua on Work); back up any same-name local customizations.
+
 ## Commands
 
 ```sh

@@ -34,7 +34,8 @@ The currently selected profile on this Mac does not determine repository policy.
   theme/keybindings/general skills, and Cua CLI/MCP/vendor skill.
 - Personal only: REA setup/MCP/skill, Hopper, GitHub CLI/MCP, alphaXiv, Hugging
   Face, DeepWiki, Cord/Discord presence, and the other personal bundle entries.
-  Work renders only Cua MCP and supplies no Pi provider/model defaults.
+  Work adds/updates only Cua MCP, preserves existing local MCPs, and supplies no
+  Pi provider/model defaults.
 - Microsoft Teams/Outlook/Word/Excel, Zoom, and Chrome remain manual installs
   unless the user explicitly changes that policy.
 - When changing a scoped feature, check **installation, templates, ignore rules,
@@ -74,8 +75,11 @@ The currently selected profile on this Mac does not determine repository policy.
 - Git's modifier preserves existing identity, credential helpers, and unrelated
   settings; `~/.gitconfig.local` provides optional overrides.
 - Pi's modifier preserves local provider/model and unknown settings. Personal
-  defaults apply only when absent; Work supplies none. MCP config is managed as
-  a whole profile-rendered file: review/back up any local additions first.
+  defaults apply only when absent; Work supplies none. MCP's modifier preserves
+  existing servers and unknown top-level settings, replacing only complete server
+  entries owned by dotfiles in the selected profile. Same-name entries are owned
+  by dotfiles; back up local customizations before applying. Invalid JSON or
+  non-object configuration is refused rather than replaced.
 - btop manages only its theme selection/assets, not other machine preferences.
 - Cua owns its version-matched SDK skill and agent links. Preserve existing Cua
   executables/skills; install a missing skill through `cua-driver skills install`.

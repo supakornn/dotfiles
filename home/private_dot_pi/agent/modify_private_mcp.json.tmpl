@@ -1,0 +1,21 @@
+#!/bin/sh
+# Preserve local/company MCPs; replace only profile-approved server entries.
+set -eu
+{{- $servers := dict -}}
+{{- range $name, $server := .mcpServers -}}
+{{- if or (eq $.profile "personal") (eq $name "cua-driver") -}}
+{{- $_ := set $servers $name $server -}}
+{{- end -}}
+{{- end }}
+servers=$(cat <<'JSON'
+{{ $servers | toJson }}
+JSON
+)
+jq -es --argjson servers "$servers" '
+  if length > 1 then error("MCP config must contain one JSON object")
+  elif length == 0 then {} else .[0] end
+  | if type != "object" then error("MCP config must be a JSON object")
+    elif has("mcpServers") and (.mcpServers | type) != "object"
+    then error("mcpServers must be a JSON object")
+    else .mcpServers = ((.mcpServers // {}) + $servers) end
+'
