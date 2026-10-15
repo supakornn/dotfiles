@@ -1,0 +1,11 @@
+-- Keep the target language's syntax and overlay chezmoi's Go templates.
+return {
+  {
+    "alker0/chezmoi.vim",
+    lazy = false, -- detection must be loaded before opening templates
+    init = function()
+      vim.g["chezmoi#use_tmp_buffer"] = true -- required by upstream for lazy.nvim
+      vim.g["chezmoi#source_dir_path"] = {{ .chezmoi.sourceDir | toJson }}
+    end,
+  },
+}
