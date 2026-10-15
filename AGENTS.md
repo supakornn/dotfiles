@@ -60,8 +60,8 @@ The currently selected profile on this Mac does not determine repository policy.
   the approved pinned npx command. These are not language runtimes for Mise.
 - `home/`: native chezmoi sources. `.chezmoidata.json` contains shared Pi data;
   `.chezmoiignore` and templates select profile-specific configuration.
-- `tests/smoke.sh`: the single shell test. Keep helpers in that test's temporary
-  sandbox, not in additional repository scripts.
+- Keep verification scripts and helpers local in temporary sandboxes, outside
+  the repository; do not commit a test suite.
 - Use native chezmoi/Homebrew/Mise mechanisms. Keep the repository small: Bash,
   native templates, Brewfiles, README, and this file. No Python deployment layer,
   custom backup engine, `docs/` tree, or committed agent working notes.
@@ -85,14 +85,15 @@ The currently selected profile on this Mac does not determine repository policy.
 
 ## Verify and deliver
 
-1. Run `bash tests/smoke.sh`, `bash -n dot tests/smoke.sh`,
+1. Run `bash -n dot`,
    `sh -n home/modify_dot_gitconfig home/dot_config/btop/modify_btop.conf`,
    `ruby -c` on each Brewfile, and `git diff --check` (also `--cached` if staged).
-2. For changed scope/behavior, extend the same test to prove both inclusion and
-   exclusion, existing-config preservation, and repeatability. On macOS Bash 3.2,
+2. For changed scope/behavior, verify locally in a temporary sandbox: prove both
+   inclusion and exclusion, existing-config preservation, and repeatability.
+   Keep these verification scripts outside the repository. On macOS Bash 3.2,
    make assertions fail explicitly (`|| fail`); bare `[[ ... ]]` and negated
    commands are not a reliable errexit-based assertion mechanism.
-3. Tests use real chezmoi/jq with temporary HOME/XDG and fake mutating tools.
+3. Local checks use real chezmoi/jq with temporary HOME/XDG and fake mutating tools.
    Temporary HOME does **not** isolate real Homebrew/app changes. Never run a
    real full init as a supposedly isolated test.
 4. Report exactly what was tested versus mocked. Downloads, licences, remote
