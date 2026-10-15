@@ -1,10 +1,5 @@
 {
   "mcpServers": {
-    "cua-driver": {
-      "command": "~/.local/bin/cua-driver",
-      "args": ["mcp"],
-      "description": "Operate native desktop apps through the local Cua Driver."
-    },
     "alphaxiv": {
       "url": "https://api.alphaxiv.org/mcp/v1"
     },
@@ -12,13 +7,34 @@
       "url": "https://huggingface.co/mcp",
       "description": "Search Hugging Face models, datasets, papers, and documentation."
     },
-    "context7": {
-      "url": "https://mcp.context7.com/mcp",
-      "description": "Look up current library and framework documentation."
+    "deepwiki": {
+      "url": "https://mcp.deepwiki.com/mcp"
     },
     "github": {
       "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "!echo Bearer $(gh auth token)"
+      },
       "description": "Work with GitHub repositories, issues, pull requests, and code."
+    },
+    "rea": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "rea-agents@6.4.0",
+        "mcp"
+      ],
+      "env": {
+        "HOPPER_LAUNCHER_PATH": "${HOME}/Applications/Hopper Disassembler.app/Contents/MacOS/hopper"
+      }
+    },
+    "cua-driver": {
+      "command": "~/.local/bin/cua-driver",
+      "args": [
+        "mcp"
+      ],
+      "description": "Control macOS apps and browsers through Cua Driver"
     }
   }
 }

@@ -1,20 +1,30 @@
 [dotfiles]
-"~/.agents" = { source = "dotfiles/.agents" }
+# Preserve local-only skills and all unrelated agent state.
+"~/.agents/skills" = { source = "dotfiles/.agents/skills", mode = "symlink-each" }
+"~/.agents/.skill-lock.json" = { source = "dotfiles/.agents/.skill-lock.json", mode = "copy" }
 "~/.config/bat" = { source = "dotfiles/.config/bat" }
 "~/.config/btop/themes" = { source = "dotfiles/.config/btop/themes" }
-"~/.config/btop/btop.conf" = { source = "dotfiles/.config/btop/btop.conf" }
-"~/.config/fish" = { source = "dotfiles/.config/fish" }
+# btop saves on exit; never let it rewrite the tracked source through a symlink.
+"~/.config/btop/btop.conf" = { source = "dotfiles/.config/btop/btop.conf", mode = "copy" }
+# Keep fish_variables and unrelated local Fish configuration in place.
+"~/.config/fish/config.fish" = { source = "dotfiles/.config/fish/config.fish" }
+"~/.config/fish/conf.d" = { source = "dotfiles/.config/fish/conf.d", mode = "symlink-each" }
+"~/.config/fish/functions" = { source = "dotfiles/.config/fish/functions", mode = "symlink-each" }
+"~/.config/fish/themes" = { source = "dotfiles/.config/fish/themes", mode = "symlink-each" }
 "~/.config/ghostty" = { source = "dotfiles/.config/ghostty" }
 "~/.config/herdr/config.toml" = { source = "dotfiles/.config/herdr/config.toml" }
 "~/.config/lazygit" = { source = "dotfiles/.config/lazygit" }
-"~/.config/mise" = { source = "dotfiles/.config/mise" }
+"~/.config/mise/config.toml" = { source = "dotfiles/.config/mise/config.toml" }
 "~/.config/nvim" = { source = "dotfiles/.config/nvim" }
 "~/.config/starship.toml" = { source = "dotfiles/.config/starship.toml" }
 "~/.config/vorssaint" = { source = "dotfiles/.config/vorssaint" }
-"~/.feynman" = { source = "dotfiles/.feynman" }
 "~/.gitconfig" = { source = "dotfiles/.gitconfig" }
 "~/.gitignore_global" = { source = "dotfiles/.gitignore_global" }
-"~/.pi" = { source = "dotfiles/.pi" }
+# Pi writes settings/auth/session files at runtime. Own only specific config files.
+"~/.pi/agent/keybindings.json" = { source = "dotfiles/.pi/agent/keybindings.json", mode = "copy" }
+"~/.pi/agent/mcp.json" = { source = "dotfiles/.pi/agent/mcp.json", mode = "copy" }
+"~/.pi/agent/settings.json" = { source = "dotfiles/.pi/agent/settings.json", mode = "copy" }
+"~/.pi/agent/themes/catppuccin-mocha.json" = { source = "dotfiles/.pi/agent/themes/catppuccin-mocha.json", mode = "copy" }
 "~/.tmux.conf" = { source = "dotfiles/.tmux.conf" }
 
 [tasks.install-herdr-plugins]
