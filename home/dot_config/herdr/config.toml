@@ -364,6 +364,14 @@ resize_mode = "prefix+shift+r"
 # and `plugin_action` for an installed plugin action. Popup commands may also
 # specify width and height in cells or percentages.
 
+[[keys.command]]
+key = "prefix+cmd+g"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "80%"
+height = "80%"
+
 # Herdr Annotate: terminal comments, document review, and agent feedback.
 [[keys.command]]
 key = "prefix+a"
