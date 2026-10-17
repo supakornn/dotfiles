@@ -111,7 +111,6 @@ case "$command" in
       mise --cd "$HOME" exec -- npx --yes "$rea" --help
     fi
     bat cache --build
-    herdr plugin install --yes plannotator/herdr-annotate
     herdr plugin install --yes kryptamine/herdr-auto-title
     echo 'Done. Sign-ins, licences, and macOS permissions remain interactive.' ;;
   diff|status|apply)

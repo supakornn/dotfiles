@@ -199,8 +199,7 @@ reload_config = "prefix+r"
 
 # Focus the target of the currently visible notification.
 # Default: "prefix+o".
-# Moved to leave prefix+o available for Annotate document review.
-open_notification_target = "prefix+i"
+# open_notification_target = "prefix+o"
 
 # Select the previous workspace.
 # Default: unset.
@@ -371,38 +370,6 @@ command = "lazygit"
 description = "run lazygit"
 width = "80%"
 height = "80%"
-
-# Herdr Annotate: terminal comments, document review, and agent feedback.
-[[keys.command]]
-key = "prefix+a"
-type = "plugin_action"
-command = "annotate.capture"
-description = "Annotate selected terminal text"
-
-[[keys.command]]
-key = "prefix+shift+a"
-type = "plugin_action"
-command = "annotate.copy-context"
-description = "Copy annotations as agent context"
-
-# prefix+m remains pane zoom.
-[[keys.command]]
-key = "prefix+shift+m"
-type = "plugin_action"
-command = "annotate.manage"
-description = "Manage annotations"
-
-[[keys.command]]
-key = "prefix+o"
-type = "plugin_action"
-command = "annotate.open"
-description = "Review documents in the current folder"
-
-[[keys.command]]
-key = "prefix+shift+o"
-type = "plugin_action"
-command = "annotate.last"
-description = "Review the agent's last reply"
 
 # Legacy indexed shortcuts are parsed for compatibility. Prefer switch_tab,
 # switch_workspace, and focus_agent in new configurations.

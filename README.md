@@ -38,4 +38,10 @@ Existing packages are kept without upgrades unless requested.
 Microsoft apps, Zoom, and Chrome are installed manually.
 Neovim's `lazy-lock.json` stays local to each Mac, managed by Lazy.
 
+Plannotator reviews use the browser through the shared Pi extension. Herdr
+Annotate is no longer installed by dotfiles; on an existing Mac, remove it with
+`herdr plugin uninstall annotate`. Saved annotations and review history remain
+local and are not deleted. `prefix+o` returns to Herdr's default notification
+target shortcut after applying the configuration.
+
 Contributor instructions: [AGENTS.md](AGENTS.md).
