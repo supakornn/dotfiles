@@ -32,7 +32,7 @@ The currently selected profile on this Mac does not determine repository policy.
   `base` is a scope, not a third machine profile. Never infer it from a hostname.
 - Shared: shell/editor/terminal configs, font, Herdr plugins, Pi's five packages,
   theme/keybindings/general skills, and Cua CLI/MCP/vendor skill.
-- Personal only: REA setup/MCP/skill, Hopper, GitHub CLI/MCP, alphaXiv, Hugging
+- Personal only: REA setup/MCP/skill, Ghidra, GitHub CLI/MCP, alphaXiv, Hugging
   Face, DeepWiki, Cord/Discord presence, and the other personal bundle entries.
   Work adds/updates only Cua MCP, preserves existing local MCPs, and supplies no
   Pi provider/model defaults.
@@ -83,7 +83,9 @@ The currently selected profile on this Mac does not determine repository policy.
 - btop manages only its theme selection/assets, not other machine preferences.
 - Cua owns its version-matched SDK skill and agent links. Preserve existing Cua
   executables/skills; install a missing skill through `cua-driver skills install`.
-- Existing Hopper in `/Applications/Hopper Disassembler.app` is retained.
+- REA explicitly uses Ghidra (Homebrew) with the shared Mise Java runtime.
+  Existing Hopper in `/Applications/Hopper Disassembler.app` is retained but
+  is no longer installed or required by dotfiles.
 - Refuse managed-directory symlinks rather than writing into an old repository.
   Keep their targets and local-only data; ask before live migration work.
 

@@ -28,9 +28,6 @@ if ! command -v brew >/dev/null 2>&1; then
     if [[ -x "$brew" ]]; then eval "$("$brew" shellenv)"; break; fi
   done
 fi
-if [[ -x '/Applications/Hopper Disassembler.app/Contents/MacOS/hopper' ]]; then
-  export HOMEBREW_BUNDLE_CASK_SKIP="${HOMEBREW_BUNDLE_CASK_SKIP:-} hopper-disassembler"
-fi
 command="${1:---help}"
 [[ $# == 0 ]] || shift
 case "$command" in
@@ -106,9 +103,10 @@ case "$command" in
       fi
     done < <(jq -r '.packages[]' "$HOME/.pi/agent/settings.json")
     if [[ "$selected" == personal ]]; then
-      rea="$(jq -r '.mcpServers.rea.args[1]' "$HOME/.pi/agent/mcp.json")"
+      rea="$(jq -r '.mcpServers.rea.args[] | select(startswith("rea-agents@"))' "$HOME/.pi/agent/mcp.json")"
       [[ "$rea" =~ ^rea-agents@[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail 'REA must use a pinned release.'
-      mise --cd "$HOME" exec -- npx --yes "$rea" --help
+      GHIDRA_INSTALL_DIR="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR' "$HOME/.pi/agent/mcp.json")" \
+        REA_ANALYSIS_PROVIDER=ghidra mise --cd "$HOME" exec -- npx --yes "$rea" doctor --provider ghidra --json
     fi
     bat cache --build
     herdr plugin install --yes kryptamine/herdr-auto-title
@@ -130,6 +128,17 @@ case "$command" in
     done
     mise --cd "$HOME" doctor || healthy=false
     [[ -x "$HOME/.local/bin/cua-driver" && -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || { echo 'Missing Cua CLI or skill.'; healthy=false; }
+    if [[ "$selected" == personal ]]; then
+      ghidra="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR // empty' "$HOME/.pi/agent/mcp.json")" || healthy=false
+      native=mac_x86_64
+      [[ "$(uname -m)" != arm64 ]] || native=mac_arm_64
+      if [[ ! -x "$ghidra/support/analyzeHeadless" || ! -f "$ghidra/Ghidra/application.properties" ]] ||
+        [[ ! -x "$ghidra/Ghidra/Features/Decompiler/os/$native/decompile" && ! -x "$ghidra/Ghidra/Features/Decompiler/build/os/$native/decompile" ]]; then
+        echo 'Missing Ghidra headless installation or host-native decompiler. Run dot init.'
+        healthy=false
+      fi
+      MISE_AUTO_INSTALL=0 MISE_EXEC_AUTO_INSTALL=0 mise --cd "$HOME" exec -- java -version || healthy=false
+    fi
     if [[ "$selected" == work ]]; then
       for path in "$HOME/.agents/skills/reverse-engineer-anything" "$HOME/.config/nvim/lua/plugins/cord.lua" "$HOME/.local/share/nvim/lazy/cord.nvim" "$HOME"/.npm/_npx/*/node_modules/rea-agents; do
         if [[ -e "$path" || -L "$path" ]]; then echo "Personal leftover (not removed): $path"; healthy=false; fi

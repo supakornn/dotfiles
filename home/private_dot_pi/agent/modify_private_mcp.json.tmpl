@@ -4,6 +4,11 @@ set -eu
 {{- $servers := dict -}}
 {{- range $name, $server := .mcpServers -}}
 {{- if or (eq $.profile "personal") (eq $name "cua-driver") -}}
+{{- if eq $name "rea" -}}
+{{- $server = deepCopy $server -}}
+{{- $_ := set $server "args" (concat (list "--cd" $.chezmoi.homeDir) $server.args) -}}
+{{- $_ := set $server.env "GHIDRA_INSTALL_DIR" (printf "%s/opt/ghidra/libexec" (output "brew" "--prefix" | trim)) -}}
+{{- end -}}
 {{- $_ := set $servers $name $server -}}
 {{- end -}}
 {{- end }}
