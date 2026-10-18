@@ -2,7 +2,7 @@
 brew "mole"
 brew "gh"
 brew "mas"
-cask "hopper-disassembler"
+brew "ghidra"
 cask "anydesk"
 cask "codexbar"
 cask "batfi"

@@ -38,14 +38,19 @@
     },
     "rea": {
       "type": "stdio",
-      "command": "npx",
+      "command": "mise",
       "args": [
+        "exec",
+        "--",
+        "npx",
         "-y",
         "rea-agents@6.4.0",
         "mcp"
       ],
       "env": {
-        "HOPPER_LAUNCHER_PATH": "/Applications/Hopper Disassembler.app/Contents/MacOS/hopper"
+        "REA_ANALYSIS_PROVIDER": "ghidra",
+        "MISE_AUTO_INSTALL": "0",
+        "MISE_EXEC_AUTO_INSTALL": "0"
       }
     },
     "cua-driver": {
