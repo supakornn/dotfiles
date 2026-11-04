@@ -1,5 +1,6 @@
-font-family = jetbrains mono
-font-size = 13
+font-family = Geist mono
+font-size = 14
+font-feature = +ss11
 font-thicken = true
 font-thicken-strength = 200
 font-style-bold = regular

@@ -37,6 +37,8 @@ Homebrew owns apps and standalone tools; Mise owns language runtimes.
 Existing packages are kept without upgrades unless requested.
 Microsoft apps, Zoom, and Chrome are installed manually.
 Neovim's `lazy-lock.json` stays local to each Mac, managed by Lazy.
+Ghostty uses Geist Mono at size 14 with `+ss11` on both Macs; Homebrew owns the
+font and chezmoi owns the configuration. Previously installed fonts are kept.
 
 Plannotator reviews use the browser through the shared Pi extension. Herdr
 Annotate is no longer installed by dotfiles; on an existing Mac, remove it with
