@@ -1,6 +1,5 @@
 {{ if ne .profile "personal" }}
 .agents/skills/reverse-engineer-anything
-.config/nvim/lua/plugins/cord.lua
 {{ end }}
 # Editor-local agent state is never configuration, in either profile.
 .config/nvim/.pi

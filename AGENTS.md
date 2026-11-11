@@ -33,15 +33,14 @@ The currently selected profile on this Mac does not determine repository policy.
 - Shared: shell/editor/terminal configs, font, Herdr plugins, Pi's five packages,
   theme/keybindings/general skills, and Cua CLI/MCP/vendor skill.
 - Personal only: REA setup/MCP/skill, Ghidra, GitHub CLI/MCP, alphaXiv, Hugging
-  Face, DeepWiki, Cord/Discord presence, and the other personal bundle entries.
+  Face, DeepWiki, and the other personal bundle entries.
   Work adds/updates only Cua MCP, preserves existing local MCPs, and supplies no
   Pi provider/model defaults.
 - Microsoft Teams/Outlook/Word/Excel, Zoom, and Chrome remain manual installs
   unless the user explicitly changes that policy.
 - When changing a scoped feature, check **installation, templates, ignore rules,
   skills/plugins/MCP, and verification together**. A disabled personal feature
-  must not still download, start, or report activity on Work. Cord's specification
-  itself is omitted on Work, not merely configured to hide presence.
+  must not still download, start, or report activity on Work.
 - Profile switching is refused. Never implement automatic uninstallation or
   local-skill cleanup. Existing personal leftovers can remain and even load;
   doctor reports known leftovers. Profiles are not a security boundary.

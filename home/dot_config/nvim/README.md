@@ -2,7 +2,7 @@
 
 A code-reading and lightweight-editing setup alongside terminal tools and AI agents.
 The source lives in `home/dot_config/nvim/` and is copied to `~/.config/nvim`
-by chezmoi. Cord's Discord presence plugin is deployed only for the personal profile.
+by chezmoi.
 
 ## Install and start
 

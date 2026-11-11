@@ -140,7 +140,7 @@ case "$command" in
       MISE_AUTO_INSTALL=0 MISE_EXEC_AUTO_INSTALL=0 mise --cd "$HOME" exec -- java -version || healthy=false
     fi
     if [[ "$selected" == work ]]; then
-      for path in "$HOME/.agents/skills/reverse-engineer-anything" "$HOME/.config/nvim/lua/plugins/cord.lua" "$HOME/.local/share/nvim/lazy/cord.nvim" "$HOME"/.npm/_npx/*/node_modules/rea-agents; do
+      for path in "$HOME/.agents/skills/reverse-engineer-anything" "$HOME"/.npm/_npx/*/node_modules/rea-agents; do
         if [[ -e "$path" || -L "$path" ]]; then echo "Personal leftover (not removed): $path"; healthy=false; fi
       done
     fi
