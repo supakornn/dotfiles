@@ -20,3 +20,21 @@ home/private_dot_pi/agent/*trust.json*
 home/private_dot_pi/agent/*sessions*/
 home/dot_config/herdr/*plugins*
 home/dot_config/herdr/*session*
+
+# Herdr desktop: only the settings modifier and custom appearance are sources.
+home/dot_config/herdr-app/*
+!home/dot_config/herdr-app/modify_settings.json
+!home/dot_config/herdr-app/layouts/
+!home/dot_config/herdr-app/themes/
+!home/dot_config/herdr-app/mods/
+home/dot_config/herdr-app/layouts/*
+!home/dot_config/herdr-app/layouts/catppuccin.json
+!home/dot_config/herdr-app/layouts/catppuccin.png
+home/dot_config/herdr-app/themes/*
+!home/dot_config/herdr-app/themes/catppuccin-mocha.json
+home/dot_config/herdr-app/mods/*
+!home/dot_config/herdr-app/mods/spaces-icons/
+!home/dot_config/herdr-app/mods/tabs-graph/
+home/dot_config/herdr-app/mods/*/jsconfig.json
+home/dot_config/herdr-app/mods/*/*.d.ts
+home/dot_config/herdr-app/mods/*/*.error

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Manage ligatures only; preserve all other Herdr preferences and local state.
+set -eu
+jq -s '
+  (if length == 0 then {}
+   elif length == 1 and (.[0] | type) == "object" then .[0]
+   else error("Herdr settings must contain a single JSON object")
+   end)
+  | .font_ligatures = true
+'

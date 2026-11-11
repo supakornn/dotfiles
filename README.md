@@ -46,6 +46,50 @@ Annotate is no longer installed by dotfiles; on an existing Mac, remove it with
 local and are not deleted. `prefix+o` returns to Herdr's default notification
 target shortcut after applying the configuration.
 
+## Herdr desktop appearance (Base: both Macs)
+
+Chezmoi manages `~/.config/herdr-app/layouts/catppuccin.json`, its preview,
+`themes/catppuccin-mocha.json`, and the `spaces-icons` / `tabs-graph` mods on
+both Personal and Work. The layout always uses Mocha, with a lavender accent,
+independent of system appearance. Other layouts and themes remain untouched.
+
+Chezmoi also enables terminal font ligatures (`font_ligatures: true`) in
+`~/.config/herdr-app/settings.json` on both Macs. Its modifier preserves every
+other setting and refuses malformed JSON or non-object input. Missing or empty
+settings start with only this preference. Fonts must support ligatures; Herdr
+applies the preference live after `./dot apply`.
+
+The layout and mods come from [MarcozVD/herdr-layout-catppuccin](https://github.com/MarcozVD/herdr-layout-catppuccin)
+at `b58f43478fbf874c8be989b3336793f7c98b6d10`; the theme uses the
+[official Catppuccin palette](https://github.com/catppuccin/palette).
+These are vendored copies, not automatically updated. Mods depend on Herdr's
+shipped panels and API; validate them after app upgrades.
+
+This adds configuration only: Herdr desktop must already be installed separately
+(the existing `herdr` package/configuration is unchanged). Back up any same-name
+custom files before adoption. Review `./dot diff`, then run `./dot apply` when
+ready. With the Herdr desktop window running, validate and select the layout once
+on each Mac:
+
+```sh
+herdr-app check ~/.config/herdr-app/mods/spaces-icons
+herdr-app check ~/.config/herdr-app/mods/tabs-graph
+herdr-app do layout.switch '{"name":"catppuccin"}'
+herdr-app do app.theme '{"name":"catppuccin-mocha"}'
+herdr-app status
+```
+
+`spaces-icons` reads project folders, runs read-only Git commands and
+`hc machine ls`, and caches icons under Herdr's data folder (using `cp` for PNGs
+on macOS). Neither bundled mod accesses the network. Optional Git Graph is not
+installed; its button stays hidden. Sessions, credentials, keybindings,
+window state, layout clicks/selection, caches, generated typings, and shipped
+layouts/mods are not managed. Except for font ligatures, settings and selection
+remain local to each Mac.
+
+To stop using it, switch to another layout (`Ctrl+Shift+L`). To stop syncing it,
+remove these sources; already-applied files remain until removed manually.
+
 ## REA with Ghidra (Personal only)
 
 REA uses free, open-source Ghidra instead of requiring a Hopper licence.
