@@ -65,11 +65,13 @@ at `b58f43478fbf874c8be989b3336793f7c98b6d10`; the theme uses the
 These are vendored copies, not automatically updated. Mods depend on Herdr's
 shipped panels and API; validate them after app upgrades.
 
-This adds configuration only: Herdr desktop must already be installed separately
-(the existing `herdr` package/configuration is unchanged). Back up any same-name
-custom files before adoption. Review `./dot diff`, then run `./dot apply` when
-ready. With the Herdr desktop window running, validate and select the layout once
-on each Mac:
+Homebrew installs [Herdr desktop](https://formulae.brew.sh/cask/herdr-app) through
+`cask "herdr-app"` in Base on both Macs; the cask currently requires Apple Silicon.
+The existing `herdr` CLI package/configuration is unchanged. Back up any same-name
+custom files before adoption. Review `./dot diff`, then run `./dot init` to install
+dependencies and apply configuration, or `./dot apply` for configuration only.
+The existing bundle checks in `./dot doctor` cover the cask. With the Herdr desktop
+window running, validate and select the layout once on each Mac:
 
 ```sh
 herdr-app check ~/.config/herdr-app/mods/spaces-icons
