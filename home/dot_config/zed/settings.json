@@ -1,0 +1,65 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent_ui_font_size": 15.0,
+  "mermaid_font_family": "Geist Mono",
+  "markdown_preview": {
+    "code_font_family": "Geist Mono",
+    "font_family": "Geist Mono"
+  },
+  "disable_ai": true,
+  "ui_font_size": 15.0,
+  "ui_font_family": "Geist Mono",
+  "buffer_font_size": 14.0,
+  "terminal": {
+    "font_family": "Geist Mono",
+    "font_size": 14.0
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Catppuccin Macchiato",
+    "dark": "Catppuccin Macchiato"
+  },
+  "buffer_font_family": "Geist Mono",
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    }
+  },
+  "base_keymap": "Zed",
+  "session": {
+    "trust_all_worktrees": false
+  },
+  "vim_mode": true,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Catppuccin Mocha",
+  },
+}

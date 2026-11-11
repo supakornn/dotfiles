@@ -46,6 +46,17 @@ Annotate is no longer installed by dotfiles; on an existing Mac, remove it with
 local and are not deleted. `prefix+o` returns to Herdr's default notification
 target shortcut after applying the configuration.
 
+## Zed configuration (Base: both Macs)
+
+Chezmoi manages `~/.config/zed/settings.json` and `keymap.json` on both
+Personal and Work, imported from the existing configuration. These are whole-file
+configs: back up local customizations and review `./dot diff` before `./dot apply`.
+Prompts, custom themes, credentials, sessions, and other local files stay unmanaged.
+Zed remains in the existing Base Homebrew bundle; no installers or extensions are
+added. The settings reference Catppuccin themes, which must be available separately
+on each Mac. To roll back, restore your backed-up files and remove these sources
+if you no longer want them managed.
+
 ## Herdr desktop appearance (Base: both Macs)
 
 Chezmoi manages `~/.config/herdr-app/layouts/catppuccin.json`, its preview,
