@@ -5,4 +5,8 @@
 .config/nvim/.pi
 # Lazy owns each machine's plugin pins.
 .config/nvim/lazy-lock.json
+# Herdr generates these when checking the vendored mod.
+.config/herdr-app/mods/auto-title/jsconfig.json
+.config/herdr-app/mods/auto-title/*.d.ts
+.config/herdr-app/mods/auto-title/*.error
 # Credentials, sessions, local-only skills, and universal variables are not sources.

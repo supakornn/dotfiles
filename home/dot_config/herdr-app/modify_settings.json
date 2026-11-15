@@ -6,5 +6,5 @@ jq -s '
    elif length == 1 and (.[0] | type) == "object" then .[0]
    else error("Herdr settings must contain a single JSON object")
    end)
-  | .font_ligatures = true
+  | .font_ligatures = false
 '

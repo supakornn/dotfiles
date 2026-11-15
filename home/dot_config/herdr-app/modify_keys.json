@@ -1,0 +1,15 @@
+#!/bin/sh
+# Add the Auto Title popup shortcut without replacing local bindings.
+set -eu
+jq -s '
+  (if length == 0 then {}
+   elif length == 1 and (.[0] | type) == "object" then .[0]
+   else error("Herdr keys must contain a single JSON object")
+   end)
+  | if has("global") and (.global | type) != "object" then
+      error("Herdr global keys must be an object")
+    else . end
+  | if (.global // {} | has("cmd-alt-t")) and .global["cmd-alt-t"] != "mod.open:auto-title" then
+      error("cmd-alt-t is already bound; choose a shortcut before applying")
+    else .global["cmd-alt-t"] = "mod.open:auto-title" end
+'

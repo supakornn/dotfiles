@@ -75,6 +75,18 @@ herdr-app do layout.switch '{"name":"catppuccin"}'
 herdr-app do app.theme '{"name":"catppuccin-latte"}'
 ```
 
+**Auto Title** is included on both profiles. Press `Cmd+Option+T` to open its
+installer/status popup. The optional **Install** button downloads a checksum-checked
+GitHub release and starts a login service; `dot init` and `dot apply` only deploy
+the popup, not the service. Existing shortcuts are preserved; a conflicting
+`Cmd+Option+T` binding must be resolved before applying. Check the mod with
+`herdr-app check ~/.config/herdr-app/mods/auto-title`.
+
+The popup is vendored from [kryptamine/herdr-auto-title](https://github.com/kryptamine/herdr-auto-title/tree/67c03f3a1ed0ce6717f815b3609e3e32b496c39b/mod)
+(v0.22.3). The service manages its own updates and local state. To remove the
+service, run `"$HOME/Library/Application Support/herdr-auto-title/bin/herdr-auto-title" desktop uninstall`;
+removing the popup files alone does not stop it.
+
 Layout and mods adapted from [MarcozVD/herdr-layout-catppuccin](https://github.com/MarcozVD/herdr-layout-catppuccin).
 Colors from [Catppuccin](https://github.com/catppuccin/palette).
 Contributor instructions: [AGENTS.md](AGENTS.md).
