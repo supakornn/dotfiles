@@ -1,6 +1,6 @@
 {
   "piSettings": {
-    "theme": "catppuccin-mocha",
+    "theme": "catppuccin-latte",
     "packages": [
       "npm:pi-web-access",
       "npm:pi-toggle-skills",

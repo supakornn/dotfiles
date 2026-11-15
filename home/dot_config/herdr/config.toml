@@ -32,7 +32,7 @@ onboarding = false
 # Default: unset; Herdr uses the configured theme's light sibling if available.
 # light_name = "catppuccin-latte"
 
-name = "catppuccin"
+name = "catppuccin-latte"
 auto_switch = false
 [theme.custom]
 # Override individual tokens from the base theme. Colors accept #rrggbb, named
@@ -40,43 +40,43 @@ auto_switch = false
 # transparent. Every custom token defaults to unset.
 
 # Highlight and selection accent.
-accent = "#cba6f7"
+accent = "#8839ef"
 # Sidebar and panel background.
-panel_bg = "#1e1e2e"
+panel_bg = "#eff1f5"
 # Desktop sidebar background, independent of other panel surfaces.
-sidebar_bg = "#1e1e2e"
+sidebar_bg = "#eff1f5"
 # Background of the active Space and focused Agent sidebar rows.
-active_row_bg = "#313244"
+active_row_bg = "#ccd0da"
 # Background of the Navigate-mode cursor row in the sidebar.
-selection_bg = "#45475a"
+selection_bg = "#bcc0cc"
 # Lowest elevated surface color.
-surface0 = "#313244"
+surface0 = "#ccd0da"
 # Higher elevated surface color.
-surface1 = "#45475a"
+surface1 = "#bcc0cc"
 # Dimmed surface color.
-surface_dim = "#181825"
+surface_dim = "#e6e9ef"
 # Lowest overlay color.
-overlay0 = "#6c7086"
+overlay0 = "#9ca0b0"
 # Higher overlay color.
-overlay1 = "#7f849c"
+overlay1 = "#8c8fa1"
 # Primary foreground text.
-text = "#cdd6f4"
+text = "#4c4f69"
 # Secondary foreground text.
-subtext0 = "#a6adc8"
+subtext0 = "#6c6f85"
 # Mauve semantic color.
-mauve = "#cba6f7"
+mauve = "#8839ef"
 # Green semantic color.
-green = "#a6e3a1"
+green = "#40a02b"
 # Yellow semantic color.
-yellow = "#f9e2af"
+yellow = "#df8e1d"
 # Red semantic color.
-red = "#f38ba8"
+red = "#d20f39"
 # Blue semantic color.
-blue = "#89b4fa"
+blue = "#1e66f5"
 # Teal semantic color.
-teal = "#94e2d5"
+teal = "#179299"
 # Peach semantic color.
-peach = "#fab387"
+peach = "#fe640b"
 
 # -----------------------------------------------------------------------------
 # Terminal
@@ -532,7 +532,7 @@ prompt_new_workspace_name = true
 # Accent color for highlights, borders, and navigation UI. Accepts #rrggbb,
 # named colors, or rgb(r,g,b).
 # Default: "cyan".
-accent = "#cba6f7"
+accent = "#8839ef"
 
 agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = false
@@ -550,7 +550,7 @@ status_indicators = "symbols"
 # Expanded Agent layout. Built-in tokens: state_icon, state_text, workspace,
 # tab, pane, agent, terminal_title, and terminal_title_stripped. `$name` reads
 # custom pane metadata. A token can be styled with an inline table such as
-# { token = "workspace", fg = "#89b4fa", bold = true, dim = false }.
+# { token = "workspace", fg = "#1e66f5", bold = true, dim = false }.
 # Default: [["state_icon", "workspace", "tab"], ["agent"]].
 # rows = [["state_icon", "workspace", "tab"], ["agent"]]
 

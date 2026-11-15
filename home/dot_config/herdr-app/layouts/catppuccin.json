@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "row",
-  "theme": "catppuccin-mocha",
+  "theme": "catppuccin-latte",
   "preview": "layouts/catppuccin.png",
   "titlebar": "none",
   "traffic_lights": [
