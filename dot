@@ -18,6 +18,22 @@ routine() (
   cat "$output" >&2
   exit "$result"
 )
+verify_rea() {
+  local report result summary
+  if "$verbose"; then "$@"; return; fi
+  if report="$("$@")"; then return 0; else result=$?; fi
+  if summary="$(jq -er '
+    [.scope_checks[] | select(.ok == false) |
+      "\(.name): \(.detail)" + (if (.remediation // "") != "" then "\n  \(.remediation)" else "" end)] |
+    select(length > 0) | join("\n")
+  ' <<< "$report" 2>/dev/null)"; then
+    printf '%s\n' "$summary" >&2
+  else
+    printf 'REA with Ghidra verification failed (exit %s).\n' "$result" >&2
+  fi
+  printf 'Run ./dot init --verbose for the full REA report.\n' >&2
+  return "$result"
+}
 config_summary() {
   local pending
   pending="$(chez status | awk 'substr($0, 2, 1) ~ /[ADMR]/ { count++ } END { print count+0 }')" || fail 'Cannot inspect pending configuration changes.'
@@ -150,7 +166,7 @@ case "$command" in
       rea="$(jq -r '.mcpServers.rea.args[] | select(startswith("rea-agents@"))' "$HOME/.pi/agent/mcp.json")"
       [[ "$rea" =~ ^rea-agents@[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail 'REA must use a pinned release.'
       GHIDRA_INSTALL_DIR="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR' "$HOME/.pi/agent/mcp.json")" \
-        REA_ANALYSIS_PROVIDER=ghidra routine mise --cd "$HOME" exec -- npx --yes "$rea" doctor --provider ghidra --json
+        REA_ANALYSIS_PROVIDER=ghidra verify_rea mise --cd "$HOME" exec -- npx --yes "$rea" doctor --provider ghidra --json
     fi
     task 'Build bat theme cache'
     routine bat cache --build
