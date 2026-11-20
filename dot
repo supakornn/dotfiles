@@ -13,6 +13,15 @@ check_directories() {
     [[ ! -L "$path" ]] || fail "Managed directory is a symlink: $path. Move the link aside before applying; keep its target data."
   done <<< "$paths"
 }
+check_skills() {
+  local source="$1" name="${2:-}" skills skill
+  skills="$(jq -er --arg source "$source" --arg name "$name" '
+    .skills | to_entries[] | select(.value.source == $source and ($name == "" or .key == $name)) | .key
+  ' "$HOME/.agents/.skill-lock.json")" || return 1
+  while IFS= read -r skill; do
+    [[ -f "$HOME/.agents/skills/$skill/SKILL.md" ]] || return 1
+  done <<< "$skills"
+}
 profile() {
   selected="$(jq -r '.data.profile // empty' "$config")"
   case "$selected" in personal|work) ;; *) fail 'Run dot init --profile personal|work first.' ;; esac
@@ -86,6 +95,8 @@ case "$command" in
     done
     chez ${force[@]+"${force[@]}"} apply
     mise --cd "$HOME" --yes install
+    mise --cd "$HOME" exec -- npx --yes skills add addyosmani/agent-skills --global --agent pi --skill '*' --yes
+    mise --cd "$HOME" exec -- npx --yes skills add backnotprop/pstack --global --agent pi --skill bro --yes
     cua="$HOME/.local/bin/cua-driver"
     if [[ ! -x "$cua" ]]; then
       [[ ! -e "$cua" && ! -L "$cua" ]] || fail "Refusing to replace $cua."
@@ -127,6 +138,8 @@ case "$command" in
       brew bundle check --no-upgrade --file "$repo/packages/Brewfile.$group" || healthy=false
     done
     mise --cd "$HOME" doctor || healthy=false
+    check_skills addyosmani/agent-skills || { echo 'Missing Addy Osmani skills or installer records. Run dot init.'; healthy=false; }
+    check_skills backnotprop/pstack bro || { echo 'Missing pstack bro skill or installer record. Run dot init.'; healthy=false; }
     [[ -x "$HOME/.local/bin/cua-driver" && -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || { echo 'Missing Cua CLI or skill.'; healthy=false; }
     if [[ "$selected" == personal ]]; then
       ghidra="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR // empty' "$HOME/.pi/agent/mcp.json")" || healthy=false

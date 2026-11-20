@@ -26,7 +26,7 @@ and macOS permissions need manual setup.
 
 | Scope | Includes |
 | --- | --- |
-| [Base](packages/Brewfile.base) | Shared apps, tools, runtimes, editor/shell configs, Pi packages, and Cua |
+| [Base](packages/Brewfile.base) | Shared apps, tools, runtimes, editor/shell configs, Pi packages, shared agent skills, and Cua |
 | [Personal](packages/Brewfile.personal) | Extra apps, GitHub CLI/MCP, REA with Ghidra, and research MCP servers |
 | [Work](packages/Brewfile.work) | Base only; Cua is the only managed MCP server, with no Pi provider/model defaults |
 
@@ -63,6 +63,35 @@ and Chrome are installed manually.
   Zed's Catppuccin and Catppuccin Icons extensions must be available separately.
 - To undo configuration changes, restore the previous sources or your backups,
   preview the diff, and apply explicitly. Installed software is not removed automatically.
+
+### Agent skills
+
+Both profiles install all of [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+and only `bro` from [backnotprop/pstack](https://github.com/backnotprop/pstack)
+through the native `npx skills` installer during `dot init`:
+
+```sh
+npx --yes skills add addyosmani/agent-skills --global --agent pi --skill '*' --yes
+npx --yes skills add backnotprop/pstack --global --agent pi --skill bro --yes
+```
+
+These skills and `~/.agents/.skill-lock.json` are installer-owned, not chezmoi sources.
+Pi and other universal-skill agents share `~/.agents/skills`. Back up local edits
+before refreshing. `dot doctor` checks the recorded Addy Osmani skills and `bro`
+without downloading anything or comparing against the latest upstream list.
+
+`dot init` does not remove previously installed skills. To migrate from the full
+pstack collection, back up the skill directories and lock file, then list the
+pstack entries other than `bro`:
+
+```sh
+jq -r '.skills | to_entries[] | select(.value.source == "backnotprop/pstack" and .key != "bro") | .key' ~/.agents/.skill-lock.json
+```
+
+Review the names, then remove only those with `npx skills remove --global --yes <names...>`.
+Before installing over any old vendored Addy Osmani skills, back up their local edits
+and ensure they are no longer managed by chezmoi. To roll back, remove only the
+newly installed names and restore your backed-up files and lock.
 
 ### Herdr desktop
 
