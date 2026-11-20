@@ -48,6 +48,10 @@ Run from the repository:
 ./dot package list     # Show packages by scope
 ```
 
+`init` and `apply` show a short task list and keep warnings, errors, and prompts
+visible. Use `./dot diff` for the full preview, or add `--verbose` to `init`
+or `apply` for detailed output.
+
 Existing packages are not upgraded unless requested. Microsoft apps, Zoom,
 and Chrome are installed manually.
 

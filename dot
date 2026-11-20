@@ -6,6 +6,24 @@ config="${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.json"
 export HOMEBREW_NO_AUTO_UPDATE=1
 fail() { echo "dot: $*" >&2; exit 1; }
 chez() { chezmoi --source "$repo/home" --config "$config" --destination "$HOME" "$@"; }
+verbose=false
+task() { printf '\n==> %s\n' "$*"; }
+# Only for non-interactive commands. Keep stderr live and replay stdout on failure.
+routine() (
+  if "$verbose"; then "$@"; exit; fi
+  local output result
+  output="$(mktemp "${TMPDIR:-/tmp}/dot-output.XXXXXX")" || exit 1
+  trap 'rm -f -- "$output"' EXIT
+  if "$@" > "$output"; then exit 0; else result=$?; fi
+  cat "$output" >&2
+  exit "$result"
+)
+config_summary() {
+  local pending
+  pending="$(chez status | awk 'substr($0, 2, 1) ~ /[ADMR]/ { count++ } END { print count+0 }')" || fail 'Cannot inspect pending configuration changes.'
+  if [[ "$pending" == 0 ]]; then printf 'No pending configuration changes.\n'
+  else printf '%s pending configuration changes. Run ./dot diff for details.\n' "$pending"; fi
+}
 check_directories() {
   local paths path
   paths="$(chez managed --include dirs --path-style absolute)" || fail 'Cannot inspect managed directories.'
@@ -27,8 +45,9 @@ profile() {
   case "$selected" in personal|work) ;; *) fail 'Run dot init --profile personal|work first.' ;; esac
 }
 usage() {
-  echo 'dot init [--profile personal|work] [--upgrade] [--force]'
-  echo 'dot diff | status | apply [--force] | doctor'
+  echo 'dot init [--profile personal|work] [--upgrade] [--force] [--verbose]'
+  echo 'dot apply [--force] [--verbose]'
+  echo 'dot diff | status | doctor'
   echo 'dot package list [base|personal|work]'
 }
 # Find existing Homebrew even before the shell has been configured.
@@ -61,12 +80,14 @@ case "$command" in
           case "$requested" in personal|work) ;; *) fail 'Unknown profile.' ;; esac ;;
         --upgrade) upgrade=true ;;
         --force) force=(--force) ;;
+        --verbose|-v) verbose=true ;;
         --help|-h) usage; exit 0 ;;
         *) fail "Unknown option: $1" ;;
       esac
       shift
     done
     [[ "$(uname -s)" == Darwin ]] || fail 'Setup requires macOS.'
+    task 'Check setup prerequisites'
     if ! command -v brew >/dev/null 2>&1; then
       installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       /bin/bash -c "$installer"
@@ -84,28 +105,39 @@ case "$command" in
       if [[ -n "$requested" ]]; then chez init --promptChoice "Profile=$requested"; else chez init; fi
       profile
     fi
+    printf 'Profile: %s\n' "$selected"
+    task 'Review pending configuration'
     check_directories
-    # Preview first. Native chezmoi asks before overwriting externally changed files.
-    chez diff
+    if "$verbose"; then chez diff; else config_summary; fi
+    task 'Prepare Homebrew tap'
     brew tap anomalyco/tap
     brew trust --formula anomalyco/tap/opencode-v2
+    brew_options=()
+    if ! "$upgrade"; then brew_options+=(--no-upgrade); fi
+    if ! "$verbose"; then brew_options+=(--quiet); fi
     for group in base "$selected"; do
-      if "$upgrade"; then brew bundle install --file "$repo/packages/Brewfile.$group"
-      else brew bundle install --no-upgrade --file "$repo/packages/Brewfile.$group"; fi
+      task "Install Homebrew packages ($group)"
+      brew bundle install ${brew_options[@]+"${brew_options[@]}"} --file "$repo/packages/Brewfile.$group"
     done
-    chez ${force[@]+"${force[@]}"} apply
-    mise --cd "$HOME" --yes install
-    mise --cd "$HOME" exec -- npx --yes skills add addyosmani/agent-skills --global --agent pi --skill '*' --yes
-    mise --cd "$HOME" exec -- npx --yes skills add backnotprop/pstack --global --agent pi --skill bro --yes
+    task 'Apply configuration'
+    # Keep chezmoi on the terminal so it can ask about externally changed files.
+    chez ${force[@]+"${force[@]}"} apply --verbose="$verbose"
+    task 'Install Mise runtimes'
+    routine mise --cd "$HOME" --yes install
+    task 'Install agent skills (Addy Osmani and bro)'
+    routine mise --cd "$HOME" exec -- npx --yes skills add addyosmani/agent-skills --global --agent pi --skill '*' --yes
+    routine mise --cd "$HOME" exec -- npx --yes skills add backnotprop/pstack --global --agent pi --skill bro --yes
+    task 'Check Cua driver and skill'
     cua="$HOME/.local/bin/cua-driver"
     if [[ ! -x "$cua" ]]; then
       [[ ! -e "$cua" && ! -L "$cua" ]] || fail "Refusing to replace $cua."
       installer="$(curl -fsSL https://cua.ai/driver/install.sh)"
       /bin/bash -c "$installer" cua-driver-install --bin-dir "$HOME/.local/bin" --no-modify-path
     fi
-    "$cua" --version
+    routine "$cua" --version
     if [[ ! -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]]; then "$cua" skills install; fi
     [[ -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || fail 'Cua skill is missing; check existing skill links.'
+    task 'Check Pi packages'
     while IFS= read -r package; do
       name="${package#npm:}"
       manifest="$HOME/.pi/agent/npm/node_modules/$name/package.json"
@@ -114,21 +146,41 @@ case "$command" in
       fi
     done < <(jq -r '.packages[]' "$HOME/.pi/agent/settings.json")
     if [[ "$selected" == personal ]]; then
+      task 'Verify REA with Ghidra'
       rea="$(jq -r '.mcpServers.rea.args[] | select(startswith("rea-agents@"))' "$HOME/.pi/agent/mcp.json")"
       [[ "$rea" =~ ^rea-agents@[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail 'REA must use a pinned release.'
       GHIDRA_INSTALL_DIR="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR' "$HOME/.pi/agent/mcp.json")" \
-        REA_ANALYSIS_PROVIDER=ghidra mise --cd "$HOME" exec -- npx --yes "$rea" doctor --provider ghidra --json
+        REA_ANALYSIS_PROVIDER=ghidra routine mise --cd "$HOME" exec -- npx --yes "$rea" doctor --provider ghidra --json
     fi
-    bat cache --build
-    herdr plugin install --yes kryptamine/herdr-auto-title
-    echo 'Done. Sign-ins, licences, and macOS permissions remain interactive.' ;;
+    task 'Build bat theme cache'
+    routine bat cache --build
+    task 'Install Herdr Auto Title plugin'
+    routine herdr plugin install --yes kryptamine/herdr-auto-title
+    printf '\nDone. Sign-ins, licences, and macOS permissions remain interactive.\n' ;;
   diff|status|apply)
     command -v chezmoi >/dev/null 2>&1 || fail 'Run dot init first.'
     [[ -f "$config" ]] || fail 'Run dot init --profile personal|work first.'
     profile
-    [[ "$command" != apply ]] || check_directories
-    if [[ "$command" == apply && "${1:-}" == --force && $# == 1 ]]; then chez --force apply
-    else [[ $# == 0 ]] || fail 'Only dot apply accepts --force.'; chez "$command"; fi ;;
+    if [[ "$command" != apply ]]; then
+      [[ $# == 0 ]] || fail "dot $command takes no options."
+      chez "$command"
+    else
+      force=()
+      while [[ $# -gt 0 ]]; do
+        case "$1" in
+          --force) force=(--force) ;;
+          --verbose|-v) verbose=true ;;
+          --help|-h) usage; exit 0 ;;
+          *) fail "Unknown option: $1" ;;
+        esac
+        shift
+      done
+      task "Apply configuration ($selected)"
+      check_directories
+      if ! "$verbose"; then config_summary; fi
+      chez ${force[@]+"${force[@]}"} apply --verbose="$verbose"
+      printf '\nDone.\n'
+    fi ;;
   doctor)
     [[ $# == 0 ]] || fail 'doctor takes no options.'
     profile
