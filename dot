@@ -47,10 +47,16 @@ check_directories() {
     [[ ! -L "$path" ]] || fail "Managed directory is a symlink: $path. Move the link aside before applying; keep its target data."
   done <<< "$paths"
 }
+skill_selections() {
+  jq -r --arg profile "$selected" '
+    .[] | select(.scope == "base" or .scope == $profile) | . as $entry |
+    .skills[] | [$entry.source, ($entry.package // $entry.source), .] | @tsv
+  ' "$repo/packages/skills.json"
+}
 check_skills() {
-  local source="$1" name="${2:-}" skills skill
+  local source="$1" name="$2" skills skill
   skills="$(jq -er --arg source "$source" --arg name "$name" '
-    .skills | to_entries[] | select(.value.source == $source and ($name == "" or .key == $name)) | .key
+    .skills | to_entries[] | select(.value.source == $source and ($name == "*" or .key == $name)) | .key
   ' "$HOME/.agents/.skill-lock.json")" || return 1
   while IFS= read -r skill; do
     [[ -f "$HOME/.agents/skills/$skill/SKILL.md" ]] || return 1
@@ -121,6 +127,7 @@ case "$command" in
       if [[ -n "$requested" ]]; then chez init --promptChoice "Profile=$requested"; else chez init; fi
       profile
     fi
+    skills="$(skill_selections)" || fail 'Cannot read packages/skills.json.'
     printf 'Profile: %s\n' "$selected"
     task 'Review pending configuration'
     check_directories
@@ -140,9 +147,11 @@ case "$command" in
     chez ${force[@]+"${force[@]}"} apply --verbose="$verbose"
     task 'Install Mise runtimes'
     routine mise --cd "$HOME" --yes install
-    task 'Install agent skills (Addy Osmani and bro)'
-    routine mise --cd "$HOME" exec -- npx --yes skills add addyosmani/agent-skills --global --agent pi --skill '*' --yes
-    routine mise --cd "$HOME" exec -- npx --yes skills add backnotprop/pstack --global --agent pi --skill bro --yes
+    task 'Install agent skills'
+    while IFS=$'\t' read -r source package skill; do
+      [[ -n "$source" ]] || continue
+      routine mise --cd "$HOME" exec -- npx --yes skills add "$package" --global --agent pi --skill "$skill" --yes
+    done <<< "$skills"
     task 'Check Cua driver and skill'
     cua="$HOME/.local/bin/cua-driver"
     if [[ ! -x "$cua" ]]; then
@@ -206,8 +215,11 @@ case "$command" in
       brew bundle check --no-upgrade --file "$repo/packages/Brewfile.$group" || healthy=false
     done
     mise --cd "$HOME" doctor || healthy=false
-    check_skills addyosmani/agent-skills || { echo 'Missing Addy Osmani skills or installer records. Run dot init.'; healthy=false; }
-    check_skills backnotprop/pstack bro || { echo 'Missing pstack bro skill or installer record. Run dot init.'; healthy=false; }
+    skills="$(skill_selections)" || fail 'Cannot read packages/skills.json.'
+    while IFS=$'\t' read -r source package skill; do
+      [[ -n "$source" ]] || continue
+      check_skills "$source" "$skill" || { echo "Missing skill or installer record: $source ($skill). Run dot init."; healthy=false; }
+    done <<< "$skills"
     [[ -x "$HOME/.local/bin/cua-driver" && -f "$HOME/.agents/skills/cua-driver/SKILL.md" ]] || { echo 'Missing Cua CLI or skill.'; healthy=false; }
     if [[ "$selected" == personal ]]; then
       ghidra="$(jq -r '.mcpServers.rea.env.GHIDRA_INSTALL_DIR // empty' "$HOME/.pi/agent/mcp.json")" || healthy=false
