@@ -6,13 +6,8 @@
   },
   {
     "scope": "base",
-    "source": "backnotprop/pstack",
-    "skills": ["bro"]
-  },
-  {
-    "scope": "base",
     "source": "cursor/plugins",
-    "package": "https://github.com/cursor/plugins/tree/main/pstack/skills/in-your-own-words",
-    "skills": ["in-your-own-words"]
+    "package": "https://github.com/cursor/plugins/tree/main/pstack/skills",
+    "skills": ["bro", "in-your-own-words"]
   }
 ]
