@@ -443,15 +443,15 @@
 		<key>menuBarSeparateMetrics</key>
 		<false/>
 		<key>menuBarUsageBarCriticalColor</key>
-		<string>#FF453A</string>
+		<string>#ED8796</string>
 		<key>menuBarUsageBarElevatedColor</key>
-		<string>#FFD60A</string>
+		<string>#EED49F</string>
 		<key>menuBarUsageBarHighThreshold</key>
 		<integer>90</integer>
 		<key>menuBarUsageBarMediumThreshold</key>
 		<integer>70</integer>
 		<key>menuBarUsageBarNormalColor</key>
-		<string>#64D2FF</string>
+		<string>#8AADF4</string>
 		<key>micMuteMenuBarIndicator</key>
 		<true/>
 		<key>micMuteShortcut</key>

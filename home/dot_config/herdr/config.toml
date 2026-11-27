@@ -32,7 +32,8 @@ onboarding = false
 # Default: unset; Herdr uses the configured theme's light sibling if available.
 # light_name = "catppuccin-latte"
 
-name = "catppuccin-latte"
+# Herdr provides a Mocha base; the overrides below use Macchiato.
+name = "catppuccin"
 auto_switch = false
 [theme.custom]
 # Override individual tokens from the base theme. Colors accept #rrggbb, named
@@ -40,43 +41,43 @@ auto_switch = false
 # transparent. Every custom token defaults to unset.
 
 # Highlight and selection accent.
-accent = "#8839ef"
+accent = "#c6a0f6"
 # Sidebar and panel background.
-panel_bg = "#eff1f5"
+panel_bg = "#24273a"
 # Desktop sidebar background, independent of other panel surfaces.
-sidebar_bg = "#eff1f5"
+sidebar_bg = "#24273a"
 # Background of the active Space and focused Agent sidebar rows.
-active_row_bg = "#ccd0da"
+active_row_bg = "#363a4f"
 # Background of the Navigate-mode cursor row in the sidebar.
-selection_bg = "#bcc0cc"
+selection_bg = "#494d64"
 # Lowest elevated surface color.
-surface0 = "#ccd0da"
+surface0 = "#363a4f"
 # Higher elevated surface color.
-surface1 = "#bcc0cc"
+surface1 = "#494d64"
 # Dimmed surface color.
-surface_dim = "#e6e9ef"
+surface_dim = "#1e2030"
 # Lowest overlay color.
-overlay0 = "#9ca0b0"
+overlay0 = "#6e738d"
 # Higher overlay color.
-overlay1 = "#8c8fa1"
+overlay1 = "#8087a2"
 # Primary foreground text.
-text = "#4c4f69"
+text = "#cad3f5"
 # Secondary foreground text.
-subtext0 = "#6c6f85"
+subtext0 = "#a5adcb"
 # Mauve semantic color.
-mauve = "#8839ef"
+mauve = "#c6a0f6"
 # Green semantic color.
-green = "#40a02b"
+green = "#a6da95"
 # Yellow semantic color.
-yellow = "#df8e1d"
+yellow = "#eed49f"
 # Red semantic color.
-red = "#d20f39"
+red = "#ed8796"
 # Blue semantic color.
-blue = "#1e66f5"
+blue = "#8aadf4"
 # Teal semantic color.
-teal = "#179299"
+teal = "#8bd5ca"
 # Peach semantic color.
-peach = "#fe640b"
+peach = "#f5a97f"
 
 # -----------------------------------------------------------------------------
 # Terminal
@@ -532,7 +533,7 @@ prompt_new_workspace_name = true
 # Accent color for highlights, borders, and navigation UI. Accepts #rrggbb,
 # named colors, or rgb(r,g,b).
 # Default: "cyan".
-accent = "#8839ef"
+accent = "#c6a0f6"
 
 agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = false
