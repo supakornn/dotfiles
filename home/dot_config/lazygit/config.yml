@@ -2,31 +2,31 @@ gui:
   mouseEvents: false
   theme:
     activeBorderColor:
-      - '#1e66f5'
+      - '#8aadf4'
       - bold
     inactiveBorderColor:
-      - '#6c6f85'
+      - '#a5adcb'
     searchingActiveBorderColor:
-      - '#df8e1d'
+      - '#eed49f'
     optionsTextColor:
-      - '#1e66f5'
+      - '#8aadf4'
     selectedLineBgColor:
-      - '#ccd0da'
+      - '#363a4f'
     inactiveViewSelectedLineBgColor:
-      - '#9ca0b0'
+      - '#6e738d'
     cherryPickedCommitFgColor:
-      - '#1e66f5'
+      - '#8aadf4'
     cherryPickedCommitBgColor:
-      - '#bcc0cc'
+      - '#494d64'
     markedBaseCommitFgColor:
-      - '#1e66f5'
+      - '#8aadf4'
     markedBaseCommitBgColor:
-      - '#df8e1d'
+      - '#eed49f'
     unstagedChangesColor:
-      - '#d20f39'
+      - '#ed8796'
     defaultFgColor:
-      - '#4c4f69'
+      - '#cad3f5'
     authorColors:
-      '*': '#7287fd'
+      '*': '#b7bdf8'
 git:
   overrideGpg: true

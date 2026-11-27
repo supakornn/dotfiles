@@ -1,7 +1,7 @@
 # dotfiles
 
 My macOS setup: Fish, Ghostty, Herdr, tmux, Neovim, Zed, and Pi,
-with Catppuccin Latte and Geist Mono.
+with Catppuccin Macchiato and Geist Mono.
 
 ## Setup
 
@@ -63,13 +63,14 @@ Cua and REA keep their separate skill setup.
 
 ## Desktop
 
-After theme changes, reload apps and run `bat cache --build`.
+After applying the shared Macchiato configuration, reload apps and run
+`bat cache --build`.
 Install Zed's Catppuccin and Catppuccin Icons extensions separately.
 With Herdr desktop running:
 
 ```sh
 herdr-app do layout.switch '{"name":"catppuccin"}'
-herdr-app do app.theme '{"name":"catppuccin-latte"}'
+herdr-app do app.theme '{"name":"catppuccin-macchiato"}'
 ```
 
 Press `Cmd+Option+T` for [Auto Title](https://github.com/kryptamine/herdr-auto-title).

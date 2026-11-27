@@ -34,6 +34,7 @@ home/dot_config/herdr-app/layouts/*
 home/dot_config/herdr-app/themes/*
 !home/dot_config/herdr-app/themes/catppuccin-mocha.json
 !home/dot_config/herdr-app/themes/catppuccin-latte.json
+!home/dot_config/herdr-app/themes/catppuccin-macchiato.json
 home/dot_config/herdr-app/mods/*
 !home/dot_config/herdr-app/mods/spaces-icons/
 !home/dot_config/herdr-app/mods/tabs-graph/

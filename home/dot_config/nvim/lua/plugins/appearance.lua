@@ -3,9 +3,9 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
-      flavour = "latte",
+      flavour = "macchiato",
       transparent_background = true,
     },
   },
-  { "LazyVim/LazyVim", opts = { colorscheme = "catppuccin" } },
+  { "LazyVim/LazyVim", opts = { colorscheme = "catppuccin-macchiato" } },
 }
