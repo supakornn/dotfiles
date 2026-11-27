@@ -1,6 +1,6 @@
 # dotfiles
 
-My macOS setup: Fish, Ghostty, Rex, tmux, Neovim, and Pi,
+My macOS setup: Fish, Ghostty, Rex, Neovim, and Pi,
 with Catppuccin Macchiato and Geist Mono.
 
 ## Setup
@@ -48,6 +48,8 @@ Review the diff before applying: `--force` skips prompts and makes no backups.
 Credentials, sessions, and local-only data stay unmanaged. Git identity and
 unrelated Pi/MCP settings are preserved; back up same-name managed MCP entries.
 Profiles are not a security boundary, and Personal leftovers are not removed on Work.
+Tmux is no longer installed or configured by dotfiles. Existing installations,
+`~/.tmux.conf`, and plugins are left alone; remove them manually only if no longer needed.
 To roll back, restore previous sources or backups, preview, and apply explicitly.
 
 ## Agent skills
