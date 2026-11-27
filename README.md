@@ -1,6 +1,6 @@
 # dotfiles
 
-My macOS setup: Fish, Ghostty, Rex, tmux, Neovim, Zed, and Pi,
+My macOS setup: Fish, Ghostty, Rex, tmux, Neovim, and Pi,
 with Catppuccin Macchiato and Geist Mono.
 
 ## Setup
@@ -60,20 +60,3 @@ means all), and optional `package` URL. `dot init` installs these globally for P
 The installer owns `~/.agents/skills` and its local lock. Back up local edits
 before refreshing; removing a manifest entry does not uninstall a skill.
 Cua and REA keep their separate skill setup.
-
-## Desktop
-
-After applying the shared Macchiato configuration, reload apps and run
-`bat cache --build`.
-Install Zed's Catppuccin and Catppuccin Icons extensions separately.
-
-Both profiles manage `~/.config/rex/init.lua`. Review `./dot diff` and back up
-any existing Rex config before applying. On the Rex server machine, run
-`rex config reload` afterward. `Cmd+D` splits right; `Cmd+Shift+D` splits below.
-
-Existing Herdr installations and configs are left alone. If you previously applied
-the old Neovim config, remove `~/.config/nvim/after/plugin/herdr-navigation.lua`
-manually if you no longer want the old pane handoff.
-
-Colors from [Catppuccin](https://github.com/catppuccin/palette).
-Contributor instructions: [AGENTS.md](AGENTS.md).
