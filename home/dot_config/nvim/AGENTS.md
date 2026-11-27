@@ -13,7 +13,7 @@ The canonical config is this directory, deployed to `~/.config/nvim` by the root
 - Keep formatting on save, debugger/test adapters, extra linters, inlay hints,
   and code lenses disabled. Builds and tests belong in the terminal.
 - Use Snacks pickers and blink.cmp. Scala commands must work without Telescope.
-- Keep Neovim/tmux pane navigation in `lua/config/keymaps.lua`, after LazyVim's defaults.
+- Keep split navigation in `lua/config/keymaps.lua`, after LazyVim's defaults.
 - Java uses JDTLS; Metals attaches only to Scala/sbt. Kotlin uses JetBrains kotlin-lsp.
 - OmniSharp must start with the resolved project root as its process cwd.
 - Keep installation helpers local to Neovim; preserve the Kotlin public-host redirect
