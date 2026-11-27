@@ -12,5 +12,13 @@ for _, key in ipairs({ "<C-u>", "<C-d>", "n", "N", "gg", "G" }) do
   vim.keymap.set("n", key, key .. "zz")
 end
 
--- LazyVim defines window maps after after/plugin scripts; reapply Herdr maps here.
-dofile(vim.fn.stdpath("config") .. "/after/plugin/herdr-navigation.lua")
+-- At a Neovim split edge, hand off to the tmux navigator when available.
+for key, direction in pairs({ h = "Left", j = "Down", k = "Up", l = "Right" }) do
+  vim.keymap.set("n", "<C-" .. key .. ">", function()
+    local previous = vim.api.nvim_get_current_win()
+    vim.cmd("wincmd " .. key)
+    if vim.api.nvim_get_current_win() == previous and vim.env.TMUX and vim.env.TMUX ~= "" then
+      pcall(vim.cmd, "TmuxNavigate" .. direction)
+    end
+  end, { silent = true, desc = "Navigate " .. direction .. " (Neovim/tmux)" })
+end

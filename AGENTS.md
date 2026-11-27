@@ -30,7 +30,7 @@ The currently selected profile on this Mac does not determine repository policy.
 - The single machine-local selection is `data.profile` in
   `${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi/chezmoi.json`: `personal` or `work`.
   `base` is a scope, not a third machine profile. Never infer it from a hostname.
-- Shared: shell/editor/terminal configs, font, Herdr plugins, Pi's five packages,
+- Shared: shell/editor/terminal configs (including Rex), font, Pi's five packages,
   theme/keybindings/general skills, and Cua CLI/MCP/vendor skill.
 - Personal only: REA setup/MCP/skill, Ghidra, GitHub CLI/MCP, alphaXiv, Hugging
   Face, DeepWiki, and the other personal bundle entries.
@@ -56,8 +56,9 @@ The currently selected profile on this Mac does not determine repository policy.
   Bun, Python, Rust, and Go; all global declarations are `latest`. Projects may
   pin versions. TypeScript belongs in project dependencies; do not restore pipx.
   Homebrew's own transitive runtime dependencies can remain installed.
-- Pi packages, Herdr plugins, and Cua use their native/vendor installers; REA uses
-  the approved pinned npx command. These are not language runtimes for Mise.
+- Rex is installed manually; chezmoi manages only its `init.lua`.
+- Pi packages and Cua use their native/vendor installers; REA uses the approved
+  pinned npx command. These are not language runtimes for Mise.
 - `home/`: native chezmoi sources. `.chezmoidata.json` contains shared Pi data;
   `.chezmoiignore` and templates select profile-specific configuration.
 - Keep verification scripts and helpers local in temporary sandboxes, outside

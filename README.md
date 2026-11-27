@@ -1,12 +1,12 @@
 # dotfiles
 
-My macOS setup: Fish, Ghostty, Herdr, tmux, Neovim, Zed, and Pi,
+My macOS setup: Fish, Ghostty, Rex, tmux, Neovim, Zed, and Pi,
 with Catppuccin Macchiato and Geist Mono.
 
 ## Setup
 
 Review [packages/](packages/) and back up existing configs first.
-Herdr desktop requires Apple Silicon.
+Install [Rex](https://www.superlogical.com/rex/docs/installation) manually if you use it.
 
 ```sh
 git clone https://github.com/supakornn/dotfiles.git ~/Documents/dotfiles
@@ -66,18 +66,14 @@ Cua and REA keep their separate skill setup.
 After applying the shared Macchiato configuration, reload apps and run
 `bat cache --build`.
 Install Zed's Catppuccin and Catppuccin Icons extensions separately.
-With Herdr desktop running:
 
-```sh
-herdr-app do layout.switch '{"name":"catppuccin"}'
-herdr-app do app.theme '{"name":"catppuccin-macchiato"}'
-```
+Both profiles manage `~/.config/rex/init.lua`. Review `./dot diff` and back up
+any existing Rex config before applying. On the Rex server machine, run
+`rex config reload` afterward. `Cmd+D` splits right; `Cmd+Shift+D` splits below.
 
-Press `Cmd+Option+T` for [Auto Title](https://github.com/kryptamine/herdr-auto-title).
-Setup deploys its popup, not the optional login service; resolve shortcut conflicts
-before applying. To remove the service, run
-`"$HOME/Library/Application Support/herdr-auto-title/bin/herdr-auto-title" desktop uninstall`.
+Existing Herdr installations and configs are left alone. If you previously applied
+the old Neovim config, remove `~/.config/nvim/after/plugin/herdr-navigation.lua`
+manually if you no longer want the old pane handoff.
 
-Layout adapted from [MarcozVD/herdr-layout-catppuccin](https://github.com/MarcozVD/herdr-layout-catppuccin),
-colors from [Catppuccin](https://github.com/catppuccin/palette).
+Colors from [Catppuccin](https://github.com/catppuccin/palette).
 Contributor instructions: [AGENTS.md](AGENTS.md).
