@@ -53,7 +53,7 @@ Leader is **Space**. Press Space and pause to see the available shortcuts.
 | Space cf | Manually format |
 | Space qq | Quit all windows |
 | jj (insert mode) | Exit insert mode |
-| Ctrl-h/j/k/l | Navigate Neovim splits and Herdr panes |
+| Ctrl-h/j/k/l | Navigate Neovim splits and tmux panes |
 | Space ud | Toggle diagnostics |
 
 LazyVim's standard keymaps are retained except for the shortcuts in

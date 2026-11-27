@@ -179,8 +179,6 @@ case "$command" in
     fi
     task 'Build bat theme cache'
     routine bat cache --build
-    task 'Install Herdr Auto Title plugin'
-    routine herdr plugin install --yes kryptamine/herdr-auto-title
     printf '\nDone. Sign-ins, licences, and macOS permissions remain interactive.\n' ;;
   diff|status|apply)
     command -v chezmoi >/dev/null 2>&1 || fail 'Run dot init first.'
