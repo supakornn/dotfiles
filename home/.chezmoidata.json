@@ -1,6 +1,7 @@
 {
   "piSettings": {
     "theme": "catppuccin-macchiato",
+    "showHardwareCursor": true,
     "packages": [
       "npm:pi-web-access",
       "npm:pi-toggle-skills",
