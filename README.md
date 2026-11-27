@@ -23,7 +23,7 @@ Zoom, and Chrome.
 
 | Scope | Includes |
 | --- | --- |
-| [Base](packages/Brewfile.base) | Shared apps, runtimes, configs, Pi packages, agent skills, and Cua |
+| [Base](packages/Brewfile.base) | Shared apps, runtimes, configs, Pi packages, agent skills, Cua, and Worktrunk |
 | [Personal](packages/Brewfile.personal) | Extra apps, GitHub CLI/MCP, REA with Ghidra, and research MCP servers |
 | [Work](packages/Brewfile.work) | Base only; only Cua MCP is managed, with no Pi provider/model defaults |
 
@@ -51,6 +51,16 @@ Profiles are not a security boundary, and Personal leftovers are not removed on 
 Tmux is no longer installed or configured by dotfiles. Existing installations,
 `~/.tmux.conf`, and plugins are left alone; remove them manually only if no longer needed.
 To roll back, restore previous sources or backups, preview, and apply explicitly.
+
+## Worktrunk
+
+Homebrew installs `wt` on both profiles. During `dot init`, Worktrunk's native
+installers offer to update detected shell configs and install the Pi activity
+extension. Back up any local customizations before accepting. Restart your shell
+and Pi to load the integration. `dot apply` does not run these installers.
+
+`dot doctor` checks the Homebrew package. Use `wt config show` to check shell
+integration in the current shell.
 
 ## Agent skills
 

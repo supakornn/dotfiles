@@ -170,6 +170,10 @@ case "$command" in
         mise --cd "$HOME" exec -- pi install "$package"
       fi
     done < <(jq -r '.packages[]' "$HOME/.pi/agent/settings.json")
+    task 'Set up Worktrunk shell integration and Pi plugin'
+    # Keep the vendor installers on the terminal for confirmation.
+    wt config shell install
+    wt config plugins pi install
     if [[ "$selected" == personal ]]; then
       task 'Verify REA with Ghidra'
       rea="$(jq -r '.mcpServers.rea.args[] | select(startswith("rea-agents@"))' "$HOME/.pi/agent/mcp.json")"
