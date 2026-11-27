@@ -52,25 +52,31 @@ Tmux is no longer installed or configured by dotfiles. Existing installations,
 `~/.tmux.conf`, and plugins are left alone; remove them manually only if no longer needed.
 To roll back, restore previous sources or backups, preview, and apply explicitly.
 
-## Rex appearance
+## Rex
 
-Rex is installed manually. On either profile, `./dot init` and `./dot apply`
-set **Geist Mono, 14 pt** when `Rex.app` is installed in `/Applications` or
-`~/Applications`. Relaunch Rex to pick up font changes. These two macOS
-preferences are outside the chezmoi diff; `./dot doctor` checks them without
-writing. The preference keys are undocumented and may change in a Rex update.
-To undo, choose a different font in Rex; a later `dot apply` will set it again.
+Rex is installed manually. On either profile, `./dot apply` and `./dot init`
+apply the source Mac's tracked preferences: Geist Mono Medium at 14 pt, system
+appearance, vertical tabs, left sidebar, and its pane and activity settings.
+Rex must be in `/Applications` or `~/Applications`. Relaunch it after applying.
+These preferences are outside the chezmoi diff; `./dot doctor` checks them
+without writing. The macOS preference keys are undocumented and may change.
+To undo, change the values in Rex; a later apply restores the tracked values.
 
-With Rex open and its **Remote Control** setting already enabled, `./dot apply`
-and `./dot init` also ask the local app to import and select **Catppuccin
-Macchiato** if it is missing. Dotfiles never enable Remote Control or launch Rex.
-An existing import is left alone, even if you switched themes. This is one-time
-setup, not a live link to Ghostty.
+The tracked palettes are **Catppuccin Latte**, **Macchiato**, and **Mocha**.
+If Rex is open and Remote Control is already enabled, `dot` asks the local
+app to import any missing palettes. Otherwise import them from
+`~/.config/rex/themes/` via **Settings → Themes → Import Theme**, then reapply.
+The light and dark selections use the local IDs for Latte and Macchiato,
+respectively. Existing palettes are not overwritten; if a selected name is
+ambiguous, `dot` reports it instead of guessing. Remote Control permissions,
+hosts, credentials, and sessions remain local.
 
-Without Remote Control, run `rex config check && rex config reload` on the
-local Mac, then choose **Import Catppuccin Macchiato Theme** in the command
-palette. Or import `~/.config/rex/themes/Catppuccin Macchiato` via
-**Settings → Themes → Import Theme**.
+Both Macs share the Lua split bindings in `~/.config/rex/init.lua`. Run
+`rex config check && rex config reload` on each local server after applying.
+For the same built-in shortcuts, use the same Rex version on both Macs.
+Shortcuts recorded in the app can override Lua; use **Settings → Shortcuts**
+to restore differing shortcuts to their defaults or match them manually.
+`dot` does not copy or reset the app's shortcut store.
 
 ## Agent skills
 

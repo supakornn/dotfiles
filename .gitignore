@@ -23,4 +23,6 @@ home/dot_config/rex/*
 !home/dot_config/rex/themes/
 home/dot_config/rex/themes/*
 !home/dot_config/rex/themes/Catppuccin Macchiato
+!home/dot_config/rex/themes/Catppuccin Latte
+!home/dot_config/rex/themes/Catppuccin Mocha
 !home/dot_config/rex/themes/LICENSE
