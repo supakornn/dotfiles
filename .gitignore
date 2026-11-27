@@ -20,3 +20,7 @@ home/private_dot_pi/agent/*trust.json*
 home/private_dot_pi/agent/*sessions*/
 home/dot_config/rex/*
 !home/dot_config/rex/init.lua
+!home/dot_config/rex/themes/
+home/dot_config/rex/themes/*
+!home/dot_config/rex/themes/Catppuccin Macchiato
+!home/dot_config/rex/themes/LICENSE

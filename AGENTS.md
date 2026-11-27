@@ -56,7 +56,10 @@ The currently selected profile on this Mac does not determine repository policy.
   Bun, Python, Rust, and Go; all global declarations are `latest`. Projects may
   pin versions. TypeScript belongs in project dependencies; do not restore pipx.
   Homebrew's own transitive runtime dependencies can remain installed.
-- Rex is installed manually; chezmoi manages only its `init.lua`.
+- Rex is installed manually. In Base, chezmoi manages its `init.lua` and theme
+  asset; `dot` writes only its macOS font family and size. Import a missing
+  theme through a running local Rex app only if Remote Control is already
+  enabled. Retain other preferences and the existing Remote Control state.
 - Pi packages and Cua use their native/vendor installers; REA uses the approved
   pinned npx command. These are not language runtimes for Mise.
 - `home/`: native chezmoi sources. `.chezmoidata.json` contains shared Pi data;

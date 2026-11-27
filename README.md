@@ -52,6 +52,26 @@ Tmux is no longer installed or configured by dotfiles. Existing installations,
 `~/.tmux.conf`, and plugins are left alone; remove them manually only if no longer needed.
 To roll back, restore previous sources or backups, preview, and apply explicitly.
 
+## Rex appearance
+
+Rex is installed manually. On either profile, `./dot init` and `./dot apply`
+set **Geist Mono, 14 pt** when `Rex.app` is installed in `/Applications` or
+`~/Applications`. Relaunch Rex to pick up font changes. These two macOS
+preferences are outside the chezmoi diff; `./dot doctor` checks them without
+writing. The preference keys are undocumented and may change in a Rex update.
+To undo, choose a different font in Rex; a later `dot apply` will set it again.
+
+With Rex open and its **Remote Control** setting already enabled, `./dot apply`
+and `./dot init` also ask the local app to import and select **Catppuccin
+Macchiato** if it is missing. Dotfiles never enable Remote Control or launch Rex.
+An existing import is left alone, even if you switched themes. This is one-time
+setup, not a live link to Ghostty.
+
+Without Remote Control, run `rex config check && rex config reload` on the
+local Mac, then choose **Import Catppuccin Macchiato Theme** in the command
+palette. Or import `~/.config/rex/themes/Catppuccin Macchiato` via
+**Settings → Themes → Import Theme**.
+
 ## Agent skills
 
 Edit [packages/skills.json](packages/skills.json): each entry has a `scope`

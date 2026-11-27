@@ -47,6 +47,90 @@ check_directories() {
     [[ ! -L "$path" ]] || fail "Managed directory is a symlink: $path. Move the link aside before applying; keep its target data."
   done <<< "$paths"
 }
+rex_installed() {
+  [[ "$(uname -s)" == Darwin ]] &&
+    [[ -x /Applications/Rex.app/Contents/MacOS/Rex ||
+       -x "$HOME/Applications/Rex.app/Contents/MacOS/Rex" ]]
+}
+rex_font() {
+  local mode="$1" key type expected current changed=false
+  rex_installed || return 0
+
+  while read -r key type expected; do
+    current="$(defaults read com.superlogical.rex "$key" 2>/dev/null)" || current=''
+    [[ "$current" != "$expected" ]] || continue
+    if [[ "$mode" == check ]]; then
+      echo 'Rex font differs from Geist Mono 14 pt. Quit Rex, run ./dot apply, then reopen Rex.'
+      return 1
+    fi
+    defaults write com.superlogical.rex "$key" "-$type" "$expected" ||
+      fail "Cannot set Rex preference $key."
+    changed=true
+  done <<'REX_FONT'
+Workspace.terminalFontName string Geist Mono
+Workspace.terminalFontPointSize int 14
+REX_FONT
+  if "$changed"; then echo 'Set Rex font to Geist Mono 14 pt. Relaunch Rex if it is open.'; fi
+}
+rex_theme_manual() {
+  printf 'Rex theme not imported automatically (%s). Use “Import Catppuccin Macchiato Theme” in Rex.\n' "$1" >&2
+}
+rex_theme() (
+  rex_installed || return 0
+  unset REX_BLOCK REX_SESSION REX_CLIENT
+  local theme='Catppuccin Macchiato' present remote cli client
+  local palette="$HOME/.config/rex/themes/$theme"
+  local -a connection
+  # Rex stores custom themes as JSON in a macOS Data preference. Read it only;
+  # use the app's import action to preserve all unrelated themes and settings.
+  if defaults read com.superlogical.rex Workspace.customThemes >/dev/null 2>&1; then
+    if ! present="$(defaults export com.superlogical.rex - 2>/dev/null |
+      plutil -extract 'Workspace\.customThemes' raw -expect data - 2>/dev/null |
+      base64 -D 2>/dev/null |
+      jq -r --arg theme "$theme" '
+        if type == "object" or type == "array" then
+          any(.. | objects | .name? | strings; ascii_downcase == ($theme | ascii_downcase))
+        else error("unexpected theme data") end
+      ' 2>/dev/null)" || [[ "$present" != true && "$present" != false ]]; then
+      rex_theme_manual 'cannot read the custom theme list'
+      return
+    fi
+    [[ "$present" != true ]] || return 0
+  fi
+  remote="$(defaults read com.superlogical.rex rex.client.remoteControl 2>/dev/null)" || remote=''
+  case "$remote" in
+    1|true|YES) ;;
+    *) rex_theme_manual 'Remote Control is off'; return ;;
+  esac
+  if ! cli="$(command -v rex)"; then
+    cli="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+  fi
+  [[ -x "$cli" ]] || { rex_theme_manual 'Rex CLI not found'; return; }
+  # Ignore the caller's Rex session/host. Only target a Mac app connected to
+  # this user's local server over its Unix socket, never a remote client.
+  connection=(--autostart=false --server "unix://$HOME/Library/Application Support/rex/server.sock" --timeout 4s)
+  if ! client="$("$cli" "${connection[@]}" client ls --json 2>/dev/null |
+    jq -er --argjson uid "$(id -u)" '
+      [.clients[] | select(.connection_state == "connected" and
+        .info.kind == "app" and .info.platform == "macos" and
+        .principal.transport == "unix" and .principal.uid == $uid) | .client_id]
+      | select(length == 1) | .[0] | strings | select(length > 0)
+    ' 2>/dev/null)"; then
+    rex_theme_manual 'no single local Rex app connected; open Rex and retry'
+    return
+  fi
+  if "$cli" "${connection[@]}" --client "$client" do client.theme.import "path=$palette" >/dev/null 2>&1; then
+    printf 'Requested Rex to import and select %s.\n' "$theme"
+  else
+    rex_theme_manual 'the Rex import action failed'
+  fi
+)
+apply_config() {
+  # Keep chezmoi on the terminal so it can ask about externally changed files.
+  chez "$@" apply --verbose="$verbose"
+  rex_font apply
+  rex_theme
+}
 skill_selections() {
   jq -r --arg profile "$selected" '
     .[] | select(.scope == "base" or .scope == $profile) | . as $entry |
@@ -143,8 +227,7 @@ case "$command" in
       brew bundle install ${brew_options[@]+"${brew_options[@]}"} --file "$repo/packages/Brewfile.$group"
     done
     task 'Apply configuration'
-    # Keep chezmoi on the terminal so it can ask about externally changed files.
-    chez ${force[@]+"${force[@]}"} apply --verbose="$verbose"
+    apply_config ${force[@]+"${force[@]}"}
     task 'Install Mise runtimes'
     routine mise --cd "$HOME" --yes install
     task 'Install agent skills'
@@ -205,7 +288,7 @@ case "$command" in
       task "Apply configuration ($selected)"
       check_directories
       if ! "$verbose"; then config_summary; fi
-      chez ${force[@]+"${force[@]}"} apply --verbose="$verbose"
+      apply_config ${force[@]+"${force[@]}"}
       printf '\nDone.\n'
     fi ;;
   doctor)
@@ -213,6 +296,7 @@ case "$command" in
     profile
     healthy=true
     chez verify || healthy=false
+    rex_font check || healthy=false
     for group in base "$selected"; do
       brew bundle check --no-upgrade --file "$repo/packages/Brewfile.$group" || healthy=false
     done
